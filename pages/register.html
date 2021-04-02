@@ -56,5 +56,23 @@
             </div>
         </div>
     </nav>
+
+    <form onreset="return getInput()" method="POST">
+      <label for="fname">First name:</label><br />
+      <input type="text" name="fname" id="fname" required /><br />
+
+      <label for="lname">Last name:</label><br />
+      <input type="text" name="lname" id="lname" required /><br />
+
+      <label for="email">Email:</label><br />
+      <input type="email" name="email" id="email" required /><br />
+
+      <label for="pass">Password:</label><br />
+      <input type="password" name="pass" id="pass" required /><br /><br />
+
+      <input type="reset" value="Register" />
+    </form>
+    <h3 style="color: red" id="error"></h3>
+    
 </body>
 </html>

@@ -19,7 +19,7 @@ function getInput() {
 
   let am = new AccountManager(localStorage);
 
-  let output = am.register(fname, lname, email, pass);
+  let output = am.registerUser(fname, lname, email, pass);
 
   if (output == 0) {
     window.location.href = "../pages/login.html";

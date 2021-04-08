@@ -11,25 +11,26 @@ function getInput() {
 
   let am = new AccountManager(localStorage);
 
-  let output = am.registerUser(fname, lname, email, pass);
+  let output = am.registerUser(fname, lname, email, pass, 0, "Burgas");
 
-  if (output == 0) {
-    window.location.href = "../pages/login.html";
-    return 0;
-  } else if (output == 1) {
-    document.getElementById("error").innerHTML = "!First name should start with capital letter!";
-    //return 1;
-  } else if (output == 2) {
-    document.getElementById("error").innerHTML = "!Last name should start with capital letter!";
-    //return 2;
-  } else if (output == 3) {
-    document.getElementById("error").innerHTML = "!Password must be at least 8 characters!";
-    //return 0;
-  } else if (output == 4) {
-    document.getElementById("error").innerHTML = "!There is already a user with this email address!";
-    //return 0;
-  }else {
-    console.log("A wild error appeared");
-    //return 0;
+  switch (output) {
+    case 0:
+      window.location.href = "../pages/login.html";
+      break;
+    case 1:
+      document.getElementById("error").innerHTML = "!First name should start with capital letter!";
+      break;
+    case 2:
+      document.getElementById("error").innerHTML = "!Last name should start with capital letter!";
+      break;
+    case 3:
+      document.getElementById("error").innerHTML = "!Password must be at least 8 characters!";
+      break;
+    case 4:
+      document.getElementById("error").innerHTML = "!There is already a user with this email address!";
+      break;
+    default:
+      console.log("A wild error appeared");
+      break;
   }
 }

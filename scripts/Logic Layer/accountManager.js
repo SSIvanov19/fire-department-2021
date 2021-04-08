@@ -14,13 +14,8 @@ let admins = [{
     role: ROLES.ADMIN
 }]
 
-function Teams(employ1Id, employ2Id, employ3Id, employ4Id, employ5Id, employ6Id, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips) {
-    this.employ1Id = employ1Id;
-    this.employ2Id = employ2Id;
-    this.employ3Id = employ3Id;
-    this.employ4Id = employ4Id;
-    this.employ5Id = employ5Id;
-    this.employ6Id = employ6Id;
+function Teams(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips) {
+    this.employees = employees;
     this.car = car;
     this.starOfWorkingDay = starOfWorkingDay;
     this.endOfWorkingDay = endOfWorkingDay;
@@ -30,16 +25,7 @@ function Teams(employ1Id, employ2Id, employ3Id, employ4Id, employ5Id, employ6Id,
     this.businessTrips = businessTrips;
 }
 
-function User(fname, lname, email, pass, id, role) {
-    this.fname = fname;
-    this.lname = lname;
-    this.email = email;
-    this.pass = pass;
-    this.id = id;
-    this.role = role;
-}
-
-function Employ(fname, lname, email, pass, id, role, region) {
+function User(fname, lname, email, pass, id, role, region) {
     this.fname = fname;
     this.lname = lname;
     this.email = email;
@@ -108,7 +94,7 @@ function AccountManager(localStorage) {
         }
     }
 
-    function registerTeam(employ1Id, employ2Id, employ3Id, employ4Id, employ5Id, employ6Id, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips) {
+    function registerTeam(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips) {
         if (teamArray != null) {
             teamArray = JSON.parse(ls.getItem('teams'));
         }
@@ -119,7 +105,7 @@ function AccountManager(localStorage) {
             ls.numberOfTeams++;
         }
 
-        let team = new Teams(employ1Id, employ2Id, employ3Id, employ4Id, employ5Id, employ6Id, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips);
+        let team = new Teams(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips);
 
         if (teamArray == null) {
             teamArray = []
@@ -132,7 +118,7 @@ function AccountManager(localStorage) {
         return 0;
     }
 
-    function registerEmploy(fname, lname, email, pass, role, region) {
+    function registerUser(fname, lname, email, pass, role, region) {
         if (userArray != null) {
             load();
         }
@@ -161,49 +147,7 @@ function AccountManager(localStorage) {
             ls.numberOfUsers++;
         }
 
-        let employ = new Employ(fname, lname, email, pass, ls.numberOfUsers, role, region);
-
-        if (userArray == null) {
-            userArray = []
-        }
-
-        userArray.push(employ);
-
-        save();
-
-        return 0;
-    }
-
-    function registerUser(fname, lname, email, pass) {
-        if (userArray != null) {
-            load();
-        }
-
-        if (validateFname(fname)) {
-            return 1;
-        }
-
-        if (validateLname(lname)) {
-            return 2;
-        }
-
-        if (validatePass(pass)) {
-            return 3;
-        }
-
-        if (userArray != null) {
-            if (findUserByEmail(email)) {
-                return 4;
-            }
-        }
-
-        if (ls.numberOfUsers == undefined || ls.numberOfUsers == 0) {
-            ls.numberOfUsers = 1;
-        } else {
-            ls.numberOfUsers++;
-        }
-
-        let user = new User(fname, lname, email, pass, ls.numberOfUsers, ROLES.USER);
+        let user = new User(fname, lname, email, pass, ls.numberOfUsers, role, region);     
 
         if (userArray == null) {
             userArray = []
@@ -236,7 +180,8 @@ function AccountManager(localStorage) {
                 email: userArray[index].email,
                 pass: userArray[index].pass,
                 id: userArray[index].id,
-                role: userArray[index].role
+                role: userArray[index].role,
+                region: userArray[index].region
             };
 
             ls.isUserEnter = true;
@@ -285,7 +230,6 @@ function AccountManager(localStorage) {
         deleteAccount,
         deleteAllAccount,
         checkForEnterUser,
-        registerEmploy,
         registerTeam
     }
 }

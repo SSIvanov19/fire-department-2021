@@ -26,12 +26,42 @@
     <h3>Information:</h3>
     <p id="fname">First Name:</p>
     <p id="lname">Last Name:</p>
-    <hr />
+    <p id="role">Role: </p>
+    <p id="region">Region: </p>
+    <hr>
   </div>
 
   <button onclick="getInput(1)">Log Out</button>
   <button onclick="getInput(2)">Delete Account</button>
-  <button onclick="getInput(3)">Delete All Accounts</button>
+  <button onclick="getInput(3)" id="deleteAll">Delete All Accounts</button>
+
+  <div id="registerEmployee">
+    <hr>
+    <p>Register an employee</p>
+    <br>
+    <form onreset="return getInput(4)" method="POST" name="register">
+      <label for="fname">First name:</label><br>
+      <input type="text" name="fname" id="fname" required /><br>
+
+      <label for="lname">Last name:</label><br>
+      <input type="text" name="lname" id="lname" required /><br>
+
+      <label for="email">Email:</label><br />
+      <input type="email" name="email" id="email" required /><br>
+
+      <label for="pass">Password:</label><br />
+      <input type="password" name="pass" id="pass" required /><br>
+
+      <label for="role">Choose a role:</label><br>
+      <select id="role" name="role" required>
+        <option value="1">Firefighter</option>
+        <option value="2">Dispatcher</option>
+      </select><br><br>
+
+      <input type="reset" value="Register" /><br>
+      <p id="error" class="has-text-danger"></p>
+    </form>
+  </div>
 </body>
 
 <script src="../scripts/Logic Layer/accountManager.js"></script>

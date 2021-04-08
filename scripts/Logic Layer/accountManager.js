@@ -223,6 +223,10 @@ function AccountManager(localStorage) {
             return true;
         }
 
+        if (userArray == null) {
+            return false;
+        }
+
         let index = userArray.findIndex(user => user.email.toLowerCase() == email.toLowerCase());
 
         if (index != -1 && userArray[index].pass == pass) {

@@ -6,14 +6,6 @@ if (localStorage.isUserEnter) {
     window.location.href = "../index.html";
 }
 
-if (localStorage.activeUser) {
-    document.getElementById("userLogin").style.display = "inline";
-    document.getElementById("userNotLogin").style.display = "none";
-} else {
-    document.getElementById("userLogin").style.display = "none";
-    document.getElementById("userNotLogin").style.display = "inline";
-}
-
 function getInput(input) {
     let am = new AccountManager(localStorage);
 

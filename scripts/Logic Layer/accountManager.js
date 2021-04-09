@@ -269,6 +269,19 @@ function AccountManager(localStorage) {
         return ls.isUserEnter;
     }
 
+    function getCars() {
+        return JSON.parse(ls.getItem('cars'));
+    }
+
+    function getFirefighters() {
+        load();
+        if (userArray != null) {
+            return userArray.filter(user => user.role == ROLES.FIREFIGHTER);
+        } else {
+            return 0;
+        }
+    }
+
     return {
         getAll,
         registerUser,
@@ -278,7 +291,9 @@ function AccountManager(localStorage) {
         deleteAllAccount,
         checkForEnterUser,
         registerTeam,
-        registerCar
+        registerCar,
+        getCars,
+        getFirefighters
     }
 }
 

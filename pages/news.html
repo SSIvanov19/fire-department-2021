@@ -15,14 +15,97 @@
 </head>
 
 <body>
-  <div w3-include-html="navbar.html"></div>
-
-
-
-  <script>
-    includeHTML();
-  </script>
-
+  <div class="first_nav">
+    <div class="container">
+      <nav class="navbar">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="../index.html">
+            <img src="../img/Logo.png" width="112" height="28" />
+          </a>
+          <a class="navbar-item is-hidden-desktop" href="tel:112">
+            <span class="icon" style="color: #333;">
+              <i class="fa fa-lg fa-phone-alt"></i>
+            </span>
+          </a>
+          <a class="navbar-item is-hidden-desktop" href="mailto:fireDepartment2021@codingburgas.bg">
+            <span class="icon" style="color: #333;">
+              <i class="fa fa-lg fa-envelope"></i>
+            </span>
+          </a>
+          <div class="navbar-burger burger" data-target="navMenuBlogHero">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div id="navMenuBlogHero" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item is-active" href="../index.html">Начало</a>
+            <a class="navbar-item" href="signal.html">Подай сигнал</a>
+  
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                Други
+              </a>
+  
+              <div class="navbar-dropdown">
+                <a class="navbar-item" href="about-site.html">
+                  За сайта
+                </a>
+  
+                <a class="navbar-item" href="info.html">
+                  Информация
+                </a>
+                <a class="navbar-item" href="stats.html">
+                  Статистики
+                </a>
+                <a class="navbar-item" href="fire-safety.html">
+                  Пожарна безопасност
+                </a>
+  
+                <a class="navbar-item" href="contacts.html">
+                  Контакти
+                </a>
+                <a class="navbar-item" href="news.html">
+                  Новини
+                </a>
+                <hr class="navbar-divider">
+                <div id="userLogin">
+                  <a class="navbar-item" href="account.html">
+                    Акаунт
+                  </a>
+                </div>
+  
+                <div id="userNotLogin">
+                  <a class="navbar-item" href="login.html">
+                    Влизане
+                  </a>
+                  <a class="navbar-item" href="register.html">
+                    Регистриране
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="field is-grouped">
+                <p class="control">
+                  <a class="button is-normal is-success" href="tel:112">
+                    <span class="icon">
+                      <i class="fa fa-phone-alt"></i>
+                    </span>
+                    <span>112</span>
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+  
   <script defer src="../scripts/Presentation Layer/navbar.js"></script>
   <script src="../scripts/Presentation Layer/includeHTML.js"></script>
 </body>

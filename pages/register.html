@@ -14,8 +14,98 @@
     <title>Рeгистрация | Fire-Department-2021</title>
 </head>
 <body>
-  <div w3-include-html="navbar.html"></div>
 
+  <div class="first_nav">
+    <div class="container">
+      <nav class="navbar">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="../index.html">
+            <img src="../img/Logo.png" width="112" height="28" />
+          </a>
+          <a class="navbar-item is-hidden-desktop" href="tel:112">
+            <span class="icon" style="color: #333;">
+              <i class="fa fa-lg fa-phone-alt"></i>
+            </span>
+          </a>
+          <a class="navbar-item is-hidden-desktop" href="mailto:fireDepartment2021@codingburgas.bg">
+            <span class="icon" style="color: #333;">
+              <i class="fa fa-lg fa-envelope"></i>
+            </span>
+          </a>
+          <div class="navbar-burger burger" data-target="navMenuBlogHero">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div id="navMenuBlogHero" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item is-active" href="../index.html">Начало</a>
+            <a class="navbar-item" href="signal.html">Подай сигнал</a>
+  
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                Други
+              </a>
+  
+              <div class="navbar-dropdown">
+                <a class="navbar-item" href="about-site.html">
+                  За сайта
+                </a>
+  
+                <a class="navbar-item" href="info.html">
+                  Информация
+                </a>
+                <a class="navbar-item" href="stats.html">
+                  Статистики
+                </a>
+                <a class="navbar-item" href="fire-safety.html">
+                  Пожарна безопасност
+                </a>
+  
+                <a class="navbar-item" href="contacts.html">
+                  Контакти
+                </a>
+                <a class="navbar-item" href="news.html">
+                  Новини
+                </a>
+                <hr class="navbar-divider">
+                <div id="userLogin">
+                  <a class="navbar-item" href="account.html">
+                    Акаунт
+                  </a>
+                </div>
+  
+                <div id="userNotLogin">
+                  <a class="navbar-item" href="login.html">
+                    Влизане
+                  </a>
+                  <a class="navbar-item" href="register.html">
+                    Регистриране
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="field is-grouped">
+                <p class="control">
+                  <a class="button is-normal is-success" href="tel:112">
+                    <span class="icon">
+                      <i class="fa fa-phone-alt"></i>
+                    </span>
+                    <span>112</span>
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+  
     <div class="hero is-primary is-fullheight">
         <div class="hero-body">
             <div class="container">
@@ -24,27 +114,27 @@
                         <form onreset="return getInput()" method="POST" class="box">
                             <p class="title is-1 has-text-centered has-text-black">Регистрация</p>
                             <div class="field">
-                              <label class="label">Име</label>
+                              <label class="label" for="fname">Име</label>
                               <p class="control has-icons-left">
-                                <input class="input" type="fname" placeholder="Име">
+                                <input class="input" type="text" name="fname" id="fname" placeholder="Име">
                                 <span class="icon is-small is-left">
                                   <i class="fas fa-id-badge"></i>
                                 </span>
                               </p>
                             </div>
                             <div class="field">
-                              <label class="label">Фамилия</label>
+                              <label class="label" for="fname">Фамилия</label>
                               <p class="control has-icons-left">
-                                <input class="input" type="lname" placeholder="Фамилия">
+                                <input class="input" name="lname" type="text" id="lname" placeholder="Фамилия">
                                 <span class="icon is-small is-left">
                                   <i class="fas fa-id-badge"></i>
                                 </span>
                               </p>
                             </div>
                             <div class="field">
-                                <label class="label">E-mail</label>
+                                <label class="label" for="email">E-mail</label>
                                 <p class="control has-icons-left has-icons-right">
-                                  <input class="input" type="email" placeholder="E-mail">
+                                  <input class="input" type="email" name="email" id="email" placeholder="E-mail">
                                   <span class="icon is-small is-left">
                                     <i class="fas fa-envelope"></i>
                                   </span>
@@ -54,9 +144,9 @@
                                 </p>
                               </div>
                               <div class="field">
-                                <label class="label">Парола</label>
+                                <label class="label" for="pass">Парола</label>
                                 <p class="control has-icons-left">
-                                  <input class="input" type="password" placeholder="Парола">
+                                  <input class="input" type="password" name="pass" id="pass" placeholder="Парола">
                                   <span class="icon is-small is-left">
                                     <i class="fas fa-lock"></i>
                                   </span>
@@ -64,9 +154,7 @@
                               </div>
                               <div class="field">
                                 <p class="control">
-                                  <button class="button is-success">
-                                    Регистрация
-                                  </button>
+                                  <input type="reset" value="Регистрация" class="button is-success">
                                 </p>
                                 <h3 style="color: red" id="error"></h3>
                               </div>
@@ -76,10 +164,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-      includeHTML();
-    </script>
 
     <script src="../scripts/Logic Layer/accountManager.js"></script>
     <script src="../scripts/Presentation Layer/register.js"></script>

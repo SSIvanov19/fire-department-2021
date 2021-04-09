@@ -1,4 +1,5 @@
 let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+let carSel = document.getElementById("car");
 
 if (localStorage.isUserEnter) {
     document.getElementById("fname").innerHTML = "First Name: " + activeUser.fname;
@@ -19,6 +20,44 @@ if (activeUser.role == 3) {
     document.getElementById("registerCar").style.display = "none";
 }
 
+window.onload = () => {
+    let am = new AccountManager(localStorage);
+    let cars = am.getCars();
+
+    cars.forEach(element => {
+        carSel.options[carSel.options.length] = new Option(element.model + " " + element.registrationPlate, element.numberOfSeats);
+    });
+}
+
+carSel.onchange = () => {
+    let am = new AccountManager(localStorage);
+    let form = document.forms.registerTeam;
+    let parentDiv = document.getElementById("teamMembers");
+    parentDiv.innerHTML = ""
+    let firefightersArray = am.getFirefighters();
+
+    for (let i = 1; i <= form.elements.car.value; i++) {
+        let newSelect = document.createElement("Select");
+        let newLabel = document.createElement("Label");
+        
+        newSelect.setAttribute("name", i);
+        newSelect.setAttribute("id", i);
+        newLabel.setAttribute("for", i);
+        
+        newLabel.innerHTML = "Firefighter " + i + ":";
+        
+        parentDiv.appendChild(newLabel);
+        parentDiv.appendChild(document.createElement("br"));
+        parentDiv.appendChild(newSelect);
+        parentDiv.appendChild(document.createElement("br"));
+
+        newSelect.options[0] = new Option("Select a firefighter");
+
+        firefightersArray.forEach(element => {
+            newSelect.options[newSelect.options.length] = new Option(element.fname + " " + element.lname, element.id);
+        });
+    }
+}
 function getInput(input) {
     let am = new AccountManager(localStorage);
 

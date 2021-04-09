@@ -1,4 +1,4 @@
-function task1(callback) {
+function task1() {
     let z, i, elmnt, file, xhttp;
 
     /* Loop through a collection of all HTML elements: */
@@ -39,5 +39,5 @@ const task2 = () => {
 
 function includeHTML() {
     task1();
-    setTimeout(function(){ task2(); }, 80);
+    setTimeout(function(){ task2(); }, 500);
 };

@@ -1,4 +1,5 @@
 let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+
 if (localStorage.isUserEnter) {
     document.getElementById("fname").innerHTML = "First Name: " + activeUser.fname;
     document.getElementById("lname").innerHTML = "Last Name: " + activeUser.lname;
@@ -11,9 +12,11 @@ if (localStorage.isUserEnter) {
 if (activeUser.role == 3) {
     document.getElementById("deleteAll").style.display = "inline";
     document.getElementById("registerEmployee").style.display = "block";
+    document.getElementById("registerCar").style.display = "block";
 } else {
     document.getElementById("deleteAll").style.display = "none";
     document.getElementById("registerEmployee").style.display = "none";
+    document.getElementById("registerCar").style.display = "none";
 }
 
 function getInput(input) {
@@ -33,31 +36,57 @@ function getInput(input) {
             window.location.href = "../index.html";
             break;
         case 4:
-            let form = document.forms.register;
+            let employeeForm = document.forms.registerEmployee;
 
-            let output = am.registerUser(form.elements.fname.value,
-                form.elements.lname.value,
-                form.elements.email.value,
-                form.elements.pass.value,
-                form.elements.role.value,
+            let employeeOutput = am.registerUser(
+                employeeForm.elements.fname.value,
+                employeeForm.elements.lname.value,
+                employeeForm.elements.email.value,
+                employeeForm.elements.pass.value,
+                employeeForm.elements.role.value,
                 "Burgas"
             );
 
-            switch (output) {
+            switch (employeeOutput) {
                 case 0:
-                    document.getElementById("error").innerHTML = "User created successfully!";
+                    document.getElementById("employeeError").innerHTML = "User created successfully!";
                     break;
                 case 1:
-                    document.getElementById("error").innerHTML = "!First name should start with capital letter!";
+                    document.getElementById("employeeError").innerHTML = "!First name should start with capital letter!";
                     break;
                 case 2:
-                    document.getElementById("error").innerHTML = "!Last name should start with capital letter!";
+                    document.getElementById("employeeError").innerHTML = "!Last name should start with capital letter!";
                     break;
                 case 3:
-                    document.getElementById("error").innerHTML = "!Password must be at least 8 characters!";
+                    document.getElementById("employeeError").innerHTML = "!Password must be at least 8 characters!";
                     break;
                 case 4:
-                    document.getElementById("error").innerHTML = "!There is already a user with this email address!";
+                    document.getElementById("employeeError").innerHTML = "!There is already a user with this email address!";
+                    break;
+                default:
+                    console.log("A wild error appeared");
+                    break;
+            }
+            break;
+        case 5:
+            let carForm = document.forms.registerCar;
+
+            let carOutput = am.registerCar(
+                carForm.elements.model.value,
+                carForm.elements.registration.value,
+                carForm.elements.seats.value,
+                "Burgas"
+            );
+
+            switch (carOutput) {
+                case 0:
+                    document.getElementById("carError").innerHTML = "Car registered successfully!";
+                    break;
+                case 1:
+                    document.getElementById("carError").innerHTML = "Number of seat must be positive number!";
+                    break;
+                case 2:
+                    document.getElementById("carError").innerHTML = "There is alredy a car with this registation plate";
                     break;
                 default:
                     console.log("A wild error appeared");

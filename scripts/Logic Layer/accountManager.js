@@ -35,10 +35,18 @@ function User(fname, lname, email, pass, id, role, region) {
     this.region = region;
 }
 
+function Car(model, registrationPlate, numberOfSeats, region) {
+    this.model = model;
+    this.registrationPlate = registrationPlate;
+    this.numberOfSeats = numberOfSeats;
+    this.region = region;
+}
+
 function AccountManager(localStorage) {
     let userArray = [];
     let ls = localStorage;
     let teamArray = [];
+    let carArray = [];
 
     function save() {
         ls.setItem("users", JSON.stringify(userArray));
@@ -57,6 +65,11 @@ function AccountManager(localStorage) {
     function findUserByEmail(email) {
         load();
         return userArray.find(user => user.email.toLowerCase() == email.toLowerCase());
+    }
+
+    function findCarByRP(registrationPlate) {
+        carArray = JSON.parse(ls.getItem('cars'));
+        return carArray.find(car => car.registrationPlate == registrationPlate);
     }
 
     function validateFname(fname) {
@@ -92,6 +105,40 @@ function AccountManager(localStorage) {
         } else {
             return false;
         }
+    }
+
+    function registerCar(model, registrationPlate, numberOfSeats, region) {
+        if (numberOfSeats <= 0) {
+            return 1;
+        }
+
+        if (carArray != null) {
+            carArray = JSON.parse(ls.getItem('cars'));
+        }
+
+        if (carArray != null) {
+            if (findCarByRP(registrationPlate)) {
+                return 2;
+            }
+        }
+
+        if (ls.numberOfCars == undefined || ls.numberOfCars == 0) {
+            ls.numberOfCars = 1;
+        } else {
+            ls.numberOfCars++;
+        }
+
+        let car = new Car(model, registrationPlate, numberOfSeats, region);
+
+        if (carArray == null) {
+            carArray = []
+        }
+
+        carArray.push(car);
+
+        ls.setItem("cars", JSON.stringify(carArray));
+
+        return 0;
     }
 
     function registerTeam(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips) {
@@ -147,7 +194,7 @@ function AccountManager(localStorage) {
             ls.numberOfUsers++;
         }
 
-        let user = new User(fname, lname, email, pass, ls.numberOfUsers, role, region);     
+        let user = new User(fname, lname, email, pass, ls.numberOfUsers, role, region);
 
         if (userArray == null) {
             userArray = []
@@ -230,7 +277,8 @@ function AccountManager(localStorage) {
         deleteAccount,
         deleteAllAccount,
         checkForEnterUser,
-        registerTeam
+        registerTeam,
+        registerCar
     }
 }
 

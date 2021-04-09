@@ -39,7 +39,7 @@
     <hr>
     <p>Register an employee</p>
     <br>
-    <form onreset="return getInput(4)" method="POST" name="register">
+    <form onreset="return getInput(4)" method="POST" name="registerEmployee">
       <label for="fname">First name:</label><br>
       <input type="text" name="fname" id="fname" required /><br>
 
@@ -59,7 +59,26 @@
       </select><br><br>
 
       <input type="reset" value="Register" /><br>
-      <p id="error" class="has-text-danger"></p>
+      <p id="employeeError" class="has-text-danger"></p>
+    </form>
+  </div>
+
+  <div id="registerCar">
+    <hr>
+    <p>Register car</p>
+    <br>
+    <form onreset="return getInput(5)" method="POST" name="registerCar">
+      <label for="model">Model:</label><br>
+      <input type="text" name="model" id="model" required /><br>
+
+      <label for="registration">Registration plate:</label><br>
+      <input type="text" name="registration" id="registration" required /><br>
+
+      <label for="seats">Seats:</label><br>
+      <input type="number" name="seats" id="seats" required /><br>
+
+      <input type="reset" value="Register" /><br>
+      <p id="carError" class="has-text-danger"></p>
     </form>
   </div>
 </body>

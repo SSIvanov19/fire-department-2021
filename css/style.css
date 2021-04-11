@@ -1,29 +1,6 @@
-.banner::after, .banner::before {
-    content: ""; 
-    position: absolute;
-    top: 0;
-    left: 50%;
-
-    transform: skew(15deg) translateX(-50%);
-    width: 75%;
-    height: 100%;
-    background-image: linear-gradient(120deg,#e42929,#e3f302);
-    background-color: rgba(51, 51, 51, 0);
-    opacity: .7;
-}
-.banner::before {
-    transform: skew(-15deg) translateX(-50%);
-}
-.banner {
-    overflow: hidden;
-}
-
 .banner {
     position: relative;
     background-image: url(../img/background.png);
     background-size: cover;
     display: relative;
-}
-.banner > * {
-    z-index: 100;
 }

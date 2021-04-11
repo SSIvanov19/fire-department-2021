@@ -2,17 +2,17 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Пожарна безопасност | Fire-Department-2021</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-social@1/bin/bulma-social.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css" />
-    <script defer src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
-    <!--<link rel="stylesheet" href="css/debug.css">-->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Пожарна безопасност | Fire-Department-2021</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-social@1/bin/bulma-social.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
+  <!--<link rel="stylesheet" href="css/debug.css">-->
 </head>
 
 <body>
@@ -51,21 +51,20 @@
               <a class="navbar-link">
                 Други
               </a>
-    
+
               <div class="navbar-dropdown">
                 <a class="navbar-item" href="pages/about-site.html">
                   За сайта
                 </a>
-                <a class="navbar-item" href="pages/account.html">
-                  Акаунт
-                </a>
                 <a class="navbar-item" href="pages/info.html">
                   Информация
+                </a>
+                <a class="navbar-item" href="pages/stats.html">
+                  Статистики
                 </a>
                 <a class="navbar-item" href="pages/fire-safety.html">
                   Пожарна безопасност
                 </a>
-                
                 <a class="navbar-item" href="pages/contacts.html">
                   Контакти
                 </a>
@@ -73,15 +72,20 @@
                   Новини
                 </a>
                 <hr class="navbar-divider">
-                <a class="navbar-item" href="pages/stats.html">
-                  Статистики
-                </a>
-                <a class="navbar-item" href="pages/login.html">
-                  Влизане
-                </a>
-                <a class="navbar-item" href="pages/register.html">
-                  Регистриране
-                </a>
+                <div id="userLogin">
+                  <a class="navbar-item" href="pages/account.html">
+                    Акаунт
+                  </a>
+                </div>
+
+                <div id="userNotLogin">
+                  <a class="navbar-item" href="pages/login.html">
+                    Влизане
+                  </a>
+                  <a class="navbar-item" href="pages/register.html">
+                    Регистриране
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -111,7 +115,8 @@
       </div>
     </div>
   </section>
-    
-    <script defer src="scripts/Presentation Layer/navbar.js"></script>
-  </body>
+
+  <script defer src="scripts/Presentation Layer/navbar.js"></script>
+</body>
+
 </html>

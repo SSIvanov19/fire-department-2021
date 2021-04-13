@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-social@1/bin/bulma-social.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css" />
+  <link href="../node_modules/bulma-calendar/dist/css/bulma-calendar.min.css" rel="stylesheet">
   <script defer src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
   <!--<link rel="stylesheet" href="../styles/debug.css">-->
 </head>
@@ -179,18 +180,50 @@
       <div id="teamMembers">
 
       </div>
-      <!--
-        <label for="firefighter">Choose a firefighter for the team:</label><br>
-        <select name="firefighter" id="firefighter" required>
-          <option value="" selected="selected">Select Firefighter</option>
-        </select><br>
-      -->
 
+      <label for="startHour">Time to start work:</label><br>
+      <input type="time" id="startTime" name="startTime" required><br>
 
+      <label for="endHour">Time to end work:</label><br>
+      <input type="time" id="endHour" name="endHour" required><br>
+
+      <label>Select working days:</label><br>
+      <input type="checkbox" id="mon" name="mon" value="monday">
+      <label for="mon">Monday</label><br>
+
+      <input type="checkbox" id="tue" name="tue" value="tuesday">
+      <label for="tue">Tuesday</label><br>
+
+      <input type="checkbox" id="wed" name="wed" value="wednesday">
+      <label for="wed">Wednesday</label><br>
+
+      <input type="checkbox" id="thu" name="thu" value="thursday">
+      <label for="thu">Thursday</label><br>
+
+      <input type="checkbox" id="fri" name="fri" value="friday">
+      <label for="fri">Friday</label><br>
+
+      <input type="checkbox" id="sat" name="sat" value="saturday">
+      <label for="sat">Saturday</label><br>
+
+      <input type="checkbox" id="sun" name="sun" value="sunday">
+      <label for="sun">Sunday</label><br>
+
+      <label for="holiday">Select Holiday:</label>
+      <input type="date" data-is-range="true" name="holiday" id="holiday">
+
+      <label for="sick">Sick leave:</label>
+      <input type="date" data-is-range="true" name="sick" id="sick">
+
+      <label for="trip">Business trip:</label>
+      <input type="date" data-is-range="true" name="trip" id="trip">
+
+      <input type="reset" value="Register">
     </form>
   </div>
 </body>
 
+<script src="../node_modules/bulma-calendar/dist/js/bulma-calendar.min.js"></script>
 <script src="../scripts/Logic Layer/accountManager.js"></script>
 <script src="../scripts//Presentation Layer/accountPageScript.js"></script>
 <script defer src="../scripts/Presentation Layer/navbar.js"></script>

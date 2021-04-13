@@ -20,13 +20,49 @@ if (activeUser.role == 3) {
     document.getElementById("registerCar").style.display = "none";
 }
 
-window.onload = () => {
+function forEachCar() {
     let am = new AccountManager(localStorage);
     let cars = am.getCars();
 
-    cars.forEach(element => {
-        carSel.options[carSel.options.length] = new Option(element.model + " " + element.registrationPlate, element.numberOfSeats);
-    });
+    for (i = carSel.length - 1; i >= 0; i--) {
+        carSel.remove(i);
+    }
+
+    carSel.options[0] = new Option("Select Car", "");
+
+    if (cars != null) {
+        cars.forEach(element => {
+            carSel.options[carSel.options.length] = new Option(element.model + " " + element.registrationPlate, element.numberOfSeats);
+        });
+    }
+}
+
+window.onload = () => {
+    forEachCar();
+
+    document.getElementById("holiday").setAttribute("data-min-date", new Date().toString());
+
+    // Initialize all input of type date
+    var calendars = bulmaCalendar.attach('[type="date"]');
+    //calendars.setAttribute("data-min-date", new Date().toString());
+
+    // Loop on each calendar initialized
+    for (var i = 0; i < calendars.length; i++) {
+        // Add listener to select event
+        calendars[i].on('select', date => {
+            console.log(date);
+        });
+    }
+
+    // To access to bulmaCalendar instance of an element
+    var element = document.querySelector('#my-element');
+    
+    if (element) {
+        // bulmaCalendar instance is available as element.bulmaCalendar
+        element.bulmaCalendar.on('select', function (datepicker) {
+            console.log(datepicker.data.value());
+        });
+    }
 }
 
 carSel.onchange = () => {
@@ -39,13 +75,13 @@ carSel.onchange = () => {
     for (let i = 1; i <= form.elements.car.value; i++) {
         let newSelect = document.createElement("Select");
         let newLabel = document.createElement("Label");
-        
+
         newSelect.setAttribute("name", i);
         newSelect.setAttribute("id", i);
         newLabel.setAttribute("for", i);
-        
+
         newLabel.innerHTML = "Firefighter " + i + ":";
-        
+
         parentDiv.appendChild(newLabel);
         parentDiv.appendChild(document.createElement("br"));
         parentDiv.appendChild(newSelect);
@@ -54,10 +90,11 @@ carSel.onchange = () => {
         newSelect.options[0] = new Option("Select a firefighter");
 
         firefightersArray.forEach(element => {
-            newSelect.options[newSelect.options.length] = new Option(element.fname + " " + element.lname, element.id);
+            newSelect.options[newSelect.options.length] = new Option(element.fname + " " + element.lname + " " + element.email, element.id);
         });
     }
 }
+
 function getInput(input) {
     let am = new AccountManager(localStorage);
 
@@ -88,6 +125,7 @@ function getInput(input) {
 
             switch (employeeOutput) {
                 case 0:
+                    location.reload();
                     document.getElementById("employeeError").innerHTML = "User created successfully!";
                     break;
                 case 1:
@@ -119,6 +157,7 @@ function getInput(input) {
 
             switch (carOutput) {
                 case 0:
+                    forEachCar();
                     document.getElementById("carError").innerHTML = "Car registered successfully!";
                     break;
                 case 1:

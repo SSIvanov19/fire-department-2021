@@ -1,3 +1,7 @@
+*{
+    font-family: 'Comfortaa', cursive;
+}
+
 .banner {
     position: relative;
     background-image: url(../img/background.png);
@@ -9,16 +13,10 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
-    font-family: 'Helvetica', 'Roboto', sans-serif;
-}
-
 footer {
     background: rgb(255, 255, 255);
     border-top: 3px solid rgb(13, 152, 216);
     color: rgb(0, 0, 0) !important;
-    font-family: 'Fira Sans Condensed', sans-serif;
-
 }
 
 .footer_title {

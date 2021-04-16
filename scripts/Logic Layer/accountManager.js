@@ -42,11 +42,21 @@ function Car(model, registrationPlate, numberOfSeats, region) {
     this.region = region;
 }
 
+function Signal(title, names, type, coordinatesX, coordinatesY, description) {
+    this.title = title,
+        this.names = names,
+        this.type = type,
+        this.coordinatesX = coordinatesX,
+        this.coordinatesY = coordinatesY,
+        this.description = description
+}
+
 function AccountManager(localStorage) {
     let userArray = [];
     let ls = localStorage;
     let teamArray = [];
     let carArray = [];
+    let signalArray = [];
 
     function save() {
         ls.setItem("users", JSON.stringify(userArray));
@@ -148,22 +158,22 @@ function AccountManager(localStorage) {
     const getCircularReplacer = () => {
         const seen = new WeakSet();
         return (key, value) => {
-          if (typeof value === "object" && value !== null) {
-            if (seen.has(value)) {
-              return;
+            if (typeof value === "object" && value !== null) {
+                if (seen.has(value)) {
+                    return;
+                }
+                seen.add(value);
             }
-            seen.add(value);
-          }
-          return value;
+            return value;
         };
-      };
-      
+    };
+
     function registerTeam(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips) {
         if (teamArray != null) {
             teamArray = JSON.parse(ls.getItem('teams'));
         }
 
-        if (hasDuplicates(employees)){
+        if (hasDuplicates(employees)) {
             return 1;
         }
 
@@ -294,6 +304,10 @@ function AccountManager(localStorage) {
         return JSON.parse(ls.getItem('cars'));
     }
 
+    function getSignals() {
+        return JSON.parse(ls.getItem('signals'));
+    }
+
     function getFirefighters() {
         load();
         if (userArray != null) {
@@ -301,6 +315,44 @@ function AccountManager(localStorage) {
         } else {
             return 0;
         }
+    }
+
+    function submitSignalForm(title, names, type, coordinatesX, coordinatesY, description) {
+        if (signalArray != null) {
+            signalArray = JSON.parse(ls.getItem('signals'));
+        }
+
+        if (title == "") {
+            return 1;
+        }
+
+        if (names == "") {
+            return 2;
+        }
+
+        if (type == "") {
+            return 3;
+        }
+
+        if (coordinatesX == null || coordinatesY == null) {
+            return 4;
+        }
+
+        if (description == "") {
+            return 5;
+        }
+
+        let signal = new Signal(title, names, type, coordinatesX, coordinatesY, description);
+
+        if (signalArray == null) {
+            signalArray = []
+        }
+
+        signalArray.push(signal);
+
+        ls.setItem("signals", JSON.stringify(signalArray));
+
+        return 0;
     }
 
     return {
@@ -314,7 +366,9 @@ function AccountManager(localStorage) {
         registerTeam,
         registerCar,
         getCars,
-        getFirefighters
+        getFirefighters,
+        submitSignalForm,
+        getSignals
     }
 }
 

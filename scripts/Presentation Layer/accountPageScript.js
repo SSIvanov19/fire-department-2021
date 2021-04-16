@@ -1,5 +1,7 @@
 let activeUser = JSON.parse(localStorage.getItem("activeUser"));
 let carSel = document.getElementById("car");
+let sigSel = document.getElementById("signals");
+let isSignalShown = false;
 
 if (localStorage.isUserEnter) {
     document.getElementById("fname").innerHTML = "First Name: " + activeUser.fname;
@@ -39,12 +41,59 @@ function forEachCar() {
     }
 }
 
+function forEachSignal() {
+    let am = new AccountManager(localStorage);
+    let signals = am.getSignals();
+
+    for (i = sigSel.length - 1; i >= 0; i--) {
+        sigSel.remove(i);
+    }
+
+    sigSel.options[0] = new Option("Select signal", "");
+
+    console.log(signals);
+
+    if (signals != null) {
+        signals.forEach((element, index) => {
+            sigSel.options[sigSel.options.length] = new Option(element.title, index);
+        });
+    }
+}
+
+function initMap(coordinatesX, coordinatesY) {
+    document.getElementById("map").innerHTML = "";
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            }),
+            new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    features: [
+                        new ol.Feature({
+                            geometry: new ol.geom.Point([coordinatesX, coordinatesY])
+                        })
+                    ]
+                }),
+                name: 'Marker'
+            })
+        ],
+        view: new ol.View({
+            center: [coordinatesX, coordinatesY],
+            zoom: 12
+        })
+    });
+}
+
 window.onload = () => {
     forEachCar();
+    forEachSignal();
 
     document.getElementById("holiday").setAttribute("data-min-date", new Date().toString());
     document.getElementById("sick").setAttribute("data-min-date", new Date().toString());
     document.getElementById("trip").setAttribute("data-min-date", new Date().toString());
+    document.getElementById("displaySignal").style.display = "none";
 
     // Initialize all input of type date
     var calendars = bulmaCalendar.attach('[type="date"]')
@@ -78,6 +127,39 @@ carSel.onchange = () => {
             newSelect.options[newSelect.options.length] = new Option(element.fname + " " + element.lname + " " + element.email, element.id);
         });
     }
+}
+
+sigSel.onchange = () => {
+    let index = document.forms.signal.elements.signals.value;
+    let am = new AccountManager(localStorage);
+    let parentDiv = document.getElementById("displaySignal");
+    let titleP = document.getElementById("title");
+    let namesP = document.getElementById("names");
+    let typeP = document.getElementById("type");
+    let desP = document.getElementById("des");
+
+    let signals = am.getSignals();
+
+    if (signals[index] != undefined) {
+        initMap(signals[index].coordinatesX, signals[index].coordinatesY);
+    }
+
+    if (isSignalShown) {
+        parentDiv.style.display = "none";
+        isSignalShown = false;
+    } else {
+        parentDiv.style.display = "block";
+        isSignalShown = true;
+    }
+
+    if (signals[index] != undefined) {
+        titleP.innerHTML = "Title: " + signals[index].title;
+        namesP.innerHTML = "Name: " + signals[index].names;
+        typeP.innerHTML = "Type: " + signals[index].type;
+        desP.innerHTML = "Short description: " + signals[index].description;
+    }
+
+
 }
 
 function getInput(input) {

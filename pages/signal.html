@@ -11,11 +11,19 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-social@1/bin/bulma-social.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css">
+  <style>
+    #map {
+      width: 600px;
+      height: 350px;
+    }
+  </style>
   <!--<link rel="stylesheet" href="../styles/debug.css">-->
 </head>
 
 <body>
- 
+
   <div class="first_nav">
     <div class="container">
       <nav class="navbar">
@@ -43,17 +51,17 @@
           <div class="navbar-start">
             <a class="navbar-item is-active" href="../index.html">Начало</a>
             <a class="navbar-item" href="signal.html">Подай сигнал</a>
-  
+
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">
                 Други
               </a>
-  
+
               <div class="navbar-dropdown">
                 <a class="navbar-item" href="about-site.html">
                   За сайта
                 </a>
-  
+
                 <a class="navbar-item" href="info.html">
                   Информация
                 </a>
@@ -63,7 +71,7 @@
                 <a class="navbar-item" href="fire-safety.html">
                   Пожарна безопасност
                 </a>
-  
+
                 <a class="navbar-item" href="contacts.html">
                   Контакти
                 </a>
@@ -76,7 +84,7 @@
                     Акаунт
                   </a>
                 </div>
-  
+
                 <div id="userNotLogin">
                   <a class="navbar-item" href="login.html">
                     Влизане
@@ -106,6 +114,32 @@
       </nav>
     </div>
   </div>
+
+  <form onreset="return getInput()" method="POST" name="signalForm">
+    <label for="title">Title:</label><br>
+    <input type="text" id="title" name="title" required><br>
+
+    <label for="names">Name and Surname:</label><br>
+    <input type="text" id="names" name="names" required><br>
+
+    <label for="type">Type of accidet:</label><br>
+    <select id="type" name="type">
+      <option value="" selected="selected">Select a type</option>
+      <option value="Fire">Fire</option>
+      <option value="Rescue">Rescue</option>
+      <option value="Flood">Flood</option>
+    </select><br>
+
+    <label for="map">Select the address</label><br>
+    <div id="map" name="map"></div>
+
+    <label for="des">Short description</label><br>
+    <textarea name="des" id="des" rows="4" cols="50" required></textarea>
+    
+    <br>
+    <input type="reset" value="Подаване" class="button is-success">
+    <p id="error" class="has-text-danger"></p>
+  </form>
 
   <footer class="hero">
     <div class="hero-body">
@@ -171,6 +205,8 @@
     <br>
   </footer>
 
+  <script src="../scripts/Logic Layer/accountManager.js"></script>
+  <script src="../scripts/Presentation Layer/signal.js"></script>
   <script defer src="../scripts/Presentation Layer/navbar.js"></script>
 </body>
 

@@ -84,6 +84,10 @@ function AccountManager(localStorage) {
         return Boolean(pass.length < 8);
     }
 
+    function hasDuplicates(array) {
+        return (new Set(array)).size !== array.length;
+    }
+
     function checkIfLoginUserIsAdmin(email, pass) {
         let index = admins.findIndex(admin => admin.email.toLowerCase() == email.toLowerCase());
 
@@ -141,9 +145,26 @@ function AccountManager(localStorage) {
         return 0;
     }
 
+    const getCircularReplacer = () => {
+        const seen = new WeakSet();
+        return (key, value) => {
+          if (typeof value === "object" && value !== null) {
+            if (seen.has(value)) {
+              return;
+            }
+            seen.add(value);
+          }
+          return value;
+        };
+      };
+      
     function registerTeam(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips) {
         if (teamArray != null) {
             teamArray = JSON.parse(ls.getItem('teams'));
+        }
+
+        if (hasDuplicates(employees)){
+            return 1;
         }
 
         if (ls.numberOfTeams == undefined || ls.numberOfTeams == 0) {
@@ -160,7 +181,7 @@ function AccountManager(localStorage) {
 
         teamArray.push(team);
 
-        ls.setItem("teams", JSON.stringify(teamArray));
+        ls.setItem("teams", JSON.stringify(teamArray, getCircularReplacer()));
 
         return 0;
     }

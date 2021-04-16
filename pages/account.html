@@ -181,32 +181,32 @@
 
       </div>
 
-      <label for="startHour">Time to start work:</label><br>
+      <label for="startTime">Time to start work:</label><br>
       <input type="time" id="startTime" name="startTime" required><br>
 
-      <label for="endHour">Time to end work:</label><br>
-      <input type="time" id="endHour" name="endHour" required><br>
+      <label for="endTime">Time to end work:</label><br>
+      <input type="time" id="endTime" name="endTime" required><br>
 
       <label>Select working days:</label><br>
-      <input type="checkbox" id="mon" name="mon" value="monday">
+      <input type="checkbox" id="mon" name="days" value="monday">
       <label for="mon">Monday</label><br>
 
-      <input type="checkbox" id="tue" name="tue" value="tuesday">
+      <input type="checkbox" id="tue" name="days" value="tuesday">
       <label for="tue">Tuesday</label><br>
 
-      <input type="checkbox" id="wed" name="wed" value="wednesday">
+      <input type="checkbox" id="wed" name="days" value="wednesday">
       <label for="wed">Wednesday</label><br>
 
-      <input type="checkbox" id="thu" name="thu" value="thursday">
+      <input type="checkbox" id="thu" name="days" value="thursday">
       <label for="thu">Thursday</label><br>
 
-      <input type="checkbox" id="fri" name="fri" value="friday">
+      <input type="checkbox" id="fri" name="days" value="friday">
       <label for="fri">Friday</label><br>
 
-      <input type="checkbox" id="sat" name="sat" value="saturday">
+      <input type="checkbox" id="sat" name="days" value="saturday">
       <label for="sat">Saturday</label><br>
 
-      <input type="checkbox" id="sun" name="sun" value="sunday">
+      <input type="checkbox" id="sun" name="days" value="sunday">
       <label for="sun">Sunday</label><br>
 
       <label for="holiday">Select Holiday:</label>
@@ -219,6 +219,7 @@
       <input type="date" data-is-range="true" name="trip" id="trip">
 
       <input type="reset" value="Register">
+      <p id="teamError" class="has-text-danger"></p>
     </form>
   </div>
 </body>

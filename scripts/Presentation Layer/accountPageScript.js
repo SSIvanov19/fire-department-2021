@@ -14,10 +14,12 @@ if (activeUser.role == 3) {
     document.getElementById("deleteAll").style.display = "inline";
     document.getElementById("registerEmployee").style.display = "block";
     document.getElementById("registerCar").style.display = "block";
+    document.getElementById("registerTeam").style.display = "block";
 } else {
     document.getElementById("deleteAll").style.display = "none";
     document.getElementById("registerEmployee").style.display = "none";
     document.getElementById("registerCar").style.display = "none";
+    document.getElementById("registerTeam").style.display = "none";
 }
 
 function forEachCar() {
@@ -41,28 +43,11 @@ window.onload = () => {
     forEachCar();
 
     document.getElementById("holiday").setAttribute("data-min-date", new Date().toString());
+    document.getElementById("sick").setAttribute("data-min-date", new Date().toString());
+    document.getElementById("trip").setAttribute("data-min-date", new Date().toString());
 
     // Initialize all input of type date
-    var calendars = bulmaCalendar.attach('[type="date"]');
-    //calendars.setAttribute("data-min-date", new Date().toString());
-
-    // Loop on each calendar initialized
-    for (var i = 0; i < calendars.length; i++) {
-        // Add listener to select event
-        calendars[i].on('select', date => {
-            console.log(date);
-        });
-    }
-
-    // To access to bulmaCalendar instance of an element
-    var element = document.querySelector('#my-element');
-    
-    if (element) {
-        // bulmaCalendar instance is available as element.bulmaCalendar
-        element.bulmaCalendar.on('select', function (datepicker) {
-            console.log(datepicker.data.value());
-        });
-    }
+    var calendars = bulmaCalendar.attach('[type="date"]')
 }
 
 carSel.onchange = () => {
@@ -171,6 +156,45 @@ function getInput(input) {
                     break;
             }
             break;
+        case 6: {
+            let teamForm = document.forms.registerTeam;
+            let checkboxes = document.querySelectorAll(`input[name=days]:checked`);
+            let firefightersArray = [];
+            let shifts = [];
+
+            for (let i = 1; i <= teamForm.elements.car.value; i++) {
+                firefightersArray.push(teamForm.elements[i].value)
+            }
+
+            checkboxes.forEach((elements) => {
+                shifts.push(elements.value);
+            });
+
+            let teamOutput = am.registerTeam(
+                firefightersArray,
+                teamForm.elements.car.value,
+                teamForm.elements.startTime.value,
+                teamForm.elements.endTime.value,
+                shifts,
+                teamForm.elements.holiday.value,
+                teamForm.elements.sick.value,
+                teamForm.elements.trip
+            );
+
+            switch (teamOutput) {
+                case 0:
+                    document.getElementById("teamError").innerHTML = "Team registered successfully!";
+                    break;
+                case 1:
+                    document.getElementById("teamError").innerHTML = "There are more than one person in the samo position!";
+                    break;
+                default:
+                    console.log("A wild error appeared");
+                    break;
+            }
+
+            break;
+        }
         default:
             console.log("A wild error appeared");
             break;

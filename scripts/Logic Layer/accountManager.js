@@ -39,11 +39,13 @@ function User(fname, lname, email, pass, id, role, region = "burgas", team = nul
     }
 }
 
-function Car(model, registrationPlate, numberOfSeats, region) {
+function Car(model, registrationPlate, numberOfSeats, region, id ,inTeam = false) {
     this.model = model;
     this.registrationPlate = registrationPlate;
     this.numberOfSeats = numberOfSeats;
     this.region = region;
+    this.id = id;
+    this.inTeam = inTeam;
 }
 
 function Signal(title, names, type, coordinatesX, coordinatesY, description) {
@@ -146,7 +148,7 @@ function AccountManager(localStorage) {
             ls.numberOfCars++;
         }
 
-        let car = new Car(model, registrationPlate, numberOfSeats, region);
+        let car = new Car(model, registrationPlate, numberOfSeats, region, ls.numberOfCars);
 
         if (carArray == null) {
             carArray = []
@@ -183,6 +185,17 @@ function AccountManager(localStorage) {
                 }
             }
         }
+
+        carArray = JSON.parse(ls.getItem("cars"));
+
+        for (const cars of carArray) {
+            if (cars.id == car){
+                cars.inTeam = true;
+                break;
+            }   
+        }
+
+        ls.setItem("cars", JSON.stringify(carArray));
 
         save();
         

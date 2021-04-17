@@ -35,8 +35,10 @@ function forEachCar() {
     carSel.options[0] = new Option("Select Car", "");
 
     if (cars != null) {
-        cars.forEach(element => {
-            carSel.options[carSel.options.length] = new Option(element.model + " " + element.registrationPlate, element.numberOfSeats);
+        cars.forEach((element, index) => {
+            if (element.inTeam == false) {
+                carSel.options[carSel.options.length] = new Option(element.model + " " + element.registrationPlate, element.numberOfSeats + " " + element.id);
+            }
         });
     }
 }
@@ -50,8 +52,6 @@ function forEachSignal() {
     }
 
     sigSel.options[0] = new Option("Select signal", "");
-
-    console.log(signals);
 
     if (signals != null) {
         signals.forEach((element, index) => {
@@ -99,14 +99,14 @@ window.onload = () => {
     var calendars = bulmaCalendar.attach('[type="date"]')
 }
 
-carSel.onchange = () => {
+carSel.onchange = () =>{
     let am = new AccountManager(localStorage);
     let form = document.forms.registerTeam;
     let parentDiv = document.getElementById("teamMembers");
     parentDiv.innerHTML = ""
     let firefightersArray = am.getFirefighters();
 
-    for (let i = 1; i <= form.elements.car.value; i++) {
+    for (let i = 1; i <= form.elements.car.value.split(" ")[0]; i++) {
         let newSelect = document.createElement("Select");
         let newLabel = document.createElement("Label");
 
@@ -121,16 +121,19 @@ carSel.onchange = () => {
         parentDiv.appendChild(newSelect);
         parentDiv.appendChild(document.createElement("br"));
 
-        newSelect.options[0] = new Option("Select a firefighter");
+        newSelect.options[0] = new Option("Select a firefighter", "");
 
-        firefightersArray.forEach(element => {
-            console.log(element.team)
-            if (element.team == null){
-                newSelect.options[newSelect.options.length] = new Option(element.fname + " " + element.lname + " " + element.email, element.id);
+        if (firefightersArray == 0){
+            continue;
+        }
+
+        for (const firefighter of firefightersArray) {
+            if (firefighter.team == null) {
+                newSelect.options[newSelect.options.length] = new Option(firefighter.fname + " " + firefighter.lname + " " + firefighter.email, firefighter.id);
             }
-        });
+        }
     }
-}
+};
 
 sigSel.onchange = () => {
     let index = document.forms.signal.elements.signals.value;
@@ -199,16 +202,16 @@ function getInput(input) {
                     document.getElementById("employeeError").innerHTML = "User created successfully!";
                     break;
                 case 1:
-                    document.getElementById("employeeError").innerHTML = "!First name should start with capital letter!";
+                    document.getElementById("employeeError").innerHTML = "First name should start with capital letter!";
                     break;
                 case 2:
-                    document.getElementById("employeeError").innerHTML = "!Last name should start with capital letter!";
+                    document.getElementById("employeeError").innerHTML = "Last name should start with capital letter!";
                     break;
                 case 3:
-                    document.getElementById("employeeError").innerHTML = "!Password must be at least 8 characters!";
+                    document.getElementById("employeeError").innerHTML = "Password must be at least 8 characters!";
                     break;
                 case 4:
-                    document.getElementById("employeeError").innerHTML = "!There is already a user with this email address!";
+                    document.getElementById("employeeError").innerHTML = "There is already a user with this email address!";
                     break;
                 default:
                     console.log("A wild error appeared");
@@ -247,8 +250,11 @@ function getInput(input) {
             let firefightersArray = [];
             let shifts = [];
 
-            for (let i = 1; i <= teamForm.elements.car.value; i++) {
-                firefightersArray.push(teamForm.elements[i].value)
+            for (let i = 1; i <= teamForm.elements.car.value.split(" ")[0]; i++) {
+                console.log(teamForm.elements[i].value)
+                if (teamForm.elements[i].value != "") {
+                    firefightersArray.push(teamForm.elements[i].value);
+                }
             }
 
             checkboxes.forEach((elements) => {
@@ -266,7 +272,7 @@ function getInput(input) {
             */
             let teamOutput = am.registerTeam(
                 firefightersArray,
-                teamForm.elements.car.value,
+                teamForm.elements.car.value.split(" ")[1],
                 teamForm.elements.startTime.value,
                 teamForm.elements.endTime.value,
                 shifts,
@@ -277,6 +283,7 @@ function getInput(input) {
 
             switch (teamOutput) {
                 case 0:
+                    location.reload();
                     document.getElementById("teamError").innerHTML = "Team registered successfully!";
                     break;
                 case 1:
@@ -286,7 +293,7 @@ function getInput(input) {
                     console.log("A wild error appeared");
                     break;
             }
-            
+
             break;
         }
         default:

@@ -14,7 +14,7 @@ let admins = [{
     role: ROLES.ADMIN
 }]
 
-function Teams(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips) {
+function Teams(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips, id) {
     this.employees = employees;
     this.car = car;
     this.starOfWorkingDay = starOfWorkingDay;
@@ -23,9 +23,10 @@ function Teams(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holida
     this.holidays = holidays;
     this.sickLeaves = sickLeaves;
     this.businessTrips = businessTrips;
+    this.id = id;
 }
 
-function User(fname, lname, email, pass, id, role, region) {
+function User(fname, lname, email, pass, id, role, region = "burgas", team = null) {
     this.fname = fname;
     this.lname = lname;
     this.email = email;
@@ -33,6 +34,9 @@ function User(fname, lname, email, pass, id, role, region) {
     this.id = id;
     this.role = role;
     this.region = region;
+    if (role = ROLES.FIREFIGHTER) {
+        this.team = team
+    }
 }
 
 function Car(model, registrationPlate, numberOfSeats, region) {
@@ -155,19 +159,6 @@ function AccountManager(localStorage) {
         return 0;
     }
 
-    const getCircularReplacer = () => {
-        const seen = new WeakSet();
-        return (key, value) => {
-            if (typeof value === "object" && value !== null) {
-                if (seen.has(value)) {
-                    return;
-                }
-                seen.add(value);
-            }
-            return value;
-        };
-    };
-
     function registerTeam(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips) {
         if (teamArray != null) {
             teamArray = JSON.parse(ls.getItem('teams'));
@@ -183,7 +174,19 @@ function AccountManager(localStorage) {
             ls.numberOfTeams++;
         }
 
-        let team = new Teams(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips);
+        load();
+
+        for (const users of userArray) {
+            for (const emoployeId of employees) {
+                if (users.id == emoployeId) {
+                    users.team = ls.numberOfTeams;
+                }
+            }
+        }
+
+        save();
+        
+        let team = new Teams(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips, ls.numberOfTeams);
 
         if (teamArray == null) {
             teamArray = []
@@ -191,8 +194,8 @@ function AccountManager(localStorage) {
 
         teamArray.push(team);
 
-        ls.setItem("teams", JSON.stringify(teamArray, getCircularReplacer()));
-
+        ls.setItem("teams", JSON.stringify(teamArray));
+        
         return 0;
     }
 

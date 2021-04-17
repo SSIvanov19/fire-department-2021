@@ -124,7 +124,10 @@ carSel.onchange = () => {
         newSelect.options[0] = new Option("Select a firefighter");
 
         firefightersArray.forEach(element => {
-            newSelect.options[newSelect.options.length] = new Option(element.fname + " " + element.lname + " " + element.email, element.id);
+            console.log(element.team)
+            if (element.team == null){
+                newSelect.options[newSelect.options.length] = new Option(element.fname + " " + element.lname + " " + element.email, element.id);
+            }
         });
     }
 }
@@ -251,7 +254,16 @@ function getInput(input) {
             checkboxes.forEach((elements) => {
                 shifts.push(elements.value);
             });
-
+            /*
+            console.log(firefightersArray);
+            console.log(teamForm.elements.car.value);
+            console.log(teamForm.elements.startTime.value);
+            console.log(teamForm.elements.endTime.value);
+            console.log(shifts);
+            console.log(teamForm.elements.holiday.value);
+            console.log(teamForm.elements.sick.value);
+            console.log(teamForm.elements.trip.value)
+            */
             let teamOutput = am.registerTeam(
                 firefightersArray,
                 teamForm.elements.car.value,
@@ -260,7 +272,7 @@ function getInput(input) {
                 shifts,
                 teamForm.elements.holiday.value,
                 teamForm.elements.sick.value,
-                teamForm.elements.trip
+                teamForm.elements.trip.value
             );
 
             switch (teamOutput) {
@@ -274,7 +286,7 @@ function getInput(input) {
                     console.log("A wild error appeared");
                     break;
             }
-
+            
             break;
         }
         default:

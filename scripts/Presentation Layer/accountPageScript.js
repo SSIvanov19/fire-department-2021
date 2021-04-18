@@ -14,11 +14,13 @@ if (localStorage.isUserEnter) {
 
 if (activeUser.role == 3) {
     document.getElementById("deleteAll").style.display = "inline";
+    document.getElementById("deleteAcc").style.display = "none";
     document.getElementById("registerEmployee").style.display = "block";
     document.getElementById("registerCar").style.display = "block";
     document.getElementById("registerTeam").style.display = "block";
 } else {
     document.getElementById("deleteAll").style.display = "none";
+    document.getElementById("deleteAcc").style.display = "inline";
     document.getElementById("registerEmployee").style.display = "none";
     document.getElementById("registerCar").style.display = "none";
     document.getElementById("registerTeam").style.display = "none";

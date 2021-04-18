@@ -86,6 +86,8 @@ function initMap(coordinatesX, coordinatesY) {
             zoom: 12
         })
     });
+
+    setTimeout( function() { map.updateSize();}, 200);
 }
 
 window.onload = () => {
@@ -150,6 +152,7 @@ sigSel.onchange = () => {
 
     if (signals[index] != undefined) {
         initMap(signals[index].coordinatesX, signals[index].coordinatesY);
+        
     }
 
     if (isSignalShown) {

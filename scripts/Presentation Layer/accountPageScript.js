@@ -99,7 +99,7 @@ window.onload = () => {
     var calendars = bulmaCalendar.attach('[type="date"]')
 }
 
-carSel.onchange = () =>{
+carSel.onchange = () => {
     let am = new AccountManager(localStorage);
     let form = document.forms.registerTeam;
     let parentDiv = document.getElementById("teamMembers");
@@ -123,7 +123,7 @@ carSel.onchange = () =>{
 
         newSelect.options[0] = new Option("Select a firefighter", "");
 
-        if (firefightersArray == 0){
+        if (firefightersArray == 0) {
             continue;
         }
 
@@ -251,7 +251,6 @@ function getInput(input) {
             let shifts = [];
 
             for (let i = 1; i <= teamForm.elements.car.value.split(" ")[0]; i++) {
-                console.log(teamForm.elements[i].value)
                 if (teamForm.elements[i].value != "") {
                     firefightersArray.push(teamForm.elements[i].value);
                 }
@@ -262,7 +261,7 @@ function getInput(input) {
             });
             /*
             console.log(firefightersArray);
-            console.log(teamForm.elements.car.value);
+            console.log(teamForm.elements.car.value.split(" ")[1]);
             console.log(teamForm.elements.startTime.value);
             console.log(teamForm.elements.endTime.value);
             console.log(shifts);
@@ -283,11 +282,35 @@ function getInput(input) {
 
             switch (teamOutput) {
                 case 0:
-                    location.reload();
+                    //location.reload();
                     document.getElementById("teamError").innerHTML = "Team registered successfully!";
                     break;
                 case 1:
                     document.getElementById("teamError").innerHTML = "There are more than one person in the samo position!";
+                    break;
+                case 2:
+                    document.getElementById("teamError").innerHTML = "You must select at least one firefighter!";
+                    break;
+                case 3:
+                    document.getElementById("teamError").innerHTML = "You must select a car for the team!";
+                    break;
+                case 4:
+                    document.getElementById("teamError").innerHTML = "You must select a start hour of a working day!";
+                    break;
+                case 5:
+                    document.getElementById("teamError").innerHTML = "You must select a end hour of a working day!";
+                    break;
+                case 6:
+                    document.getElementById("teamError").innerHTML = "You must select working days of the week!";
+                    break;
+                case 7:
+                    document.getElementById("teamError").innerHTML = "You must select a holiday!";
+                    break;
+                case 8:
+                    document.getElementById("teamError").innerHTML = "You must select a sick leave!";
+                    break;
+                case 9:
+                    document.getElementById("teamError").innerHTML = "You must select a business trip!";
                     break;
                 default:
                     console.log("A wild error appeared");

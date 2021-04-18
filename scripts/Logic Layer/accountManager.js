@@ -39,7 +39,7 @@ function User(fname, lname, email, pass, id, role, region = "burgas", team = nul
     }
 }
 
-function Car(model, registrationPlate, numberOfSeats, region, id ,inTeam = false) {
+function Car(model, registrationPlate, numberOfSeats, region, id, inTeam = false) {
     this.model = model;
     this.registrationPlate = registrationPlate;
     this.numberOfSeats = numberOfSeats;
@@ -104,6 +104,10 @@ function AccountManager(localStorage) {
         return (new Set(array)).size !== array.length;
     }
 
+    function isArrayEmpty(arr) {
+        return (Array.isArray(arr) && !arr.length)
+    }
+
     function checkIfLoginUserIsAdmin(email, pass) {
         let index = admins.findIndex(admin => admin.email.toLowerCase() == email.toLowerCase());
 
@@ -166,8 +170,40 @@ function AccountManager(localStorage) {
             teamArray = JSON.parse(ls.getItem('teams'));
         }
 
+        if (car == undefined) {
+            return 3;
+        }
+
+        if (isArrayEmpty(employees)) {
+            return 2;
+        }
+
         if (hasDuplicates(employees)) {
             return 1;
+        }
+
+        if (starOfWorkingDay == "") {
+            return 4;
+        }
+
+        if (endOfWorkingDay == "") {
+            return 5;
+        }
+
+        if (isArrayEmpty(shifts)) {
+            return 6;
+        }
+
+        if (holidays == "") {
+            return 7;
+        }
+
+        if (sickLeaves == "") {
+            return 8;
+        }
+
+        if (businessTrips == "") {
+            return 9;
         }
 
         if (ls.numberOfTeams == undefined || ls.numberOfTeams == 0) {
@@ -189,16 +225,16 @@ function AccountManager(localStorage) {
         carArray = JSON.parse(ls.getItem("cars"));
 
         for (const cars of carArray) {
-            if (cars.id == car){
+            if (cars.id == car) {
                 cars.inTeam = true;
                 break;
-            }   
+            }
         }
 
         ls.setItem("cars", JSON.stringify(carArray));
 
         save();
-        
+
         let team = new Teams(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips, ls.numberOfTeams);
 
         if (teamArray == null) {
@@ -208,7 +244,7 @@ function AccountManager(localStorage) {
         teamArray.push(team);
 
         ls.setItem("teams", JSON.stringify(teamArray));
-        
+
         return 0;
     }
 

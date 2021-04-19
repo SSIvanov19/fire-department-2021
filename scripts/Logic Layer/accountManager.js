@@ -48,13 +48,15 @@ function Car(model, registrationPlate, numberOfSeats, region, id, inTeam = false
     this.inTeam = inTeam;
 }
 
-function Signal(title, names, type, coordinatesX, coordinatesY, description) {
-    this.title = title,
-        this.names = names,
-        this.type = type,
-        this.coordinatesX = coordinatesX,
-        this.coordinatesY = coordinatesY,
-        this.description = description
+function Signal(title, names, type, coordinatesX, coordinatesY, description, id, team = null) {
+    this.title = title;
+    this.names = names;
+    this.type = type;
+    this.coordinatesX = coordinatesX;
+    this.coordinatesY = coordinatesY;
+    this.description = description;
+    this.id = id;
+    this.team = team;
 }
 
 function AccountManager(localStorage) {
@@ -360,6 +362,10 @@ function AccountManager(localStorage) {
         return JSON.parse(ls.getItem('signals'));
     }
 
+    function getTeams() {
+        return JSON.parse(ls.getItem('teams'));
+    }
+
     function getFirefighters() {
         load();
         if (userArray != null) {
@@ -394,7 +400,13 @@ function AccountManager(localStorage) {
             return 5;
         }
 
-        let signal = new Signal(title, names, type, coordinatesX, coordinatesY, description);
+        if (ls.numberOfSignals == undefined || ls.numberOfSignals == 0) {
+            ls.numberOfSignals = 1;
+        } else {
+            ls.numberOfSignals++;
+        }
+
+        let signal = new Signal(title, names, type, coordinatesX, coordinatesY, description, ls.numberOfSignals);
 
         if (signalArray == null) {
             signalArray = []
@@ -403,6 +415,29 @@ function AccountManager(localStorage) {
         signalArray.push(signal);
 
         ls.setItem("signals", JSON.stringify(signalArray));
+
+        return 0;
+    }
+
+    function assignTeamForSignal(signalId, teamId) {
+        if (signalId == "") {
+            return 1;
+        }
+
+        if (teamId == "") {
+            return 2;
+        }
+
+        let signals = getSignals();
+
+        for (const signal of signals) {
+            if (signal.id == signalId) {
+                signal.team = teamId;
+                break;
+            }
+        }
+
+        ls.setItem("signals", JSON.stringify(signals))
 
         return 0;
     }
@@ -420,7 +455,9 @@ function AccountManager(localStorage) {
         getCars,
         getFirefighters,
         submitSignalForm,
-        getSignals
+        getSignals,
+        getTeams,
+        assignTeamForSignal
     }
 }
 

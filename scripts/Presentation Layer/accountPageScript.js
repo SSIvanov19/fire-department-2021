@@ -1,7 +1,7 @@
 let activeUser = JSON.parse(localStorage.getItem("activeUser"));
 let carSel = document.getElementById("car");
 let sigSel = document.getElementById("signals");
-let isSignalShown = false;
+let teamSel = document.getElementById("teams");
 
 if (localStorage.isUserEnter) {
     document.getElementById("fname").innerHTML = "First Name: " + activeUser.fname;
@@ -14,29 +14,39 @@ if (localStorage.isUserEnter) {
 
 if (activeUser.role == 3) {
     document.getElementById("deleteAll").style.display = "inline";
+    document.getElementById("deleteAcc").style.display = "none";
     document.getElementById("registerEmployee").style.display = "block";
     document.getElementById("registerCar").style.display = "block";
     document.getElementById("registerTeam").style.display = "block";
 } else {
     document.getElementById("deleteAll").style.display = "none";
+    document.getElementById("deleteAcc").style.display = "inline";
     document.getElementById("registerEmployee").style.display = "none";
     document.getElementById("registerCar").style.display = "none";
     document.getElementById("registerTeam").style.display = "none";
 }
 
-function forEachCar() {
+if (activeUser.role == 2) {
+    document.getElementById("signalDiv").style.display = "block";
+} else {
+    document.getElementById("signalDiv").style.display = "none";
+}
+
+function forEachCar(selectElement) {
     let am = new AccountManager(localStorage);
     let cars = am.getCars();
 
-    for (i = carSel.length - 1; i >= 0; i--) {
-        carSel.remove(i);
+    for (i = selectElement.length - 1; i >= 0; i--) {
+        selectElement.remove(i);
     }
 
-    carSel.options[0] = new Option("Select Car", "");
+    selectElement.options[0] = new Option("Select Car", "");
 
     if (cars != null) {
-        cars.forEach(element => {
-            carSel.options[carSel.options.length] = new Option(element.model + " " + element.registrationPlate, element.numberOfSeats);
+        cars.forEach((element, index) => {
+            if (element.inTeam == false) {
+                selectElement.options[selectElement.options.length] = new Option(element.model + " " + element.registrationPlate, element.numberOfSeats + " " + element.id);
+            }
         });
     }
 }
@@ -51,11 +61,27 @@ function forEachSignal() {
 
     sigSel.options[0] = new Option("Select signal", "");
 
-    console.log(signals);
-
     if (signals != null) {
         signals.forEach((element, index) => {
-            sigSel.options[sigSel.options.length] = new Option(element.title, index);
+            sigSel.options[sigSel.options.length] = new Option(element.title, element.id);
+        });
+    }
+}
+
+
+function forEachTeam() {
+    let am = new AccountManager(localStorage);
+    let teams = am.getTeams();
+
+    for (i = teamSel.length - 1; i >= 0; i--) {
+        teamSel.remove(i);
+    }
+
+    teamSel.options[0] = new Option("Select a team", "");
+
+    if (teams != null) {
+        teams.forEach((element, index) => {
+            teamSel.options[teamSel.options.length] = new Option(element.id, element.id);
         });
     }
 }
@@ -84,11 +110,14 @@ function initMap(coordinatesX, coordinatesY) {
             zoom: 12
         })
     });
+
+    setTimeout(function () { map.updateSize(); }, 200);
 }
 
 window.onload = () => {
-    forEachCar();
+    forEachCar(carSel);
     forEachSignal();
+    forEachTeam();
 
     document.getElementById("holiday").setAttribute("data-min-date", new Date().toString());
     document.getElementById("sick").setAttribute("data-min-date", new Date().toString());
@@ -106,7 +135,7 @@ carSel.onchange = () => {
     parentDiv.innerHTML = ""
     let firefightersArray = am.getFirefighters();
 
-    for (let i = 1; i <= form.elements.car.value; i++) {
+    for (let i = 1; i <= form.elements.car.value.split(" ")[0]; i++) {
         let newSelect = document.createElement("Select");
         let newLabel = document.createElement("Label");
 
@@ -121,19 +150,22 @@ carSel.onchange = () => {
         parentDiv.appendChild(newSelect);
         parentDiv.appendChild(document.createElement("br"));
 
-        newSelect.options[0] = new Option("Select a firefighter");
+        newSelect.options[0] = new Option("Select a firefighter", "");
 
-        firefightersArray.forEach(element => {
-            console.log(element.team)
-            if (element.team == null){
-                newSelect.options[newSelect.options.length] = new Option(element.fname + " " + element.lname + " " + element.email, element.id);
+        if (firefightersArray == 0) {
+            continue;
+        }
+
+        for (const firefighter of firefightersArray) {
+            if (firefighter.team == null) {
+                newSelect.options[newSelect.options.length] = new Option(firefighter.fname + " " + firefighter.lname + " " + firefighter.email, firefighter.id);
             }
-        });
+        }
     }
-}
+};
 
 sigSel.onchange = () => {
-    let index = document.forms.signal.elements.signals.value;
+    let index = document.forms.signalForm.elements.signals.value;
     let am = new AccountManager(localStorage);
     let parentDiv = document.getElementById("displaySignal");
     let titleP = document.getElementById("title");
@@ -143,16 +175,18 @@ sigSel.onchange = () => {
 
     let signals = am.getSignals();
 
-    if (signals[index] != undefined) {
-        initMap(signals[index].coordinatesX, signals[index].coordinatesY);
+    console.log(index)
+
+    if (signals[index - 1] != undefined) {
+        initMap(signals[index - 1].coordinatesX, signals[index - 1].coordinatesY);
+
     }
 
-    if (isSignalShown) {
+
+    if (index == "") {
         parentDiv.style.display = "none";
-        isSignalShown = false;
     } else {
         parentDiv.style.display = "block";
-        isSignalShown = true;
     }
 
     if (signals[index] != undefined) {
@@ -199,16 +233,16 @@ function getInput(input) {
                     document.getElementById("employeeError").innerHTML = "User created successfully!";
                     break;
                 case 1:
-                    document.getElementById("employeeError").innerHTML = "!First name should start with capital letter!";
+                    document.getElementById("employeeError").innerHTML = "First name should start with capital letter!";
                     break;
                 case 2:
-                    document.getElementById("employeeError").innerHTML = "!Last name should start with capital letter!";
+                    document.getElementById("employeeError").innerHTML = "Last name should start with capital letter!";
                     break;
                 case 3:
-                    document.getElementById("employeeError").innerHTML = "!Password must be at least 8 characters!";
+                    document.getElementById("employeeError").innerHTML = "Password must be at least 8 characters!";
                     break;
                 case 4:
-                    document.getElementById("employeeError").innerHTML = "!There is already a user with this email address!";
+                    document.getElementById("employeeError").innerHTML = "There is already a user with this email address!";
                     break;
                 default:
                     console.log("A wild error appeared");
@@ -227,7 +261,7 @@ function getInput(input) {
 
             switch (carOutput) {
                 case 0:
-                    forEachCar();
+                    forEachCar(carSel);
                     document.getElementById("carError").innerHTML = "Car registered successfully!";
                     break;
                 case 1:
@@ -247,26 +281,19 @@ function getInput(input) {
             let firefightersArray = [];
             let shifts = [];
 
-            for (let i = 1; i <= teamForm.elements.car.value; i++) {
-                firefightersArray.push(teamForm.elements[i].value)
+            for (let i = 1; i <= teamForm.elements.car.value.split(" ")[0]; i++) {
+                if (teamForm.elements[i].value != "") {
+                    firefightersArray.push(teamForm.elements[i].value);
+                }
             }
 
             checkboxes.forEach((elements) => {
                 shifts.push(elements.value);
             });
-            /*
-            console.log(firefightersArray);
-            console.log(teamForm.elements.car.value);
-            console.log(teamForm.elements.startTime.value);
-            console.log(teamForm.elements.endTime.value);
-            console.log(shifts);
-            console.log(teamForm.elements.holiday.value);
-            console.log(teamForm.elements.sick.value);
-            console.log(teamForm.elements.trip.value)
-            */
+
             let teamOutput = am.registerTeam(
                 firefightersArray,
-                teamForm.elements.car.value,
+                teamForm.elements.car.value.split(" ")[1],
                 teamForm.elements.startTime.value,
                 teamForm.elements.endTime.value,
                 shifts,
@@ -277,18 +304,56 @@ function getInput(input) {
 
             switch (teamOutput) {
                 case 0:
+                    //location.reload();
                     document.getElementById("teamError").innerHTML = "Team registered successfully!";
                     break;
                 case 1:
                     document.getElementById("teamError").innerHTML = "There are more than one person in the samo position!";
                     break;
+                case 2:
+                    document.getElementById("teamError").innerHTML = "You must select at least one firefighter!";
+                    break;
+                case 3:
+                    document.getElementById("teamError").innerHTML = "You must select a car for the team!";
+                    break;
+                case 4:
+                    document.getElementById("teamError").innerHTML = "You must select a start hour of a working day!";
+                    break;
+                case 5:
+                    document.getElementById("teamError").innerHTML = "You must select a end hour of a working day!";
+                    break;
+                case 6:
+                    document.getElementById("teamError").innerHTML = "You must select working days of the week!";
+                    break;
+                case 7:
+                    document.getElementById("teamError").innerHTML = "You must select a holiday!";
+                    break;
+                case 8:
+                    document.getElementById("teamError").innerHTML = "You must select a sick leave!";
+                    break;
+                case 9:
+                    document.getElementById("teamError").innerHTML = "You must select a business trip!";
+                    break;
                 default:
                     console.log("A wild error appeared");
                     break;
             }
-            
+
             break;
         }
+        case 7:
+            let signalform = document.forms.signalForm;
+
+            let signalOutput1 = am.assignTeamForSignal(
+                signalform.elements.signals.value,
+                signalform.elements.teams.value
+            )
+
+            console.log(signalOutput1)
+
+            break;
+        case 8:
+            break;
         default:
             console.log("A wild error appeared");
             break;

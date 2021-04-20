@@ -125,7 +125,7 @@
   </div>
 
   <button onclick="getInput(1)">Log Out</button>
-  <button onclick="getInput(2)">Delete Account</button>
+  <button onclick="getInput(2)" id="deleteAcc">Delete Account</button>
   <button onclick="getInput(3)" id="deleteAll">Delete All Accounts</button>
 
   <div id="registerEmployee">
@@ -231,9 +231,9 @@
     </form>
   </div>
 
-  <div id="signal">
+  <div id="signalDiv">
     <hr>
-    <form onreset="return getInput(7)" method="POST" name="signal">
+    <form method="POST" name="signalForm" id="signalForm">
       <label for="signals">Choose a signal to display:</label><br>
       <select name="signals" id="signals">
         <option value="" selected="selected">Select signal</option>
@@ -247,12 +247,12 @@
 
         </div>
         <p id="des"></p>
-        <!--To be done
-          <select name="teams" id="teams">
-            <option value="" selected="teams">Select team</option>
-          </select><br>
-          <input>
-        -->
+        <label for="teams">Select a team:</label><br>
+        <select name="teams" id="teams">
+          <option value="" selected="teams">Select team</option>
+        </select><br>
+        <input type="reset" onclick="getInput(7)" value="Accept" class="button is-success">
+        <input type="reset" onclick="getInput(8)" value="Reject" class="button is-danger">
       </div>
     </form>
   </div>

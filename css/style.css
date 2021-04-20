@@ -58,3 +58,11 @@ footer {
     color: rgb(0, 0, 0);
     text-shadow: 4px 4px 12px #29211b;
 }
+
+.is-paddingless-horizontal {
+    display: inline-flex;
+  }
+
+  .card {
+    margin-left: 30px;
+  }

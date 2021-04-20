@@ -13,6 +13,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
   <!--<link rel="stylesheet" href="css/debug.css">-->
+  <style>
+    .is-paddingless-horizontal {
+      display: inline-flex;
+    }
+
+    .card {
+      margin-left: 30px;
+    }
+  </style>
 </head>
 
 <body>
@@ -21,7 +30,7 @@
       <nav class="navbar">
         <div class="navbar-brand">
           <a class="navbar-item" href="../index.html">
-            <img src="../img/Logo.png" width="90"/>
+            <img src="../img/Logo.png" width="90" />
           </a>
           <a class="navbar-item is-hidden-desktop" href="tel:112">
             <span class="icon" style="color: #333;">
@@ -108,6 +117,47 @@
     </div>
   </div>
 
+  <section style="margin: 5%;">
+    <div class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li>
+          <a href="../index.html">
+            <span class="icon is-small">
+              <i class="fas fa-home" aria-hidden="true"></i>
+            </span>
+            <span>Начало</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-small">
+              <i class="fas fa-puzzle-piece" aria-hidden="true"></i>
+            </span>
+            <span>Други</span>
+          </a>
+        </li>
+        <li class="is-active">
+          <a href="#">
+            <span class="icon is-small">
+              <i class="fas fa-info"></i>
+            </span>
+            <span>Информация</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="title is-3">Каква е целта на нашият проект?</p>
+      <br>
+      <p>Целта на проекта ни е да осигурим бърз и лесен достъп на гражданите до информация свързана с пожарната
+        безопасност и хората които работят за сигурността ни по всяко време и навсякъде. Освен на жителите в градовете
+        проекта има за цел да автоматизира, систематизира, модернизира и улесни работата на хората, които работят в
+        пожарните.</p>
+    </div><br><br><br>
+    
+  </section>
+
   <footer class="hero">
     <div class="hero-body">
       <div class="container">
@@ -171,7 +221,7 @@
     </div>
     <br>
   </footer>
-  
+
   <script defer src="../scripts/Presentation Layer/navbar.js"></script>
 </body>
 

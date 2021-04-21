@@ -14,7 +14,7 @@ let admins = [{
     role: ROLES.ADMIN
 }]
 
-function Teams(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips, id) {
+function Teams(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips, id, signal = null) {
     this.employees = employees;
     this.car = car;
     this.starOfWorkingDay = starOfWorkingDay;
@@ -24,6 +24,7 @@ function Teams(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holida
     this.sickLeaves = sickLeaves;
     this.businessTrips = businessTrips;
     this.id = id;
+    this.signal = signal;
 }
 
 function User(fname, lname, email, pass, id, role, region = "burgas", team = null) {
@@ -86,7 +87,7 @@ function AccountManager(localStorage) {
     }
 
     function findCarByRP(registrationPlate) {
-        carArray = JSON.parse(ls.getItem('cars'));
+        carArray = getCars();
         return carArray.find(car => car.registrationPlate == registrationPlate);
     }
 
@@ -139,7 +140,7 @@ function AccountManager(localStorage) {
         }
 
         if (carArray != null) {
-            carArray = JSON.parse(ls.getItem('cars'));
+            carArray = getCars();
         }
 
         if (carArray != null) {
@@ -169,7 +170,7 @@ function AccountManager(localStorage) {
 
     function registerTeam(employees, car, starOfWorkingDay, endOfWorkingDay, shifts, holidays, sickLeaves, businessTrips) {
         if (teamArray != null) {
-            teamArray = JSON.parse(ls.getItem('teams'));
+            teamArray = getTeams();
         }
 
         if (car == undefined) {
@@ -226,12 +227,7 @@ function AccountManager(localStorage) {
 
         carArray = JSON.parse(ls.getItem("cars"));
 
-        for (const cars of carArray) {
-            if (cars.id == car) {
-                cars.inTeam = true;
-                break;
-            }
-        }
+        carArray[carArray.findIndex(cars => cars.id == car)].inTeam = true;
 
         ls.setItem("cars", JSON.stringify(carArray));
 
@@ -337,7 +333,8 @@ function AccountManager(localStorage) {
 
         let activeUser = JSON.parse(ls.getItem("activeUser"));
 
-        userArray.splice(activeUser.id - 1, 1);
+        let index = userArray.findIndex(user => user.id == activeUser.id);
+        userArray.splice(index, 1);
 
         delete ls.activeUser;
 
@@ -366,6 +363,78 @@ function AccountManager(localStorage) {
         return JSON.parse(ls.getItem('teams'));
     }
 
+    function getTeamsForSignals() {
+        let teams = getTeams();
+        let today = new Date();
+        let returnArr = [];
+
+        if (teams == null) {
+            return null;
+        }
+
+        for (const team of teams) {
+            if (team.signal != null) {
+                continue;
+            }
+
+            if (team.shifts.find(day => day == today.getDay()) == undefined) {
+                continue;
+            }
+
+            if (parseInt(team.starOfWorkingDay) > today.getHours()) {
+                continue;
+            }
+
+            if (parseInt(team.endOfWorkingDay) < today.getHours()) {
+                continue;
+            }
+
+            let startOfHoliday = parseDate(team.holidays.slice(0, 10));
+            let endOfHoliday = parseDate(team.holidays.slice(13, 23));
+
+            let startOfSickLeaves = parseDate(team.sickLeaves.slice(0, 10));
+            let endOfSickLeaves = parseDate(team.sickLeaves.slice(13, 23));
+
+            let startOfBusinessTrips = parseDate(team.businessTrips.slice(0, 10));
+            let endOfBusinessTrips = parseDate(team.businessTrips.slice(13, 23));
+
+            if (startOfHoliday.getTime() <= today.getTime() && endOfHoliday.getTime() >= today.getTime()) {
+                continue;
+            }
+
+            if (startOfSickLeaves.getTime() <= today.getTime() && endOfSickLeaves.getTime() >= today.getTime()) {
+                continue;
+            }
+
+            if (startOfBusinessTrips.getTime() <= today.getTime() && endOfBusinessTrips.getTime() >= today.getTime()) {
+                continue;
+            }
+
+            returnArr.push(team);
+        }
+
+        return returnArr;
+    }
+
+    function parseDate(input) {
+        var parts = input.match(/(\d+)/g);
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+    }
+
+
+    function getSignalsWithId(id) {
+        return JSON.parse(ls.getItem('signals')).find(signal => signal.id == id);
+    }
+
+    function getSignalsWithTeamSelected(id) {
+        return JSON.parse(ls.getItem('signals')).filter(signal => signal.team != null);
+    }
+
+    function getSignalsWithoutTeamSelected(id) {
+        return JSON.parse(ls.getItem('signals')).filter(signal => signal.team == null);
+    }
+
+
     function getFirefighters() {
         load();
         if (userArray != null) {
@@ -375,9 +444,9 @@ function AccountManager(localStorage) {
         }
     }
 
-    function submitSignalForm(title, names, type, coordinatesX, coordinatesY, description) {
+    function submitSignalForm(title, names, type, coordinatesX, coordinatesY, description, team = null) {
         if (signalArray != null) {
-            signalArray = JSON.parse(ls.getItem('signals'));
+            signalArray = getSignals();
         }
 
         if (title == "") {
@@ -406,7 +475,18 @@ function AccountManager(localStorage) {
             ls.numberOfSignals++;
         }
 
-        let signal = new Signal(title, names, type, coordinatesX, coordinatesY, description, ls.numberOfSignals);
+
+        if (team == "") {
+            team = null
+        }
+
+        if (team != null) {
+            let teams = getTeams();
+            teams[teams.findIndex(singleTeam => singleTeam.id == team)].signal = team;
+            ls.setItem('teams', JSON.stringify(teams));
+        }
+
+        let signal = new Signal(title, names, type, coordinatesX, coordinatesY, description, ls.numberOfSignals, team);
 
         if (signalArray == null) {
             signalArray = []
@@ -414,7 +494,7 @@ function AccountManager(localStorage) {
 
         signalArray.push(signal);
 
-        ls.setItem("signals", JSON.stringify(signalArray));
+        ls.setItem('signals', JSON.stringify(signalArray));
 
         return 0;
     }
@@ -429,15 +509,39 @@ function AccountManager(localStorage) {
         }
 
         let signals = getSignals();
+        let teams = getTeams();
 
-        for (const signal of signals) {
-            if (signal.id == signalId) {
-                signal.team = teamId;
-                break;
-            }
+        if (teams.findIndex(team => team.signal == signalId) != -1) {
+            teams[teams.findIndex(team => team.signal == signalId)].signal = null;
         }
 
-        ls.setItem("signals", JSON.stringify(signals))
+        signals[signals.findIndex(signal => signal.id == signalId)].team = teamId;
+        teams[teams.findIndex(team => team.id == teamId)].signal = signalId;
+
+        ls.setItem('signals', JSON.stringify(signals));
+        ls.setItem('teams', JSON.stringify(teams))
+
+        return 0;
+    }
+
+    function deleteSignal(signalId) {
+        if (signalId == "") {
+            return 1;
+        }
+
+        let signals = getSignals();
+        let teams = getTeams();
+
+        if (teams.findIndex(team => team.signal == signalId) != -1) {
+            teams[teams.findIndex(team => team.signal == signalId)].signal = null;
+        }
+
+        let index = signals.findIndex(signal => signal.id == signalId);
+
+        signals.splice(index, 1);
+
+        ls.setItem('signals', JSON.stringify(signals));
+        ls.setItem('teams', JSON.stringify(teams));
 
         return 0;
     }
@@ -457,7 +561,12 @@ function AccountManager(localStorage) {
         submitSignalForm,
         getSignals,
         getTeams,
-        assignTeamForSignal
+        assignTeamForSignal,
+        getSignalsWithId,
+        getTeamsForSignals,
+        getSignalsWithTeamSelected,
+        getSignalsWithoutTeamSelected,
+        deleteSignal
     }
 }
 

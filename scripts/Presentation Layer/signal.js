@@ -1,10 +1,14 @@
 var coordinatesX = null;
 var coordinatesY = null;
-window.onload = () => {
 
+function getNames() {
     if (localStorage.isUserEnter == "true") {
         document.getElementById("names").value = JSON.parse(localStorage.getItem("activeUser")).fname + " " + JSON.parse(localStorage.getItem("activeUser")).lname;
     }
+}
+
+window.onload = () => {
+    getNames();
 
     var map = new ol.Map({
         target: 'map',
@@ -41,8 +45,6 @@ window.onload = () => {
     });
 }
 
-
-
 function getInput() {
     let form = document.forms.signalForm;
 
@@ -59,6 +61,7 @@ function getInput() {
 
     switch (output) {
         case 0:
+            getNames();
             document.getElementById("error").innerHTML = "Signal submit!";
             break;
         case 1:

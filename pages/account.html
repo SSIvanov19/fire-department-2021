@@ -19,6 +19,16 @@
       width: 600px;
       height: 350px;
     }
+
+    #mapPendingSignal {
+      width: 600px;
+      height: 350px;
+    }
+
+    #mapSignal {
+      width: 600px;
+      height: 350px;
+    }
   </style>
   <!--<link rel="stylesheet" href="../styles/debug.css">-->
 </head>
@@ -196,25 +206,25 @@
       <input type="time" id="endTime" name="endTime" required><br>
 
       <label>Select working days:</label><br>
-      <input type="checkbox" id="mon" name="days" value="monday">
+      <input type="checkbox" id="mon" name="days" value="1">
       <label for="mon">Monday</label><br>
 
-      <input type="checkbox" id="tue" name="days" value="tuesday">
+      <input type="checkbox" id="tue" name="days" value="2">
       <label for="tue">Tuesday</label><br>
 
-      <input type="checkbox" id="wed" name="days" value="wednesday">
+      <input type="checkbox" id="wed" name="days" value="3">
       <label for="wed">Wednesday</label><br>
 
-      <input type="checkbox" id="thu" name="days" value="thursday">
+      <input type="checkbox" id="thu" name="days" value="4">
       <label for="thu">Thursday</label><br>
 
-      <input type="checkbox" id="fri" name="days" value="friday">
+      <input type="checkbox" id="fri" name="days" value="5">
       <label for="fri">Friday</label><br>
 
-      <input type="checkbox" id="sat" name="days" value="saturday">
+      <input type="checkbox" id="sat" name="days" value="6">
       <label for="sat">Saturday</label><br>
 
-      <input type="checkbox" id="sun" name="days" value="sunday">
+      <input type="checkbox" id="sun" name="days" value="6">
       <label for="sun">Sunday</label><br>
 
       <label for="holiday">Select Holiday:</label>
@@ -234,7 +244,7 @@
   <div id="signalDiv">
     <hr>
     <form method="POST" name="signalForm" id="signalForm">
-      <label for="signals">Choose a signal to display:</label><br>
+      <label for="signals">Choose a unassigned signal to display:</label><br>
       <select name="signals" id="signals">
         <option value="" selected="selected">Select signal</option>
       </select><br>
@@ -251,9 +261,67 @@
         <select name="teams" id="teams">
           <option value="" selected="teams">Select team</option>
         </select><br>
-        <input type="reset" onclick="getInput(7)" value="Accept" class="button is-success">
-        <input type="reset" onclick="getInput(8)" value="Reject" class="button is-danger">
+
+        <input type="reset" onclick="getInput(7, 1)" value="Accept" class="button is-success">
+        <input type="reset" onclick="getInput(8, 1)" value="Reject" class="button is-danger">
+        <p id="signalError"></p>
       </div>
+    </form>
+    <form method="POST" name="signalPendingForm" id="signalPendingForm">
+      <label for="signals">Choose a pending signal to display:</label><br>
+      <select name="signals" id="signalsPending">
+        <option value="" selected="selected">Select signal</option>
+      </select><br>
+
+      <div id="displayPendingSignal">
+        <p id="titlePendingSignal"></p>
+        <p id="teamPendingSignal"></p>
+        <p id="namesPendingSignal"></p>
+        <p id="typePendingSignal"></p>
+        <div id="mapPendingSignal">
+
+        </div>
+        <p id="desPendingSignals"></p>
+        <label for="teams">Select team to change current team:</label><br>
+        <select name="teams" id="teamsPendingSignal">
+          <option value="" selected="selected">Select team</option>
+        </select><br>
+
+        <input type="reset" onclick="getInput(7, 2)" value="Change team" class="button is-success">
+        <input type="reset" onclick="getInput(8, 2)" value="Delete" class="button is-danger">
+        <p id="signalPendingError"></p>
+      </div>
+    </form>
+    <hr>
+    <h3>Submit a signal</h3>
+    <form onreset="return getInput(11)" method="POST" name="signalSubmitForm">
+      <label for="title">Title:</label><br>
+      <input type="text" id="title" name="title" required><br>
+  
+      <label for="names">Name and Surname:</label><br>
+      <input type="text" id="Signalnames" name="names" required><br>
+  
+      <label for="type">Type of accidet:</label><br>
+      <select id="type" name="type">
+        <option value="" selected="selected">Select a type</option>
+        <option value="Fire">Fire</option>
+        <option value="Rescue">Rescue</option>
+        <option value="Flood">Flood</option>
+      </select><br>
+  
+      <label for="mapSignal">Select the address</label><br>
+      <div id="mapSignal" name="mapSignal"></div>
+  
+      <label for="des">Short description</label><br>
+      <textarea name="des" id="des" rows="4" cols="50" required></textarea><br>
+      
+      <select name="teams" id="signalTeam">
+        <option value="" selected="teams">Select team</option>
+      </select><br>
+
+      <br>
+      <input type="reset" value="Подаване" class="button is-success">
+      <p id="error" class="has-text-danger"></p>
     </form>
   </div>
 </body>
@@ -262,5 +330,4 @@
 <script src="../scripts/Logic Layer/accountManager.js"></script>
 <script src="../scripts//Presentation Layer/accountPageScript.js"></script>
 <script defer src="../scripts/Presentation Layer/navbar.js"></script>
-
 </html>

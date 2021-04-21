@@ -1,7 +1,11 @@
+let am = new AccountManager(localStorage);
 let activeUser = JSON.parse(localStorage.getItem("activeUser"));
 let carSel = document.getElementById("car");
 let sigSel = document.getElementById("signals");
+let sigPendingSel = document.getElementById("signalsPending");
 let teamSel = document.getElementById("teams");
+let teamPenSel = document.getElementById("teamsPendingSignal");
+let teamSigSel = document.getElementById("signalTeam");
 
 if (localStorage.isUserEnter) {
     document.getElementById("fname").innerHTML = "First Name: " + activeUser.fname;
@@ -33,7 +37,6 @@ if (activeUser.role == 2) {
 }
 
 function forEachCar(selectElement) {
-    let am = new AccountManager(localStorage);
     let cars = am.getCars();
 
     for (i = selectElement.length - 1; i >= 0; i--) {
@@ -51,45 +54,84 @@ function forEachCar(selectElement) {
     }
 }
 
-function forEachSignal() {
-    let am = new AccountManager(localStorage);
-    let signals = am.getSignals();
+function forEachSignal(signalSelect, func) {
+    let signals = func;
 
-    for (i = sigSel.length - 1; i >= 0; i--) {
-        sigSel.remove(i);
+    for (i = signalSelect.length - 1; i >= 0; i--) {
+        signalSelect.remove(i);
     }
 
-    sigSel.options[0] = new Option("Select signal", "");
+    signalSelect.options[0] = new Option("Select signal", "");
 
     if (signals != null) {
         signals.forEach((element, index) => {
-            sigSel.options[sigSel.options.length] = new Option(element.title, element.id);
+            signalSelect.options[signalSelect.options.length] = new Option(element.title, element.id);
         });
     }
 }
 
+function forEachTeam(teamsSelect) {
+    let teams = am.getTeamsForSignals();
 
-function forEachTeam() {
-    let am = new AccountManager(localStorage);
-    let teams = am.getTeams();
-
-    for (i = teamSel.length - 1; i >= 0; i--) {
-        teamSel.remove(i);
+    for (i = teamsSelect.length - 1; i >= 0; i--) {
+        teamsSelect.remove(i);
     }
 
-    teamSel.options[0] = new Option("Select a team", "");
+    teamsSelect.options[0] = new Option("Select a team", "");
 
     if (teams != null) {
         teams.forEach((element, index) => {
-            teamSel.options[teamSel.options.length] = new Option(element.id, element.id);
+            teamsSelect.options[teamsSelect.options.length] = new Option(element.id, element.id);
         });
     }
 }
 
-function initMap(coordinatesX, coordinatesY) {
-    document.getElementById("map").innerHTML = "";
-    var map = new ol.Map({
-        target: 'map',
+function getNames() {
+    if (localStorage.isUserEnter == "true") {
+        document.getElementById("Signalnames").value = JSON.parse(localStorage.getItem("activeUser")).fname + " " + JSON.parse(localStorage.getItem("activeUser")).lname;
+    }
+}
+
+function initMapForSignal() {
+    let map = new ol.Map({
+        target: 'mapSignal',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([27.461014, 42.510578]),
+            zoom: 12
+        })
+    });
+
+    map.on('click', (m) => {
+        map.getLayers().getArray()
+            .filter(layer => layer.get('name') === 'Marker')
+            .forEach(layer => map.removeLayer(layer));
+
+        let layer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [
+                    new ol.Feature({
+                        geometry: new ol.geom.Point([m.coordinate[0], m.coordinate[1]])
+                    })
+                ]
+            }),
+            name: 'Marker'
+        });
+        map.addLayer(layer);
+
+        coordinatesX = m.coordinate[0];
+        coordinatesY = m.coordinate[1];
+    });
+}
+
+function initMap(coordinatesX, coordinatesY, id) {
+    document.getElementById(id).innerHTML = "";
+    let map = new ol.Map({
+        target: id,
         layers: [
             new ol.layer.Tile({
                 source: new ol.source.OSM()
@@ -116,20 +158,31 @@ function initMap(coordinatesX, coordinatesY) {
 
 window.onload = () => {
     forEachCar(carSel);
-    forEachSignal();
-    forEachTeam();
+    initMapForSignal();
 
-    document.getElementById("holiday").setAttribute("data-min-date", new Date().toString());
-    document.getElementById("sick").setAttribute("data-min-date", new Date().toString());
-    document.getElementById("trip").setAttribute("data-min-date", new Date().toString());
+    getNames();
+
+    if (JSON.parse(localStorage.getItem("signals")) != null) {
+        forEachSignal(sigSel, am.getSignalsWithoutTeamSelected());
+        forEachSignal(sigPendingSel, am.getSignalsWithTeamSelected());
+    }
+
+    forEachTeam(teamSel);
+    forEachTeam(teamPenSel);
+    forEachTeam(teamSigSel);
+
     document.getElementById("displaySignal").style.display = "none";
+    document.getElementById("displayPendingSignal").style.display = "none";
 
     // Initialize all input of type date
-    var calendars = bulmaCalendar.attach('[type="date"]')
+    var calendars = bulmaCalendar.attach('[type="date"]', {
+        dateFormat: 'DD/MM/YYYY',
+        lang: 'bg',
+        minDate: new Date()
+    })
 }
 
 carSel.onchange = () => {
-    let am = new AccountManager(localStorage);
     let form = document.forms.registerTeam;
     let parentDiv = document.getElementById("teamMembers");
     parentDiv.innerHTML = ""
@@ -165,43 +218,64 @@ carSel.onchange = () => {
 };
 
 sigSel.onchange = () => {
-    let index = document.forms.signalForm.elements.signals.value;
-    let am = new AccountManager(localStorage);
+    let id = document.forms.signalForm.elements.signals.value;
     let parentDiv = document.getElementById("displaySignal");
     let titleP = document.getElementById("title");
     let namesP = document.getElementById("names");
     let typeP = document.getElementById("type");
     let desP = document.getElementById("des");
 
-    let signals = am.getSignals();
+    let signal = am.getSignalsWithId(id);
 
-    console.log(index)
-
-    if (signals[index - 1] != undefined) {
-        initMap(signals[index - 1].coordinatesX, signals[index - 1].coordinatesY);
-
+    if (signal != undefined) {
+        initMap(signal.coordinatesX, signal.coordinatesY, "map");
     }
 
-
-    if (index == "") {
+    if (id == "") {
         parentDiv.style.display = "none";
     } else {
         parentDiv.style.display = "block";
     }
 
-    if (signals[index] != undefined) {
-        titleP.innerHTML = "Title: " + signals[index].title;
-        namesP.innerHTML = "Name: " + signals[index].names;
-        typeP.innerHTML = "Type: " + signals[index].type;
-        desP.innerHTML = "Short description: " + signals[index].description;
+    if (signal != undefined) {
+        titleP.innerHTML = "Title: " + signal.title;
+        namesP.innerHTML = "Name: " + signal.names;
+        typeP.innerHTML = "Type: " + signal.type;
+        desP.innerHTML = "Short description: " + signal.description;
     }
-
-
 }
 
-function getInput(input) {
-    let am = new AccountManager(localStorage);
+sigPendingSel.onchange = () => {
+    let id = document.forms.signalPendingForm.elements.signalsPending.value;
+    let parentDiv = document.getElementById("displayPendingSignal");
+    let titleP = document.getElementById("titlePendingSignal");
+    let teamP = document.getElementById("teamPendingSignal");
+    let namesP = document.getElementById("namesPendingSignal");
+    let typeP = document.getElementById("typePendingSignal");
+    let desP = document.getElementById("desPendingSignals");
 
+    let signal = am.getSignalsWithId(id);
+
+    if (signal != undefined) {
+        initMap(signal.coordinatesX, signal.coordinatesY, "mapPendingSignal");
+    }
+
+    if (id == "") {
+        parentDiv.style.display = "none";
+    } else {
+        parentDiv.style.display = "block";
+    }
+
+    if (signal != undefined) {
+        titleP.innerHTML = "Title: " + signal.title;
+        teamP.innerHTML = "Team: " + signal.team;
+        namesP.innerHTML = "Name: " + signal.names;
+        typeP.innerHTML = "Type: " + signal.type;
+        desP.innerHTML = "Short description: " + signal.description;
+    }
+}
+
+function getInput(input, form = null) {
     switch (input) {
         case 1:
             am.logOut();
@@ -304,7 +378,7 @@ function getInput(input) {
 
             switch (teamOutput) {
                 case 0:
-                    //location.reload();
+                    location.reload();
                     document.getElementById("teamError").innerHTML = "Team registered successfully!";
                     break;
                 case 1:
@@ -342,17 +416,98 @@ function getInput(input) {
             break;
         }
         case 7:
-            let signalform = document.forms.signalForm;
+            let signalForm;
+            if (form == 1) {
+                signalForm = document.forms.signalForm;
+            } else if (form == 2) {
+                signalForm = document.forms.signalPendingForm
+            }
 
             let signalOutput1 = am.assignTeamForSignal(
-                signalform.elements.signals.value,
-                signalform.elements.teams.value
+                signalForm.elements.signals.value,
+                signalForm.elements.teams.value
             )
 
-            console.log(signalOutput1)
+            switch (signalOutput1) {
+                case 0:
+                    location.reload();
+                    document.getElementById("signalError").innerHTML = "Signal changed successfully!";
+                    break;
+                case 1:
+                    document.getElementById("signalError").innerHTML = "You don't have signal selected!";
+                    document.getElementById("signalPendingError").innerHTML = "You don't have signal selected!";
+                    break;
+                case 2:
+                    document.getElementById("signalError").innerHTML = "You don't have team selected!";
+                    document.getElementById("signalPendingError").innerHTML = "You don't have team selected!";
+                    break;
+                default:
+                    console.log("A wild error appeared");
+                    break;
+            }
 
             break;
         case 8:
+            let signalForm2;
+            if (form == 1) {
+                signalForm2 = document.forms.signalForm;
+            } else if (form == 2) {
+                signalForm2 = document.forms.signalPendingForm
+            }
+
+            let signalOutput2 = am.deleteSignal(signalForm2.elements.signals.value);
+
+            switch (signalOutput2) {
+                case 0:
+                    location.reload();
+                    document.getElementById("signalError").innerHTML = "Signal deleted successfully!";
+                    document.getElementById("signalPendingError").innerHTML = "Signal deleted successfully!";
+                    break;
+                case 1:
+                    document.getElementById("signalError").innerHTML = "You don't have signal selected!";
+                    document.getElementById("signalPendingError").innerHTML = "Signal deleted successfully!";
+                    break;
+                default:
+                    console.log("A wild error appeared");
+                    break;
+            }
+            break;
+        case 11:
+            let signalForm5 = document.forms.signalSubmitForm;
+
+            let output = am.submitSignalForm(
+                signalForm5.elements.title.value,
+                signalForm5.elements.names.value,
+                signalForm5.elements.type.value,
+                coordinatesX,
+                coordinatesY,
+                signalForm5.elements.des.value,
+                signalForm5.elements.teams.value
+            );
+
+            switch (output) {
+                case 0:
+                    location.reload();
+                    getNames();
+                    document.getElementById("error").innerHTML = "Signal submit!";
+                    break;
+                case 1:
+                    document.getElementById("error").innerHTML = "Title can not be empty!";
+                    break;
+                case 2:
+                    document.getElementById("error").innerHTML = "Names can not be empty!";
+                    break;
+                case 3:
+                    document.getElementById("error").innerHTML = "There must be type selected!";
+                    break;
+                case 4:
+                    document.getElementById("error").innerHTML = "The must be a description!";
+                    break;
+                default:
+                    console.log("A wild error appeared");
+                    break;
+            }
+
             break;
         default:
             console.log("A wild error appeared");

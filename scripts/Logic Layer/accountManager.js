@@ -103,6 +103,13 @@ function AccountManager(localStorage) {
         return Boolean(pass.length < 8);
     }
 
+    function validateEmail(email) {
+        let atposition = email.indexOf("@");
+        let dotposition = email.lastIndexOf(".");
+        
+        return (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length)
+    }
+
     function hasDuplicates(array) {
         return (new Set(array)).size !== array.length;
     }
@@ -267,6 +274,10 @@ function AccountManager(localStorage) {
             if (findUserByEmail(email)) {
                 return 4;
             }
+        }
+
+        if (validateEmail(email)) {
+            return 5;
         }
 
         if (ls.numberOfUsers == undefined || ls.numberOfUsers == 0) {

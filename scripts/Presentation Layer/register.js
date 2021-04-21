@@ -18,16 +18,19 @@ function getInput() {
       window.location.href = "../pages/login.html";
       break;
     case 1:
-      document.getElementById("error").innerHTML = "!First name should start with capital letter!";
+      document.getElementById("error").innerHTML = "First name should start with capital letter!";
       break;
     case 2:
-      document.getElementById("error").innerHTML = "!Last name should start with capital letter!";
+      document.getElementById("error").innerHTML = "Last name should start with capital letter!";
       break;
     case 3:
-      document.getElementById("error").innerHTML = "!Password must be at least 8 characters!";
+      document.getElementById("error").innerHTML = "Password must be at least 8 characters!";
       break;
     case 4:
-      document.getElementById("error").innerHTML = "!There is already a user with this email address!";
+      document.getElementById("error").innerHTML = "There is already a user with this email address!";
+      break;
+    case 5:
+      document.getElementById("error").innerHTML = "The email is invalid!";
       break;
     default:
       console.log("A wild error appeared");

@@ -318,6 +318,9 @@ function getInput(input, form = null) {
                 case 4:
                     document.getElementById("employeeError").innerHTML = "There is already a user with this email address!";
                     break;
+                case 5:
+                    document.getElementById("employeeError").innerHTML = "The email is invalid!";
+                    break;
                 default:
                     console.log("A wild error appeared");
                     break;

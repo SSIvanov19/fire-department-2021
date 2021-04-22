@@ -182,7 +182,7 @@ window.onload = () => {
     })
 }
 
-carSel.onchange = () => {
+function updateCarSel() {
     let form = document.forms.registerTeam;
     let parentDiv = document.getElementById("teamMembers");
     parentDiv.innerHTML = ""
@@ -215,7 +215,9 @@ carSel.onchange = () => {
             }
         }
     }
-};
+}
+
+carSel.onchange = updateCarSel;
 
 sigSel.onchange = () => {
     let id = document.forms.signalForm.elements.signals.value;
@@ -303,7 +305,7 @@ function getInput(input, form = null) {
 
             switch (employeeOutput) {
                 case 0:
-                    location.reload();
+                    updateCarSel();
                     document.getElementById("employeeError").innerHTML = "User created successfully!";
                     break;
                 case 1:
@@ -381,7 +383,8 @@ function getInput(input, form = null) {
 
             switch (teamOutput) {
                 case 0:
-                    location.reload();
+                    forEachCar(carSel);
+                    updateCarSel();
                     document.getElementById("teamError").innerHTML = "Team registered successfully!";
                     break;
                 case 1:

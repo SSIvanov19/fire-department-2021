@@ -436,8 +436,16 @@ function getInput(input, form = null) {
 
             switch (signalOutput1) {
                 case 0:
-                    location.reload();
-                    document.getElementById("signalError").innerHTML = "Signal changed successfully!";
+                    document.getElementById("displaySignal").style.display = "none";
+                    document.getElementById("displayPendingSignal").style.display = "none";
+
+                    if (JSON.parse(localStorage.getItem("signals")) != null) {
+                        forEachSignal(sigSel, am.getSignalsWithoutTeamSelected());
+                        forEachSignal(sigPendingSel, am.getSignalsWithTeamSelected());
+                    }
+
+                    forEachTeam(teamSel);
+                    forEachTeam(teamPenSel);
                     break;
                 case 1:
                     document.getElementById("signalError").innerHTML = "You don't have signal selected!";
@@ -465,9 +473,16 @@ function getInput(input, form = null) {
 
             switch (signalOutput2) {
                 case 0:
-                    location.reload();
-                    document.getElementById("signalError").innerHTML = "Signal deleted successfully!";
-                    document.getElementById("signalPendingError").innerHTML = "Signal deleted successfully!";
+                    if (JSON.parse(localStorage.getItem("signals")) != null) {
+                        forEachSignal(sigSel, am.getSignalsWithoutTeamSelected());
+                        forEachSignal(sigPendingSel, am.getSignalsWithTeamSelected());
+                    }
+
+                    document.getElementById("displaySignal").style.display = "none";
+                    document.getElementById("displayPendingSignal").style.display = "none";
+
+                    forEachTeam(teamSel);
+                    forEachTeam(teamPenSel);
                     break;
                 case 1:
                     document.getElementById("signalError").innerHTML = "You don't have signal selected!";
@@ -493,7 +508,17 @@ function getInput(input, form = null) {
 
             switch (output) {
                 case 0:
-                    location.reload();
+                    if (JSON.parse(localStorage.getItem("signals")) != null) {
+                        forEachSignal(sigSel, am.getSignalsWithoutTeamSelected());
+                        forEachSignal(sigPendingSel, am.getSignalsWithTeamSelected());
+                    }
+
+                    document.getElementById("displaySignal").style.display = "none";
+                    document.getElementById("displayPendingSignal").style.display = "none";
+
+                    forEachTeam(teamSel);
+                    forEachTeam(teamPenSel);
+                    
                     getNames();
                     document.getElementById("error").innerHTML = "Signal submit!";
                     break;

@@ -61,7 +61,6 @@ function getInput() {
 
     switch (output) {
         case 0:
-            getNames();
             document.getElementById("error").innerHTML = "Signal submit!";
             break;
         case 1:

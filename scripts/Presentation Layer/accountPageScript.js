@@ -128,8 +128,10 @@ if (activeUser.role == 2) {
 }
 
 if (activeUser.role == 1) {
+    document.getElementById("firefighter-stats").style.display = 'block';
     document.getElementById("firefighterTeamManagment").style.display = "block";
 } else {
+    document.getElementById("firefighter-stats").style.display = 'none';
     document.getElementById("firefighterTeamManagment").style.display = "none";
 }
 

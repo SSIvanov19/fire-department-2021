@@ -7,11 +7,101 @@ let teamSel = document.getElementById("teams");
 let teamPenSel = document.getElementById("teamsPendingSignal");
 let teamSigSel = document.getElementById("signalTeam");
 
+///Need to be in onload()
 if (localStorage.isUserEnter) {
     document.getElementById("fname").innerHTML = "First Name: " + activeUser.fname;
     document.getElementById("lname").innerHTML = "Last Name: " + activeUser.lname;
     document.getElementById("role").innerHTML = "Role: " + activeUser.role;
     document.getElementById("region").innerHTML = "Region: " + activeUser.region;
+
+    if (activeUser.role == 1) {
+        console.log(activeUser.team);
+        if (activeUser.team == undefined || activeUser.team == null) {
+            document.getElementById("team").innerHTML = "Team: Unassigned";
+            document.getElementById("signalP").innerHTML = "Signal: Unassigned";
+        } else {
+            document.getElementById("team").innerHTML = "Team: " + activeUser.team;
+
+            let team = am.getTeamWithId(activeUser.team);
+            let car = am.getCarWithId(team.car);
+
+            document.getElementById("teamCar").innerHTML = "Car: " + car.model + " " + car.registrationPlate;
+            document.getElementById("membersInTeam").innerHTML = "Members:";
+
+            let iterations = team.employees.length;
+
+            for (const member of team.employees) {
+                if (!--iterations) {
+                    document.getElementById("membersInTeam").innerHTML += " " + am.getUserWithId(member).fname + " " + am.getUserWithId(member).lname;
+                } else {
+                    document.getElementById("membersInTeam").innerHTML += " " + am.getUserWithId(member).fname + " " + am.getUserWithId(member).lname + ",";
+                }
+            }
+
+            document.getElementById("startOfDay").innerHTML = "Start of work: " + team.starOfWorkingDay;
+            document.getElementById("endOfDay").innerHTML = "End of work: " + team.endOfWorkingDay;
+            document.getElementById("workingDays").innerHTML = "Woring days:";
+
+            for (let i = 1; i <= 7; i++) {
+                if (team.shifts.includes(i.toString())) {
+                    switch (i) {
+                        case 1:
+                            document.getElementById("workingDays").innerHTML += " Monday";
+                            break;
+                        case 2:
+                            document.getElementById("workingDays").innerHTML += " Tuesday";
+                            break;
+                        case 3:
+                            document.getElementById("workingDays").innerHTML += " Wednesday";
+                            break;
+                        case 4:
+                            document.getElementById("workingDays").innerHTML += " Thursday";
+                            break;
+                        case 5:
+                            document.getElementById("workingDays").innerHTML += " Friday";
+                            break;
+                        case 6:
+                            document.getElementById("workingDays").innerHTML += " Saturday";
+                            break;
+                        case 6:
+                            document.getElementById("workingDays").innerHTML += " Sunday";
+                            break;
+                    }
+                }
+            }
+
+            document.getElementById("holidayP").innerHTML = "Holiday: " + team.holidays;
+            document.getElementById("sickLeaveP").innerHTML = "Sick Leaves: " + team.sickLeaves;
+            document.getElementById("BusinessTripP").innerHTML = "Business Trip: " + team.businessTrips;
+
+            if (team.signal != null) {
+                signal = am.getSignalsWithId(team.signal)
+
+                document.getElementById("signalP").innerHTML = "Signal: " + signal.id;
+                document.getElementById("signalNameP").innerHTML = "Signal Title: " + signal.title;
+                document.getElementById("signalTypeP").innerHTML = "Signal Type: " + signal.type;
+                document.getElementById("signalDesP").innerHTML = "Signal: " + signal.description;
+                initMap(signal.coordinatesX, signal.coordinatesY, "fireMapSignal");
+
+                if (signal.isClosed) {
+                    document.getElementById("startWorkingButton").style.display = "none";
+                    document.getElementById("endWorkingButton").style.display = "none";
+                } else {
+                    console.log(signal.start);
+                    if (signal.start == null) {
+                        document.getElementById("startWorkingButton").style.display = "block";
+                        document.getElementById("endWorkingButton").style.display = "none";
+                    } else {
+                        document.getElementById("startWorkingButton").style.display = "none";
+                        document.getElementById("endWorkingButton").style.display = "block";
+                    }
+                }
+            } else {
+                document.getElementById("signalP").innerHTML = "Signal: Unassigned";
+            }
+
+        }
+    }
 } else {
     window.location.href = "../index.html";
 }
@@ -34,6 +124,12 @@ if (activeUser.role == 2) {
     document.getElementById("signalDiv").style.display = "block";
 } else {
     document.getElementById("signalDiv").style.display = "none";
+}
+
+if (activeUser.role == 1) {
+    document.getElementById("firefighterTeamManagment").style.display = "block";
+} else {
+    document.getElementById("firefighterTeamManagment").style.display = "none";
 }
 
 function forEachCar(selectElement) {
@@ -178,7 +274,8 @@ window.onload = () => {
     var calendars = bulmaCalendar.attach('[type="date"]', {
         dateFormat: 'DD/MM/YYYY',
         lang: 'bg',
-        minDate: new Date()
+        minDate: new Date(),
+        weekStart: 1
     })
 }
 
@@ -446,6 +543,7 @@ function getInput(input, form = null) {
 
                     forEachTeam(teamSel);
                     forEachTeam(teamPenSel);
+                    forEachTeam(signalTeam);
                     break;
                 case 1:
                     document.getElementById("signalError").innerHTML = "You don't have signal selected!";
@@ -483,6 +581,7 @@ function getInput(input, form = null) {
 
                     forEachTeam(teamSel);
                     forEachTeam(teamPenSel);
+                    forEachTeam(signalTeam);
                     break;
                 case 1:
                     document.getElementById("signalError").innerHTML = "You don't have signal selected!";
@@ -518,7 +617,8 @@ function getInput(input, form = null) {
 
                     forEachTeam(teamSel);
                     forEachTeam(teamPenSel);
-                    
+                    forEachTeam(signalTeam);
+
                     getNames();
                     document.getElementById("error").innerHTML = "Signal submit!";
                     break;
@@ -538,6 +638,22 @@ function getInput(input, form = null) {
                     console.log("A wild error appeared");
                     break;
             }
+
+            break;
+        case 12:
+            let team = am.getTeamWithId(activeUser.team);
+            let signal = am.getSignalsWithId(team.signal)
+
+            if (signal.start == null) {
+                if (confirm("Do you really wand to start working")) {
+                    am.startWorking(signal.id);
+                }
+            } else {
+                if (confirm("Do you really wand to end working")) {
+                    am.endWorking(signal.id);
+                }
+            }
+            location.reload();
 
             break;
         default:

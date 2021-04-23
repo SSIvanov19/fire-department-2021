@@ -67,3 +67,17 @@ footer {
   .card {
     margin-left: 30px;
   }
+  .ol-popup {
+    font-size: 12px;
+    position: absolute;
+    background-color: white;
+    -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 12px;
+    left: -50px;
+    min-width: 100px;
+    text-align: center;
+}

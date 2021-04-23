@@ -22,8 +22,10 @@ window.onload = () => {
     updateCounter("numberOfFreeCars", numberOfFreeCars);
     updateCounter("numberOfCars", numberOfCars);
 
-    if(numberOfSingals != 0) {
+    if(coordinatesX && coordinatesY) {
         initMap(coordinatesX, coordinatesY, "map");
+    } else {
+        document.getElementById("map").style.display = "none";
     }
 };
 
@@ -35,9 +37,17 @@ function getNumbers() {
     numberOfRescues = am.getNumberOfRescues() ?? 0;
     numberOfFreeCars = am.getNumberOfFreeCars() ?? 0;
     numberOfCars = am.getNumberOfCars() ?? 0;
+
     if (numberOfSingals != 0) {
-        coordinatesX = am.getAcceptedSignals().coordinatesX;
-        coordinatesY = am.getAcceptedSignals().coordinatesY;
+        let signals = am.getAcceptedSignals();
+
+        for (const signal of signals) {
+            coordinatesX = [];
+            coordinatesY = [];
+
+            coordinatesX.push(signal.coordinatesX);
+            coordinatesY.push(signal.coordinatesY);
+        }
     }
 }
 
@@ -65,13 +75,17 @@ function initMap(coordinatesXs, coordinatesYs, id) {
                 source: new ol.source.OSM()
             })
         ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([27.461014, 42.510578]),
+            zoom: 12
+        })
     });
 
     let container = document.getElementById('popup');
     let content = document.getElementById('popup-content');
     let closer = document.getElementById('popup-closer');
    
-    
+   
     for (const coordinatesX of coordinatesXs) {
         for (const coordinatesY of coordinatesYs) {
             let layer = new ol.layer.Vector({
@@ -109,7 +123,7 @@ function initMap(coordinatesXs, coordinatesYs, id) {
         if (map.hasFeatureAtPixel(event.pixel) === true) {
             var coordinate = event.coordinate;
    
-            content.innerHTML = '<b>Hello world!</b><br />I am a popup.';
+            content.innerHTML = '<b>Активен сигнал</b>';
             overlay.setPosition(coordinate);
         } else {
             overlay.setPosition(undefined);

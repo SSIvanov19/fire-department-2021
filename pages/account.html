@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Account | Fire-Department-2021</title>
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-social@1/bin/bulma-social.min.css" />
@@ -107,7 +108,8 @@
             </div>
           </div>
           <div class="navbar-item">
-            <button class="button is-success" onclick="getInput(1)"><span style="margin-right: 2%;" class="icon"><i class="fas fa-sign-out-alt"></i></span> Log Out</button>
+            <button class="button is-success" onclick="getInput(1)"><span style="margin-right: 2%;" class="icon"><i
+                  class="fas fa-sign-out-alt"></i></span> Log Out</button>
           </div>
         </div>
       </div>
@@ -145,309 +147,395 @@
     </ul>
   </div><br>
 
-  <article class="panel is-info" style="width: 40%; margin-left: 30%; margin-right: 30%;">
+  <article class="panel is-info" style="width: 50%; margin-left: 25%; margin-right: 25%;">
     <p class="panel-heading">
       Информация:
     </p>
-    <a class="panel-block is-active">
+
+    <a class="panel-block">
       <span class="panel-icon">
-        <i class="fas fa-book" aria-hidden="true"></i>
+        <i class="fas fa-id-badge"></i>
       </span>
       <p id="fname">Име:</p>
     </a>
+
     <a class="panel-block">
       <span class="panel-icon">
-        <i class="fas fa-book" aria-hidden="true"></i>
+        <i class="fas fa-id-badge"></i>
       </span>
       <p id="lname">Фамилия:</p>
     </a>
+
     <a class="panel-block">
       <span class="panel-icon">
-        <i class="fas fa-book" aria-hidden="true"></i>
+        <i class="fas fa-briefcase"></i>
       </span>
       <p id="role">Роля: </p>
     </a>
+
     <a class="panel-block">
       <span class="panel-icon">
-        <i class="fas fa-book" aria-hidden="true"></i>
+        <i class="fas fa-map-marked-alt"></i>
       </span>
       <p id="region">Регион: </p>
     </a>
 
     <div id="firefighter-stats">
+
       <a class="panel-block">
         <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+          <i class="fas fa-users"></i>
         </span>
         <p id="team"></p>
       </a>
+
       <a class="panel-block">
         <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+          <i class="fas fa-car"></i>
         </span>
         <p id="teamCar"></p>
       </a>
+
       <a class="panel-block">
         <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+          <i class="fas fa-user"></i>
         </span>
         <p id="membersInTeam"></p>
       </a>
+
       <a class="panel-block">
         <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+          <i class="fas fa-clock"></i>
         </span>
         <p id="startOfDay"></p>
       </a>
+
       <a class="panel-block">
         <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+          <i class="fas fa-clock"></i>
         </span>
         <p id="endOfDay"></p>
       </a>
+
       <a class="panel-block">
         <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+          <i class="fas fa-calendar-alt"></i>
         </span>
         <p id="workingDays"></p>
       </a>
+
       <a class="panel-block">
         <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+          <i class="fas fa-calendar-alt"></i>
         </span>
         <p id="holidayP"></p>
       </a>
+
       <a class="panel-block">
         <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+          <i class="fas fa-calendar-alt"></i>
         </span>
         <p id="sickLeaveP"></p>
       </a>
+
       <a class="panel-block">
         <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+          <i class="fas fa-suitcase-rolling"></i>
         </span>
         <p id="BusinessTripP"></p>
       </a>
     </div>
-  </article>
+  </article><br><br>
 
-  <hr>
-
-  <div id="registerEmployee">
-    <hr>
-    <p>Регистриране на работник</p>
+  <div id="registerEmployee" class="box" style="width: 60%; margin-left: 20%; margin-right: 20%;">
+    <p class="title is-3">Регистриране на работник</p>
     <br>
     <form onreset="return getInput(4)" method="POST" name="registerEmployee">
-      <label for="fname">Име:</label><br>
-      <input type="text" name="fname" id="fname" required /><br>
+      <label class="label" for="fname">Име:</label>
+      <p class="control has-icons-left">
+        <input class="input" type="text" name="fname" id="fname" placeholder="Име" required /><br>
 
-      <label for="lname">Фамилия:</label><br>
-      <input type="text" name="lname" id="lname" required /><br>
+        <span class="icon is-small is-left">
+          <i class="fas fa-id-badge"></i>
+        </span>
+      </p><br>
 
-      <label for="email">E-mail:</label><br />
-      <input type="email" name="email" id="email" required /><br>
+      <label class="label" for="lname">Фамилия:</label>
+      <p class="control has-icons-left">
+        <input class="input" type="text" name="lname" id="lname" placeholder="Фамилия" required /><br>
 
-      <label for="pass">Парола:</label><br />
-      <input type="password" name="pass" id="pass" required /><br>
+        <span class="icon is-small is-left">
+          <i class="fas fa-id-badge"></i>
+        </span>
+      </p><br>
 
-      <label for="role">Изберете роля:</label><br>
-      <select id="role" name="role" required>
-        <option value="1">Пожарникар</option>
-        <option value="2">Диспечер</option>
-      </select><br><br>
+      <label class="label" for="email">E-mail:</label>
+      <p class="control has-icons-left">
+        <input class="input" type="email" name="email" id="email" placeholder="E-mail" required /><br>
 
-      <input type="reset" value="Регистриране" /><br>
+        <span class="icon is-small is-right">
+          <i class="fas fa-envelope"></i>
+        </span>
+      </p><br>
+
+      <label class="label" for="pass">Парола:</label>
+      <p class="control has-icons-left">
+        <input class="input" type="password" name="pass" id="pass" placeholder="Парола" required /><br><br>
+
+        <span class="icon is-small is-left">
+          <i class="fas fa-lock"></i>
+        </span>
+      </p>
+
+      <label class="label" for="role">Изберете роля:</label>
+      <div class="control">
+        <div class="select">
+          <select id="role" name="role" required>
+            <option>Изберете роля</option>
+            <option value="1">Пожарникар</option>
+            <option value="2">Диспечер</option>
+          </select>
+        </div>
+      </div>
+      <br>
+
+      <button class="button is-success" type="reset">Регистриране</button><br>
       <p id="employeeError" class="has-text-danger"></p>
     </form>
-  </div>
+  </div><br><br>
 
-  <div id="registerCar">
-    <hr>
-    <p>Register car</p>
+
+  <div id="registerCar" id="registerEmployee" class="box" style="width: 60%; margin-left: 20%; margin-right: 20%;">
+    <p class="title is-3">Регистриране на кола</p>
     <br>
     <form onreset="return getInput(5)" method="POST" name="registerCar">
-      <label for="model">Model:</label><br>
-      <input type="text" name="model" id="model" required /><br>
+      <label class="label" for="model">Модел:</label>
+      <input class="input" type="text" name="model" id="model" required /><br><br>
 
-      <label for="registration">Registration plate:</label><br>
-      <input type="text" name="registration" id="registration" required /><br>
+      <label class="label" for="registration">Регистрационен номер:</label>
+      <input class="input" type="text" name="registration" id="registration" required /><br><br>
 
-      <label for="seats">Seats:</label><br>
-      <input type="number" name="seats" id="seats" required /><br>
+      <label class="label" for="seats">Места:</label>
+      <input class="input" type="number" name="seats" id="seats" required /><br><br><br>
 
-      <input type="reset" value="Register" /><br>
+      <button class="button is-success" type="reset" value="Регистриране">Регистриране</button><br>
       <p id="carError" class="has-text-danger"></p>
     </form>
-  </div>
+  </div><br><br>
 
-  <div id="registerTeam">
-    <hr>
-    <p>Register a team</p>
+
+  <div id="registerTeam" id="registerEmployee" class="box" style="width: 60%; margin-left: 20%; margin-right: 20%;">
+    <p class="title is-3">Регистриране на отбор</p>
     <br>
     <form onreset="return getInput(6)" method="POST" name="registerTeam">
-      <label for="car">Choose car for the team:</label><br>
-      <select name="car" id="car" required>
-        <option value="" selected="selected">Select Car</option>
-      </select><br>
+      <label class="label" for="car">Избери кола:</label>
+      <div class="control">
+        <div class="select">
+          <select name="car" id="car" required>
+            <option value="" selected="selected">Избери кола</option>
+          </select>
+        </div>
+      </div><br>
 
       <div id="teamMembers">
 
       </div>
 
-      <label for="startTime">Time to start work:</label><br>
-      <input type="time" id="startTime" name="startTime" required><br>
+      <label class="label" for="startTime">Час на започване:</label>
+      <input type="time" id="startTime" name="startTime" required><br><br>
 
-      <label for="endTime">Time to end work:</label><br>
-      <input type="time" id="endTime" name="endTime" required><br>
+      <label class="label" for="endTime">Час на свършване:</label>
+      <input type="time" id="endTime" name="endTime" required><br><br>
 
-      <label>Select working days:</label><br>
+      <label class="label">Работни дни:</label>
       <input type="checkbox" id="mon" name="days" value="1">
-      <label for="mon">Monday</label><br>
+      <label class="checkbox" for="mon">Понеделник</label><br>
 
       <input type="checkbox" id="tue" name="days" value="2">
-      <label for="tue">Tuesday</label><br>
+      <label class="checkbox" for="tue">Вторник</label><br>
 
       <input type="checkbox" id="wed" name="days" value="3">
-      <label for="wed">Wednesday</label><br>
+      <label class="checkbox" for="wed">Сряда</label><br>
 
       <input type="checkbox" id="thu" name="days" value="4">
-      <label for="thu">Thursday</label><br>
+      <label class="checkbox" for="thu">Четвъртък</label><br>
 
       <input type="checkbox" id="fri" name="days" value="5">
-      <label for="fri">Friday</label><br>
+      <label class="checkbox" for="fri">Петък</label><br>
 
       <input type="checkbox" id="sat" name="days" value="6">
-      <label for="sat">Saturday</label><br>
+      <label class="checkbox" for="sat">Събота</label><br>
 
       <input type="checkbox" id="sun" name="days" value="7">
-      <label for="sun">Sunday</label><br>
+      <label class="checkbox" for="sun">Неделя</label><br><br>
 
-      <label for="holiday">Select Holiday:</label>
-      <input type="date" data-is-range="true" name="holiday" id="holiday">
+      <label class="label" for="holiday">Почивни дни:</label>
+      <input type="date" data-is-range="true" name="holiday" id="holiday"><br>
 
-      <label for="sick">Sick leave:</label>
-      <input type="date" data-is-range="true" name="sick" id="sick">
+      <label class="label" for="sick">Болнични:</label>
+      <input type="date" data-is-range="true" name="sick" id="sick"><br>
 
-      <label for="trip">Business trip:</label>
-      <input type="date" data-is-range="true" name="trip" id="trip">
+      <label class="label" for="trip">Командировки:</label>
+      <input type="date" data-is-range="true" name="trip" id="trip"><br>
 
-      <input type="reset" value="Register">
+      <button class="button is-success" type="reset" value="Register">Регистриране</button>
       <p id="teamError" class="has-text-danger"></p>
     </form>
   </div>
 
   <div id="signalDiv">
-    <hr>
-    <form method="POST" name="signalForm" id="signalForm">
-      <label for="signals">Choose a unassigned signal to display:</label><br>
-      <select name="signals" id="signals">
-        <option value="" selected="selected">Select signal</option>
-      </select><br>
+    <div id="registerEmployee" class="box" style="width: 60%; margin-left: 20%; margin-right: 20%;">
+      <form method="POST" name="signalForm" id="signalForm">
+        <div class="field">
+          <label class="label" for="signals">Избери незададен сигнал:</label><br>
+          <div class="control">
+            <div class="select">
+              <select name="signals" id="signals">
+                <option value="" selected="selected">Избери сигнал</option>
+              </select>
+            </div>
+          </div>
+        </div><br>
 
-      <div id="displaySignal">
-        <p id="title"></p>
-        <p id="names"></p>
-        <p id="type"></p>
-        <div id="map" class="map">
+        <div id="displaySignal">
+          <p id="title"></p>
+          <p id="names"></p>
+          <p id="type"></p>
+          <div id="map" class="map">
 
+          </div>
+          <p id="des"></p>
+          <label for="teams">Избери отбор:</label><br>
+          <div class="control">
+            <div class="select">
+              <select name="teams" id="teams">
+                <option value="" selected="teams">Отбори</option>
+              </select>
+            </div>
+          </div>
+          <br>
+
+          <input type="reset" onclick="getInput(7, 1)" value="Accept" class="button is-success">
+          <input type="reset" onclick="getInput(8, 1)" value="Reject" class="button is-danger">
+          <p id="signalError"></p>
         </div>
-        <p id="des"></p>
-        <label for="teams">Select a team:</label><br>
-        <select name="teams" id="teams">
-          <option value="" selected="teams">Select team</option>
-        </select><br>
+      </form>
 
-        <input type="reset" onclick="getInput(7, 1)" value="Accept" class="button is-success">
-        <input type="reset" onclick="getInput(8, 1)" value="Reject" class="button is-danger">
-        <p id="signalError"></p>
-      </div>
-    </form>
-    <form method="POST" name="signalPendingForm" id="signalPendingForm">
-      <label for="signals">Choose a pending signal to display:</label><br>
-      <select name="signals" id="signalsPending">
-        <option value="" selected="selected">Select signal</option>
-      </select><br>
+      <form method="POST" name="signalPendingForm" id="signalPendingForm">
+        <label for="signals">Избери постъпил сигнал:</label><br>
+        <div class="control">
+          <div class="select">
+            <select name="signals" id="signalsPending">
+              <option value="" selected="selected">избери сигнал</option>
+            </select>
+          </div>
+          <br>
 
-      <div id="displayPendingSignal">
-        <p id="titlePendingSignal"></p>
-        <p id="teamPendingSignal"></p>
-        <p id="namesPendingSignal"></p>
-        <p id="typePendingSignal"></p>
-        <div id="mapPendingSignal" class="map">
+          <div id="displayPendingSignal">
+            <p id="titlePendingSignal"></p>
+            <p id="teamPendingSignal"></p>
+            <p id="namesPendingSignal"></p>
+            <p id="typePendingSignal"></p>
+            <div id="mapPendingSignal" class="map">
 
+            </div>
+            <p id="desPendingSignals"></p>
+            <label for="teams">Избери отбор за смяна:</label><br>
+            <div class="control">
+              <div class="select">
+                <select name="teams" id="teamsPendingSignal">
+                  <option value="" selected="selected">Отбор</option>
+                </select>
+              </div>
+            </div>
+            <br>
+
+            <input type="reset" onclick="getInput(7, 2)" value="Change team" class="button is-success">
+            <input type="reset" onclick="getInput(8, 2)" value="Delete" class="button is-danger">
+            <p id="signalPendingError"></p>
+          </div>
+      </form>
+      <form method="POST" name="signalAcceptedForm" id="signalAcceptedForm">
+        <label for="signals">Избери приет сигнал:</label><br>
+        <div class="control">
+          <div class="select">
+            <select name="signals" id="signalsAccepted">
+              <option value="" selected="selected">Избери сигнал</option>
+            </select>
+          </div>
         </div>
-        <p id="desPendingSignals"></p>
-        <label for="teams">Select team to change current team:</label><br>
-        <select name="teams" id="teamsPendingSignal">
-          <option value="" selected="selected">Select team</option>
-        </select><br>
+        <br>
 
-        <input type="reset" onclick="getInput(7, 2)" value="Change team" class="button is-success">
-        <input type="reset" onclick="getInput(8, 2)" value="Delete" class="button is-danger">
-        <p id="signalPendingError"></p>
+        <div id="displayAcceptedSignal">
+          <p id="titleAcceptedSignal"></p>
+          <p id="teamAcceptedSignal"></p>
+          <p id="namesAcceptedSignal"></p>
+          <p id="startOfWorkingAccSig"></p>
+          <p id="typeAcceptedSignal"></p>
+          <p id="desAcceptedSignals"></p>
+          <div id="mapAcceptedSignal" class="map"></div>
+        </div>
+      </form>
+      <form method="POST" name="signalClosedForm" id="signalClosedForm">
+        <label for="signals">Избери завършен сигнал:</label><br>
+        <div class="control">
+          <div class="select">
+            <select name="signals" id="signalsClosed">
+              <option value="" selected="selected">избери сигнал</option>
+            </select>
+          </div>
+        </div>
+        <br>
+
+        <div id="displayClosedSignal">
+          <p id="titleClosedP"></p>
+          <p id="namesClosedP"></p>
+          <p id="startOfWorkingClosedP"></p>
+          <p id="endOfWorkingClosedP"></p>
+          <p id="timeTakenP"></p>
+          <p id="typeClosedP"></p>
+          <p id="desClosedP"></p>
+          <div id="mapClosedMap" class="map"></div>
+        </div>
+      </form>
+    </div>
+</section>
+
+<div class="columns is-centered">
+  <div class="column is-7">
+    <form class="box" onreset="return getInput(11)" method="POST" name="signalSubmitForm">
+      <br>
+      <p class="title is-4 has-text-centered">Изпрати сигнал</p><br>
+      <label class="label" for="title">Title:</label>
+      <input class="input" type="text" id="title" name="title" required><br><br>
+
+      <label class="label" for="names">Име и фамилия:</label>
+      <input class="input" type="text" id="Signalnames" name="names" required><br><br>
+
+      <label class="label" for="type">Какъв е проблема:</label>
+      <div class="select">
+        <select id="type" name="type">
+          <option value="" selected="selected">Изберете проблем</option>
+          <option value="Fire">Пожар</option>
+          <option value="Rescue">Спасяване</option>
+          <option value="Flood">Наводнение</option>
+          <option value="Another">Друго</option>
+        </select>
       </div>
-    </form>
-    <form method="POST" name="signalAcceptedForm" id="signalAcceptedForm">
-      <label for="signals">Choose a accepted signal to display:</label><br>
-      <select name="signals" id="signalsAccepted">
-        <option value="" selected="selected">Select signal</option>
-      </select><br>
+      <br><br>
 
-      <div id="displayAcceptedSignal">
-        <p id="titleAcceptedSignal"></p>
-        <p id="teamAcceptedSignal"></p>
-        <p id="namesAcceptedSignal"></p>
-        <p id="startOfWorkingAccSig"></p>
-        <p id="typeAcceptedSignal"></p>
-        <p id="desAcceptedSignals"></p>
-        <div id="mapAcceptedSignal" class="map"></div>
+      <label class="label" for="mapSignal">Изберете адрес</label>
+      <div id="mapSignal" name="mapSignal" class="map" style="width: 100%;"></div><br><br>
+
+      <label class="label" for="des">Кратко описание:</label>
+      <textarea class="textarea is-info" name="des" id="des" rows="4" cols="50" required></textarea><br><br>
+      <label class="label" for="type">Изберете отбор за сиганала:</label>
+      <div class="select">
+        <select name="teams" id="signalTeam">
+          <option value="" selected="teams">Изберете отбор</option>
+        </select>
       </div>
-    </form>
-    <form method="POST" name="signalClosedForm" id="signalClosedForm">
-      <label for="signals">Choose a closed signal to display:</label><br>
-      <select name="signals" id="signalsClosed">
-        <option value="" selected="selected">Select signal</option>
-      </select><br>
-
-      <div id="displayClosedSignal">
-        <p id="titleClosedP"></p>
-        <p id="namesClosedP"></p>
-        <p id="startOfWorkingClosedP"></p>
-        <p id="endOfWorkingClosedP"></p>
-        <p id="timeTakenP"></p>
-        <p id="typeClosedP"></p>
-        <p id="desClosedP"></p>
-        <div id="mapClosedMap" class="map"></div>
-      </div>
-    </form>
-
-    <hr>
-    <h3>Submit a signal</h3>
-    <form onreset="return getInput(11)" method="POST" name="signalSubmitForm">
-      <label for="title">Title:</label><br>
-      <input type="text" id="title" name="title" required><br>
-
-      <label for="names">Name and Surname:</label><br>
-      <input type="text" id="Signalnames" name="names" required><br>
-
-      <label for="type">Type of accidet:</label><br>
-      <select id="type" name="type">
-        <option value="" selected="selected">Select a type</option>
-        <option value="Fire">Fire</option>
-        <option value="Rescue">Rescue</option>
-        <option value="Flood">Flood</option>
-      </select><br>
-
-      <label for="mapSignal">Select the address</label><br>
-      <div id="mapSignal" name="mapSignal" class="map"></div>
-
-      <label for="des">Short description</label><br>
-      <textarea name="des" id="des" rows="4" cols="50" required></textarea><br>
-
-      <select name="teams" id="signalTeam">
-        <option value="" selected="teams">Select team</option>
-      </select><br>
+      <br><br>
 
       <br>
       <input type="reset" value="Подаване" class="button is-success">
@@ -469,13 +557,94 @@
         <input type="reset" value="Свършване на работа" class="button is-danger" id="endWorkingButton">
       </form>
     </div>
-
   </div>
-  <br><br>
-  <button onclick="getInput(2)" id="deleteAcc">Delete Account</button>
-  <button onclick="getInput(3)" id="deleteAll">Delete All Accounts</button>
+</div>
+<br><br>
 
-</section>
+<article class="message is-danger">
+  <div class="message-body">
+    <p class="title is-3">Опасна зона</p><br>
+    <h1 class="subtitle is-5" style="margin-left: 5%;">Бъдете внимателни с действията в тази зона. <b>Действията са
+        необратими!</b></h1><br>
+    <button onclick="getInput(2)" id="deleteAcc" class="button is-danger is-outlined" style="margin-left: 5%;">
+      <span>Изтриване на акаунта</span>
+      <span class="icon is-small">
+        <i class="fas fa-times"></i>
+      </span>
+    </button>
+
+    <button onclick="getInput(3)" id="deleteAll" class="button is-danger is-outlined" style="margin-left: 5%;">
+      <span>Изтриване на всички акаунти</span>
+      <span class="icon is-small">
+        <i class="fas fa-times"></i>
+      </span>
+    </button>
+  </div>
+</article>
+
+<footer class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-4">
+          <div class="content">
+            <h6 class="footer_title title is-6">ИСКАТЕ ДА СТАНЕТЕ ДОБРОВОЛЕЦ?</h6>
+            <p>Напишете имейла си, ако искате да станете доброволец и нашият екип ще се свърже с Вас.</p>
+            <div class="newsletter">
+              <form action="mailto:kntaligadzhiev19@codingburgas.bg" method="POST" class="newsletter-form">
+                <input type="email" name="email" placeholder="Въведете имейла си!" />
+                <button>
+                  <i class="fa fa-paper-plane"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4" style="text-align: center;">
+          <div class="content">
+            <div>
+              <h6 class="footer_title title is-6">СОЦИАЛНИ МЕДИИ</h6>
+              <p>Последвайте ни в социалните медии!</p>
+              <a class="button is-medium is-facebook" href="https://www.facebook.com/GlavnaDirekciaPBZN">
+                <span class="icon">
+                  <i class="fab fa-facebook-f fa-lg"></i>
+                </span>
+              </a>
+              <a class="button is-medium is-foursquare">
+                <span class="icon">
+                  <i class="fab fa-instagram fa-lg"></i>
+                </span>
+              </a>
+              <a class="button is-medium is-twitter">
+                <span class="icon">
+                  <i class="fab fa-twitter fa-lg"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4">
+          <div class="content">
+            <h6 class="footer_title title is-6">ПРИЕМНА ЗА ГРАЖДАНИ</h6>
+            <p class="is-marginless">ул. „6-и септември“ 29, София 1000</p>
+            <p class="is-marginless">Приемно време: 10:00 - 12:00 ч. и 14:00 - 16:00 ч.</p>
+            <p class="is-marginless">За жалби, предложения и сигнали:</p>
+            <div>
+              <i class="fa fa-phone"></i> &nbsp; <span>телефон:</span>
+              <a href="tel:029822574">02 9822 574</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-foot">
+    <div class="container has-text-centered">
+      <p class="footer-text"> &copy; 2021 - techFlames</p>
+    </div>
+  </div>
+  <br>
+</footer>
 
 </body>
 

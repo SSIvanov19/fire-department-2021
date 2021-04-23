@@ -15,22 +15,7 @@
   <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css">
   <style>
-    #map {
-      width: 600px;
-      height: 350px;
-    }
-
-    #mapPendingSignal {
-      width: 600px;
-      height: 350px;
-    }
-
-    #mapSignal {
-      width: 600px;
-      height: 350px;
-    }
-
-    #fireMapSignal {
+    .map {
       width: 600px;
       height: 350px;
     }
@@ -267,7 +252,7 @@
         <p id="title"></p>
         <p id="names"></p>
         <p id="type"></p>
-        <div id="map">
+        <div id="map" class="map">
 
         </div>
         <p id="des"></p>
@@ -292,7 +277,7 @@
         <p id="teamPendingSignal"></p>
         <p id="namesPendingSignal"></p>
         <p id="typePendingSignal"></p>
-        <div id="mapPendingSignal">
+        <div id="mapPendingSignal" class="map">
 
         </div>
         <p id="desPendingSignals"></p>
@@ -306,6 +291,40 @@
         <p id="signalPendingError"></p>
       </div>
     </form>
+    <form method="POST" name="signalAcceptedForm" id="signalAcceptedForm">
+      <label for="signals">Choose a accepted signal to display:</label><br>
+      <select name="signals" id="signalsAccepted">
+        <option value="" selected="selected">Select signal</option>
+      </select><br>
+
+      <div id="displayAcceptedSignal">
+        <p id="titleAcceptedSignal"></p>
+        <p id="teamAcceptedSignal"></p>
+        <p id="namesAcceptedSignal"></p>
+        <p id="startOfWorkingAccSig"></p>
+        <p id="typeAcceptedSignal"></p>
+        <p id="desAcceptedSignals"></p>
+        <div id="mapAcceptedSignal" class="map"></div>
+      </div>
+    </form>
+    <form method="POST" name="signalClosedForm" id="signalClosedForm">
+      <label for="signals">Choose a closed signal to display:</label><br>
+      <select name="signals" id="signalsClosed">
+        <option value="" selected="selected">Select signal</option>
+      </select><br>
+
+      <div id="displayClosedSignal">
+        <p id="titleClosedP"></p>
+        <p id="namesClosedP"></p>
+        <p id="startOfWorkingClosedP"></p>
+        <p id="endOfWorkingClosedP"></p>
+        <p id="timeTakenP"></p>
+        <p id="typeClosedP"></p>
+        <p id="desClosedP"></p>
+        <div id="mapClosedMap" class="map"></div>
+      </div>
+    </form>
+
     <hr>
     <h3>Submit a signal</h3>
     <form onreset="return getInput(11)" method="POST" name="signalSubmitForm">
@@ -324,7 +343,7 @@
       </select><br>
 
       <label for="mapSignal">Select the address</label><br>
-      <div id="mapSignal" name="mapSignal"></div>
+      <div id="mapSignal" name="mapSignal" class="map"></div>
 
       <label for="des">Short description</label><br>
       <textarea name="des" id="des" rows="4" cols="50" required></textarea><br>
@@ -344,13 +363,15 @@
     <p id="signalP"></p>
     <p id="signalNameP"></p>
     <p id="signalTypeP"></p>
-    <div id="fireMapSignal"></div>
+    <div id="fireMapSignal" class="map"></div>
     <p id="signalDesP"></p>
 
-    <form onreset="return getInput(12)" method="POST" name="signalSubmitForm">
-      <input type="reset" value="Започване на работа" class="button is-success" id="startWorkingButton">
-      <input type="reset" value="Свършване на работа" class="button is-danger" id="endWorkingButton">
-    </form>
+    <div id="signalWorkButtons">
+      <form onreset="return getInput(12)" method="POST" name="signalSubmitForm">
+        <input type="reset" value="Започване на работа" class="button is-success" id="startWorkingButton">
+        <input type="reset" value="Свършване на работа" class="button is-danger" id="endWorkingButton">
+      </form>
+    </div>
 
   </div>
 </body>

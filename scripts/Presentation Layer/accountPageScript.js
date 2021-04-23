@@ -3,6 +3,8 @@ let activeUser = JSON.parse(localStorage.getItem("activeUser"));
 let carSel = document.getElementById("car");
 let sigSel = document.getElementById("signals");
 let sigPendingSel = document.getElementById("signalsPending");
+let sigAccSel = document.getElementById("signalsAccepted");
+let sigClosedSel = document.getElementById("signalsClosed");
 let teamSel = document.getElementById("teams");
 let teamPenSel = document.getElementById("teamsPendingSignal");
 let teamSigSel = document.getElementById("signalTeam");
@@ -15,7 +17,6 @@ if (localStorage.isUserEnter) {
     document.getElementById("region").innerHTML = "Region: " + activeUser.region;
 
     if (activeUser.role == 1) {
-        console.log(activeUser.team);
         if (activeUser.team == undefined || activeUser.team == null) {
             document.getElementById("team").innerHTML = "Team: Unassigned";
             document.getElementById("signalP").innerHTML = "Signal: Unassigned";
@@ -80,7 +81,7 @@ if (localStorage.isUserEnter) {
                 document.getElementById("signalP").innerHTML = "Signal: " + signal.id;
                 document.getElementById("signalNameP").innerHTML = "Signal Title: " + signal.title;
                 document.getElementById("signalTypeP").innerHTML = "Signal Type: " + signal.type;
-                document.getElementById("signalDesP").innerHTML = "Signal: " + signal.description;
+                document.getElementById("signalDesP").innerHTML = "Signal Des: " + signal.description;
                 initMap(signal.coordinatesX, signal.coordinatesY, "fireMapSignal");
 
                 if (signal.isClosed) {
@@ -98,8 +99,8 @@ if (localStorage.isUserEnter) {
                 }
             } else {
                 document.getElementById("signalP").innerHTML = "Signal: Unassigned";
+                document.getElementById("signalWorkButtons").style.display = "none";
             }
-
         }
     }
 } else {
@@ -152,6 +153,7 @@ function forEachCar(selectElement) {
 
 function forEachSignal(signalSelect, func) {
     let signals = func;
+    console.log(signals);
 
     for (i = signalSelect.length - 1; i >= 0; i--) {
         signalSelect.remove(i);
@@ -261,6 +263,8 @@ window.onload = () => {
     if (JSON.parse(localStorage.getItem("signals")) != null) {
         forEachSignal(sigSel, am.getSignalsWithoutTeamSelected());
         forEachSignal(sigPendingSel, am.getSignalsWithTeamSelected());
+        forEachSignal(sigAccSel, am.getAcceptedSignals());
+        forEachSignal(sigClosedSel, am.getClosedSignals());
     }
 
     forEachTeam(teamSel);
@@ -269,6 +273,8 @@ window.onload = () => {
 
     document.getElementById("displaySignal").style.display = "none";
     document.getElementById("displayPendingSignal").style.display = "none";
+    document.getElementById("displayAcceptedSignal").style.display = "none";
+    document.getElementById("displayClosedSignal").style.display = "none";
 
     // Initialize all input of type date
     var calendars = bulmaCalendar.attach('[type="date"]', {
@@ -371,6 +377,79 @@ sigPendingSel.onchange = () => {
         namesP.innerHTML = "Name: " + signal.names;
         typeP.innerHTML = "Type: " + signal.type;
         desP.innerHTML = "Short description: " + signal.description;
+    }
+}
+
+sigAccSel.onchange = () => {
+    let id = document.forms.signalAcceptedForm.elements.signals.value;
+
+    let parentDiv = document.getElementById("displayAcceptedSignal");
+    let titleP = document.getElementById("titleAcceptedSignal");
+    let teamP = document.getElementById("teamAcceptedSignal");
+    let namesP = document.getElementById("namesAcceptedSignal");
+    let typeP = document.getElementById("typeAcceptedSignal");
+    let desP = document.getElementById("desAcceptedSignals");
+    let startP = document.getElementById("startOfWorkingAccSig");
+
+    let signal = am.getSignalsWithId(id);
+
+    if (signal != undefined) {
+        initMap(signal.coordinatesX, signal.coordinatesY, "mapAcceptedSignal");
+    }
+
+    if (id == "") {
+        parentDiv.style.display = "none";
+    } else {
+        parentDiv.style.display = "block";
+    }
+
+    let startDate = new Date(signal.start);
+
+    if (signal != undefined) {
+        titleP.innerHTML = "Title: " + signal.title;
+        teamP.innerHTML = "Team: " + signal.team;
+        namesP.innerHTML = "Name: " + signal.names;
+        typeP.innerHTML = "Type: " + signal.type;
+        desP.innerHTML = "Short description: " + signal.description;
+        startP.innerHTML = "Start of working: " + startDate.getHours() + ":" + startDate.getMinutes();
+    }
+}
+
+sigClosedSel.onchange = () => {
+    let id = document.forms.signalClosedForm.elements.signals.value;
+
+    let parentDiv = document.getElementById("displayClosedSignal");
+    let titleP = document.getElementById("titleClosedP");
+    let namesP = document.getElementById("namesClosedP");
+    let typeP = document.getElementById("typeClosedP");
+    let desP = document.getElementById("desClosedP");
+    let startP = document.getElementById("startOfWorkingClosedP");
+    let endP = document.getElementById("endOfWorkingClosedP");
+    let timeP = document.getElementById("timeTakenP");
+
+    let signal = am.getSignalsWithId(id);
+
+    if (signal != undefined) {
+        initMap(signal.coordinatesX, signal.coordinatesY, "mapClosedMap");
+    }
+
+    if (id == "") {
+        parentDiv.style.display = "none";
+    } else {
+        parentDiv.style.display = "block";
+    }
+
+    let startDate = new Date(signal.start);
+    let endDate = new Date(signal.end);
+
+    if (signal != undefined) {
+        titleP.innerHTML = "Title: " + signal.title;
+        namesP.innerHTML = "Name: " + signal.names;
+        typeP.innerHTML = "Type: " + signal.type;
+        desP.innerHTML = "Short description: " + signal.description;
+        startP.innerHTML = "Start of working: " + startDate.getHours() + ":" + startDate.getMinutes();
+        endP.innerHTML = "End of working: " + endDate.getHours() + ":" + endDate.getMinutes();
+        timeP.innerHTML = "Time taken: " + signal.timeToComplete;
     }
 }
 

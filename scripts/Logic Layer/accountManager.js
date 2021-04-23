@@ -445,13 +445,20 @@ function AccountManager(localStorage) {
     }
 
     function getSignalsWithTeamSelected(id) {
-        return JSON.parse(ls.getItem('signals')).filter(signal => signal.team != null);
+        return JSON.parse(ls.getItem('signals')).filter(signal => signal.team != null).filter(signal => signal.start == null);
     }
 
     function getSignalsWithoutTeamSelected(id) {
         return JSON.parse(ls.getItem('signals')).filter(signal => signal.team == null).filter(signal => signal.isClosed != true);
     }
 
+    function getAcceptedSignals(id) {
+        return JSON.parse(ls.getItem('signals')).filter(signal => signal.team != null).filter(signal => signal.start != null);
+    }
+
+    function getClosedSignals(id) {
+        return JSON.parse(ls.getItem('signals')).filter(signal => signal.isClosed == true);
+    }
 
     function getFirefighters() {
         load();
@@ -592,7 +599,7 @@ function AccountManager(localStorage) {
     function endWorking(id) {
         let teams = getTeams()
         let signals = getSignals();
-        
+
         signals[signals.findIndex(signal => signal.id == id)].end = new Date();
         signals[signals.findIndex(signal => signal.id == id)].isClosed = true;
 
@@ -614,10 +621,10 @@ function AccountManager(localStorage) {
         let hours = Math.floor(diff / 1000 / 60 / 60);
         diff -= hours * 1000 * 60 * 60;
         let minutes = Math.floor(diff / 1000 / 60);
-    
+
         if (hours < 0)
-           hours = hours + 24;
-    
+            hours = hours + 24;
+
         return (hours <= 9 ? "0" : "") + hours + ":" + (minutes <= 9 ? "0" : "") + minutes;
     }
 
@@ -646,7 +653,9 @@ function AccountManager(localStorage) {
         getCarWithId,
         getUserWithId,
         startWorking,
-        endWorking
+        endWorking,
+        getAcceptedSignals,
+        getClosedSignals
     }
 }
 

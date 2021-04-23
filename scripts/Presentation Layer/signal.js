@@ -73,6 +73,9 @@ function getInput() {
             document.getElementById("error").innerHTML = "There must be type selected!";
             break;
         case 4:
+            document.getElementById("error").innerHTML = "There must be a address selected!";
+            break;
+        case 5:
             document.getElementById("error").innerHTML = "The must be a description!";
             break;
         default:

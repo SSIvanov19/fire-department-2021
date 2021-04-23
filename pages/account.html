@@ -116,7 +116,36 @@
 </div>
 
 <section style="margin: 5%">
-  <article class="panel is-info" style="width: 30%; margin-left: 35%; margin-right: 35%;">
+  <div class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li>
+        <a href="../index.html">
+          <span class="icon is-small">
+            <i class="fas fa-home" aria-hidden="true"></i>
+          </span>
+          <span>Начало</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span class="icon is-small">
+            <i class="fas fa-puzzle-piece" aria-hidden="true"></i>
+          </span>
+          <span>Други</span>
+        </a>
+      </li>
+      <li class="is-active">
+        <a href="#">
+          <span class="icon is-small">
+            <i class="fas fa-user"></i>
+          </span>
+          <span>Акаунт</span>
+        </a>
+      </li>
+    </ul>
+  </div><br>
+
+  <article class="panel is-info" style="width: 40%; margin-left: 30%; margin-right: 30%;">
     <p class="panel-heading">
       Информация:
     </p>
@@ -207,28 +236,28 @@
 
   <div id="registerEmployee">
     <hr>
-    <p>Register an employee</p>
+    <p>Регистриране на работник</p>
     <br>
     <form onreset="return getInput(4)" method="POST" name="registerEmployee">
-      <label for="fname">First name:</label><br>
+      <label for="fname">Име:</label><br>
       <input type="text" name="fname" id="fname" required /><br>
 
-      <label for="lname">Last name:</label><br>
+      <label for="lname">Фамилия:</label><br>
       <input type="text" name="lname" id="lname" required /><br>
 
-      <label for="email">Email:</label><br />
+      <label for="email">E-mail:</label><br />
       <input type="email" name="email" id="email" required /><br>
 
-      <label for="pass">Password:</label><br />
+      <label for="pass">Парола:</label><br />
       <input type="password" name="pass" id="pass" required /><br>
 
-      <label for="role">Choose a role:</label><br>
+      <label for="role">Изберете роля:</label><br>
       <select id="role" name="role" required>
-        <option value="1">Firefighter</option>
-        <option value="2">Dispatcher</option>
+        <option value="1">Пожарникар</option>
+        <option value="2">Диспечер</option>
       </select><br><br>
 
-      <input type="reset" value="Register" /><br>
+      <input type="reset" value="Регистриране" /><br>
       <p id="employeeError" class="has-text-danger"></p>
     </form>
   </div>

@@ -49,7 +49,7 @@ function Car(model, registrationPlate, numberOfSeats, region, id, inTeam = false
     this.inTeam = inTeam;
 }
 
-function Signal(title, names, type, coordinatesX, coordinatesY, description, id, team = null) {
+function Signal(title, names, type, coordinatesX, coordinatesY, description, id, team = null, isClosed = false, start = null, end = null, timeToComplete = null) {
     this.title = title;
     this.names = names;
     this.type = type;
@@ -58,6 +58,10 @@ function Signal(title, names, type, coordinatesX, coordinatesY, description, id,
     this.description = description;
     this.id = id;
     this.team = team;
+    this.isClosed = isClosed;
+    this.start = start;
+    this.end = end;
+    this.timeToComplete = timeToComplete;
 }
 
 function AccountManager(localStorage) {
@@ -106,7 +110,7 @@ function AccountManager(localStorage) {
     function validateEmail(email) {
         let atposition = email.indexOf("@");
         let dotposition = email.lastIndexOf(".");
-        
+
         return (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length)
     }
 
@@ -122,14 +126,16 @@ function AccountManager(localStorage) {
         let index = admins.findIndex(admin => admin.email.toLowerCase() == email.toLowerCase());
 
         if (index != -1 && admins[index].pass == pass) {
-            let activeUser = {
-                fname: admins[index].fname,
-                lname: admins[index].lname,
-                email: admins[index].email,
-                pass: admins[index].pass,
-                role: admins[index].role,
-                region: admins[index].region,
-            };
+            let activeUser = new User(
+                admins[index].fname,
+                admins[index].lname,
+                admins[index].email,
+                admins[index].pass,
+                admins[index].id,
+                admins[index].role,
+                admins[index].region,
+                admins[index].team
+            );
 
             ls.isUserEnter = true;
             ls.setItem("activeUser", JSON.stringify(activeUser));
@@ -313,15 +319,16 @@ function AccountManager(localStorage) {
         let index = userArray.findIndex(user => user.email.toLowerCase() == email.toLowerCase());
 
         if (index != -1 && userArray[index].pass == pass) {
-            let activeUser = {
-                fname: userArray[index].fname,
-                lname: userArray[index].lname,
-                email: userArray[index].email,
-                pass: userArray[index].pass,
-                id: userArray[index].id,
-                role: userArray[index].role,
-                region: userArray[index].region
-            };
+            let activeUser = new User(
+                userArray[index].fname,
+                userArray[index].lname,
+                userArray[index].email,
+                userArray[index].pass,
+                userArray[index].id,
+                userArray[index].role,
+                userArray[index].region,
+                userArray[index].team
+            );
 
             ls.isUserEnter = true;
             ls.setItem("activeUser", JSON.stringify(activeUser));
@@ -442,7 +449,7 @@ function AccountManager(localStorage) {
     }
 
     function getSignalsWithoutTeamSelected(id) {
-        return JSON.parse(ls.getItem('signals')).filter(signal => signal.team == null);
+        return JSON.parse(ls.getItem('signals')).filter(signal => signal.team == null).filter(signal => signal.isClosed != true);
     }
 
 
@@ -557,6 +564,63 @@ function AccountManager(localStorage) {
         return 0;
     }
 
+    function getTeamWithId(id) {
+        let teams = getTeams();
+
+        return teams.find(team => team.id == id);
+    }
+
+    function getCarWithId(id) {
+        let cars = getCars();
+
+        return cars.find(car => car.id == id);
+    }
+
+    function getUserWithId(id) {
+        load()
+
+        return userArray.find(user => user.id == id);
+    }
+
+    function startWorking(id) {
+        let signals = getSignals();
+        signals[signals.findIndex(signal => signal.id == id)].start = new Date();
+
+        ls.setItem("signals", JSON.stringify(signals));
+    }
+
+    function endWorking(id) {
+        let teams = getTeams()
+        let signals = getSignals();
+        
+        signals[signals.findIndex(signal => signal.id == id)].end = new Date();
+        signals[signals.findIndex(signal => signal.id == id)].isClosed = true;
+
+        let signal = signals.find(signal => signal.id == id);
+
+        signals[signals.findIndex(signal => signal.id == id)].timeToComplete = diff(signal.start, signal.end);
+
+        teams[teams.findIndex(team => team.signal == id)].signal = null;
+        signals[signals.findIndex(signal => signal.id == id)].team = null;
+
+        ls.setItem("signals", JSON.stringify(signals));
+        ls.setItem("teams", JSON.stringify(teams));
+    }
+
+    function diff(start, end) {
+        let startDate = new Date(start);
+        let endDate = new Date(end);
+        let diff = endDate.getTime() - startDate.getTime();
+        let hours = Math.floor(diff / 1000 / 60 / 60);
+        diff -= hours * 1000 * 60 * 60;
+        let minutes = Math.floor(diff / 1000 / 60);
+    
+        if (hours < 0)
+           hours = hours + 24;
+    
+        return (hours <= 9 ? "0" : "") + hours + ":" + (minutes <= 9 ? "0" : "") + minutes;
+    }
+
     return {
         getAll,
         registerUser,
@@ -577,7 +641,12 @@ function AccountManager(localStorage) {
         getTeamsForSignals,
         getSignalsWithTeamSelected,
         getSignalsWithoutTeamSelected,
-        deleteSignal
+        deleteSignal,
+        getTeamWithId,
+        getCarWithId,
+        getUserWithId,
+        startWorking,
+        endWorking
     }
 }
 

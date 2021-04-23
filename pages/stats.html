@@ -21,7 +21,7 @@
       <nav class="navbar">
         <div class="navbar-brand">
           <a class="navbar-item" href="../index.html">
-            <img src="../img/Logo.png" width="90"/>
+            <img src="../img/Logo.png" width="90" />
           </a>
           <a class="navbar-item is-hidden-desktop" href="tel:112">
             <span class="icon" style="color: #333;">
@@ -139,44 +139,47 @@
       <div class="tile is-12 is-parent">
         <div class="tile is-child box">
           <p class="title is-4 has-text-centered">Сигнали</p>
-          <p class="title is-1 has-text-centered">50</p>
+          <p class="title is-1 has-text-centered" id="numberOfSignals">0</p>
         </div>
 
         <div class="tile is-child box" style="margin-left: 2% !important;">
           <p class="title is-4 has-text-centered">Пожари</p>
-          <p class="title is-1 has-text-centered">50</p>
+          <p class="title is-1 has-text-centered" id="numberOfFires">0</p>
         </div>
 
         <div class="tile is-child box" style="margin-left: 2% !important;">
           <p class="title is-4 has-text-centered">Наводнения</p>
-          <p class="title is-1 has-text-centered">50</p>
+          <p class="title is-1 has-text-centered" id="numberOfFloods">0</p>
         </div>
 
-        <div class="tile is-child box" style="margin-left: 2% !important;">
-          <p class="title is-4 has-text-centered">Отбори</p>
-          <p class="title is-1 has-text-centered">50</p>
-        </div>
       </div>
     </div>
 
     <div class="tile is-ancestor">
       <div class="tile is-12 is-parent">
         <div class="tile is-child box">
-          <p class="title is-4 has-text-centered">Спасителните операции</p>
-          <p class="title is-1 has-text-centered">50</p>
+          <p class="title is-4 has-text-centered">Отбори</p>
+          <p class="title is-1 has-text-centered" id="numberOfTeams">0</p>
         </div>
 
         <div class="tile is-child box" style="margin-left: 2% !important;">
-          <p class="title is-4 has-text-centered">Отбор с най-много заслуги</p>
-          <p class="title is-1 has-text-centered">1</p>
+          <p class="title is-4 has-text-centered">Спасителните операции</p>
+          <p class="title is-1 has-text-centered" id="numberOfRescues">0</p>
         </div>
 
         <div class="tile is-child box" style="margin-left: 2% !important;">
           <p class="title is-4 has-text-centered">Свободни пожарни коли</p>
-          <p class="title is-1 has-text-centered">50</p>
+          <p class="title is-1 has-text-centered" id="numberOfFreeCars">0</p>
+          <p class="has-text-centered">от общо</p>
+          <p class="has-text-centered" id="numberOfCars">0</p>
         </div>
       </div>
     </div>
+    <div id="map" style="width: 600px; height: 400px;"></div>
+    <div id="popup" class="ol-popup">
+      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+      <div id="popup-content"></div>
+  </div>
   </div>
 
   <footer class="hero">
@@ -243,6 +246,8 @@
     <br>
   </footer>
 
+  <script src="../scripts/Logic Layer/accountManager.js"></script>
+  <script src="../scripts/Presentation Layer/stats.js"></script>
   <script defer src="../scripts/Presentation Layer/navbar.js"></script>
 </body>
 

@@ -560,13 +560,14 @@ function AccountManager(localStorage) {
         if (teams.findIndex(team => team.signal == signalId) != -1) {
             teams[teams.findIndex(team => team.signal == signalId)].signal = null;
         }
-
         let index = signals.findIndex(signal => signal.id == signalId);
+
 
         signals.splice(index, 1);
 
         ls.setItem('signals', JSON.stringify(signals));
         ls.setItem('teams', JSON.stringify(teams));
+        ls.numberOfSignals--;
 
         return 0;
     }
@@ -628,6 +629,50 @@ function AccountManager(localStorage) {
         return (hours <= 9 ? "0" : "") + hours + ":" + (minutes <= 9 ? "0" : "") + minutes;
     }
 
+    function getNumberOfSignals() {
+        return localStorage.numberOfSignals;
+    }
+
+    function getNumberOfFires() {
+        if (getSignals() == null) {
+            return 0;
+        } else {
+            return getSignals().filter(signal => signal.type == "Fire").length;
+        }
+    }
+
+    function getNumberOfFloods() {
+        if (getSignals() == null) {
+            return 0;
+        } else {
+            return getSignals().filter(signal => signal.type == "Flood").length;
+        }
+    }
+
+    function getNumberOfTeam() {
+        return ls.numberOfTeams;
+    }
+
+    function getNumberOfRescues() {
+        if (getSignals() == null) {
+            return 0;
+        } else {
+            return getSignals().filter(signal => signal.type == "Rescue").length;
+        }
+    }
+
+    function getNumberOfCars() {
+        return ls.numberOfCars;
+    }
+
+    function getNumberOfFreeCars() {
+        if (getCars() == null) {
+            return 0;
+        } else {
+            return getCars().filter(car => car.inTeam == false).length;
+        }
+    }
+
     return {
         getAll,
         registerUser,
@@ -655,7 +700,15 @@ function AccountManager(localStorage) {
         startWorking,
         endWorking,
         getAcceptedSignals,
-        getClosedSignals
+        getClosedSignals,
+        getNumberOfSignals,
+        getNumberOfFires,
+        getNumberOfFloods,
+        getNumberOfFloods,
+        getNumberOfTeam,
+        getNumberOfCars,
+        getNumberOfFreeCars,
+        getNumberOfRescues
     }
 }
 

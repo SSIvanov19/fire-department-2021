@@ -1,2 +1,20 @@
-# fire-department-2021
-Repo for project about fire department.
+# Team techFlames
+
+![Team Logo](Logo.png)
+
+---
+
+### Table of Contents
+
+- [The team](#the-team)
+
+---
+
+## The team
+
+- Miroslav Ivanov - Scrum Trainer
+- Stoyan Ivanov - Back-End Developer
+- Kostadin Taligadzhiev - Front-End Developer
+- Yoan Tanev - Designer
+
+---

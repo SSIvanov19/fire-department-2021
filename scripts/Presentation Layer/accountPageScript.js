@@ -1,5 +1,5 @@
 let am = new AccountManager(localStorage);
-let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+let activeUser = am.getActiveUser();
 let carSel = document.getElementById("car");
 let sigSel = document.getElementById("signals");
 let sigPendingSel = document.getElementById("signalsPending");
@@ -9,132 +9,175 @@ let teamSel = document.getElementById("teams");
 let teamPenSel = document.getElementById("teamsPendingSignal");
 let teamSigSel = document.getElementById("signalTeam");
 
-//Need to be in onload()
-let isTrue = (am.checkForEnterUser() == 'true');
+window.onload = () => {
+    let isEnter = (am.checkForEnterUser() == 'true');
 
-if (isTrue) {
-    document.getElementById("fname").innerHTML = "Име: " + activeUser.fname;
-    document.getElementById("lname").innerHTML = "Фамилия: " + activeUser.lname;
-    document.getElementById("role").innerHTML = "Роля: " + activeUser.role;
-    document.getElementById("region").innerHTML = "Регион: " + activeUser.region;
+    if (isEnter) {
+        document.getElementById("fname").innerHTML = "Име: " + activeUser.fname;
+        document.getElementById("lname").innerHTML = "Фамилия: " + activeUser.lname;
+        document.getElementById("role").innerHTML = "Роля: " + activeUser.role;
+        document.getElementById("region").innerHTML = "Регион: " + activeUser.region;
 
-    if (activeUser.role == 1) {
-        if (activeUser.team == undefined || activeUser.team == null) {
-            document.getElementById("team").innerHTML = "Отбор: няма";
-            document.getElementById("signalP").innerHTML = "Сигнали: няма";
+        //If user is firefighter
+        if (activeUser.role == 1) {
+            initFirefighter();
+            document.getElementById("firefighter-stats").style.display = 'block';
+            document.getElementById("firefighterTeamManagment").style.display = "block";
         } else {
-            document.getElementById("team").innerHTML = "Отбор: " + activeUser.team;
+            document.getElementById("firefighter-stats").style.display = 'none';
+            document.getElementById("firefighterTeamManagment").style.display = "none";
+        }
 
-            let team = am.getTeamWithId(activeUser.team);
-            let car = am.getCarWithId(team.car);
+        //If user is dispatcher
+        if (activeUser.role == 2) {
+            document.getElementById("signalDiv").style.display = "block";
 
-            document.getElementById("teamCar").innerHTML = "Кола: " + car.model + " " + car.registrationPlate;
-            document.getElementById("membersInTeam").innerHTML = "Съотборници:";
+            getNames();
+            initMapForSignal();
 
-            let iterations = team.employees.length;
-
-            for (const member of team.employees) {
-                if (!--iterations) {
-                    document.getElementById("membersInTeam").innerHTML += " " + am.getUserWithId(member).fname + " " + am.getUserWithId(member).lname;
-                } else {
-                    document.getElementById("membersInTeam").innerHTML += " " + am.getUserWithId(member).fname + " " + am.getUserWithId(member).lname + ",";
-                }
+            if (am.getSignals() != null) {
+                forEachOption(sigSel, am.getSignalsWithoutTeamSelected(), "Изберете сигнал");
+                forEachOption(sigPendingSel, am.getSignalsWithTeamSelected(), "Изберете сигнал");
+                forEachOption(sigAccSel, am.getAcceptedSignals(), "Изберете сигнал");
+                forEachOption(sigClosedSel, am.getClosedSignals(), "Изберете сигнал");
             }
 
-            document.getElementById("startOfDay").innerHTML = "Начало на смяната: " + team.starOfWorkingDay;
-            document.getElementById("endOfDay").innerHTML = "Край на смяната: " + team.endOfWorkingDay;
-            document.getElementById("workingDays").innerHTML = "Работни дни:";
+            let sels = [teamSel, teamPenSel, teamSigSel];
 
-            for (let i = 1; i <= 7; i++) {
-                if (team.shifts.includes(i.toString())) {
-                    switch (i) {
-                        case 1:
-                            document.getElementById("workingDays").innerHTML += " Понеделник";
-                            break;
-                        case 2:
-                            document.getElementById("workingDays").innerHTML += " Вторник";
-                            break;
-                        case 3:
-                            document.getElementById("workingDays").innerHTML += " Сряда";
-                            break;
-                        case 4:
-                            document.getElementById("workingDays").innerHTML += "Четвъртък";
-                            break;
-                        case 5:
-                            document.getElementById("workingDays").innerHTML += " Петък";
-                            break;
-                        case 6:
-                            document.getElementById("workingDays").innerHTML += " Събота";
-                            break;
-                        case 6:
-                            document.getElementById("workingDays").innerHTML += " Неделя";
-                            break;
-                    }
-                }
+            for (const sel of sels) {
+                forEachOption(sel, am.getTeamsForSignals(), "Изберете отбор");
             }
 
-            document.getElementById("holidayP").innerHTML = "Почивни дни: " + team.holidays;
-            document.getElementById("sickLeaveP").innerHTML = "Sick Leaves: " + team.sickLeaves;
-            document.getElementById("BusinessTripP").innerHTML = "Командировка: " + team.businessTrips;
+            let ids = ["displaySignal", "displayPendingSignal", "displayAcceptedSignal", "displayClosedSignal"];
 
-            if (team.signal != null) {
-                signal = am.getSignalsWithId(team.signal)
+            for (const id of ids) {
+                document.getElementById(id).style.display = "none";
+            }
+        } else {
+            document.getElementById("signalDiv").style.display = "none";
+        }
 
-                document.getElementById("signalP").innerHTML = "Сигнал: " + signal.id;
-                document.getElementById("signalNameP").innerHTML = "Заглавие: " + signal.title;
-                document.getElementById("signalTypeP").innerHTML = "Тип: " + signal.type;
-                document.getElementById("signalDesP").innerHTML = "Описание: " + signal.description;
-                initMap(signal.coordinatesX, signal.coordinatesY, "fireMapSignal");
+        let ids = ["registerEmployee", "registerCar", "registerTeam"];
 
-                if (signal.isClosed) {
-                    document.getElementById("startWorkingButton").style.display = "none";
-                    document.getElementById("endWorkingButton").style.display = "none";
-                } else {
-                    console.log(signal.start);
-                    if (signal.start == null) {
-                        document.getElementById("startWorkingButton").style.display = "block";
-                        document.getElementById("endWorkingButton").style.display = "none";
-                    } else {
-                        document.getElementById("startWorkingButton").style.display = "none";
-                        document.getElementById("endWorkingButton").style.display = "block";
-                    }
-                }
-            } else {
-                document.getElementById("signalP").innerHTML = "Сигнал: няма";
-                document.getElementById("signalWorkButtons").style.display = "none";
+        //If user is admin
+        if (activeUser.role == 3) {
+            document.getElementById("deleteAll").style.display = "inline";
+            document.getElementById("deleteAcc").style.display = "none";
+            for (const id of ids) {
+                document.getElementById(id).style.display = "block";
+            }
+            forEachCar(carSel);
+        } else {
+            document.getElementById("deleteAll").style.display = "none";
+            document.getElementById("deleteAcc").style.display = "inline";
+            for (const id of ids) {
+                document.getElementById(id).style.display = "none";
             }
         }
+    } else {
+        window.location.href = "../index.html";
     }
-} else {
-    window.location.href = "../index.html";
+
+    // Initialize all input of type date
+    var calendars = bulmaCalendar.attach('[type="date"]', {
+        dateFormat: 'DD/MM/YYYY',
+        lang: 'bg',
+        minDate: new Date(),
+        weekStart: 1
+    })
 }
 
-if (activeUser.role == 3) {
-    document.getElementById("deleteAll").style.display = "inline";
-    document.getElementById("deleteAcc").style.display = "none";
-    document.getElementById("registerEmployee").style.display = "block";
-    document.getElementById("registerCar").style.display = "block";
-    document.getElementById("registerTeam").style.display = "block";
-} else {
-    document.getElementById("deleteAll").style.display = "none";
-    document.getElementById("deleteAcc").style.display = "inline";
-    document.getElementById("registerEmployee").style.display = "none";
-    document.getElementById("registerCar").style.display = "none";
-    document.getElementById("registerTeam").style.display = "none";
-}
+function initFirefighter() {
+    if (activeUser.team == undefined || activeUser.team == null) {
+        document.getElementById("team").innerHTML = "Отбор: няма";
+        document.getElementById("signalP").innerHTML = "Сигнали: няма";
+    } else {
+        document.getElementById("team").innerHTML = "Отбор: " + activeUser.team;
 
-if (activeUser.role == 2) {
-    document.getElementById("signalDiv").style.display = "block";
-} else {
-    document.getElementById("signalDiv").style.display = "none";
-}
+        let team = am.getTeamWithId(activeUser.team);
+        let car = am.getCarWithId(team.car);
 
-if (activeUser.role == 1) {
-    document.getElementById("firefighter-stats").style.display = 'block';
-    document.getElementById("firefighterTeamManagment").style.display = "block";
-} else {
-    document.getElementById("firefighter-stats").style.display = 'none';
-    document.getElementById("firefighterTeamManagment").style.display = "none";
+        document.getElementById("teamCar").innerHTML = "Кола: " + car.model + " " + car.registrationPlate;
+
+        let memberInTeamP = document.getElementById("membersInTeam");
+        memberInTeamP.innerHTML = "Съотборници:";
+
+        let iterations = team.employees.length;
+
+        for (const member of team.employees) {
+            let user = am.getUserWithId(member);
+
+            if (!--iterations) {
+                memberInTeamP.innerHTML += " " + user.fname + " " + user.lname;
+            } else {
+                memberInTeamP.innerHTML += " " + user.fname + " " + user.lname + ",";
+            }
+        }
+
+        document.getElementById("startOfDay").innerHTML = "Начало на смяната: " + team.starOfWorkingDay;
+        document.getElementById("endOfDay").innerHTML = "Край на смяната: " + team.endOfWorkingDay;
+
+        let workingDaysP = document.getElementById("workingDays");
+        workingDaysP.innerHTML = "Работни дни:";
+
+        for (let i = 1; i <= 7; i++) {
+            if (team.shifts.includes(i.toString())) {
+                switch (i) {
+                    case 1:
+                        workingDaysP.innerHTML += " Понеделник";
+                        break;
+                    case 2:
+                        workingDaysP.innerHTML += " Вторник";
+                        break;
+                    case 3:
+                        workingDaysP.innerHTML += " Сряда";
+                        break;
+                    case 4:
+                        workingDaysP.innerHTML += " Четвъртък";
+                        break;
+                    case 5:
+                        workingDaysP.innerHTML += " Петък";
+                        break;
+                    case 6:
+                        workingDaysP.innerHTML += " Събота";
+                        break;
+                    case 6:
+                        workingDaysP.innerHTML += " Неделя";
+                        break;
+                }
+            }
+        }
+
+        document.getElementById("holidayP").innerHTML = "Почивни дни: " + team.holidays;
+        document.getElementById("sickLeaveP").innerHTML = "Sick Leaves: " + team.sickLeaves;
+        document.getElementById("BusinessTripP").innerHTML = "Командировка: " + team.businessTrips;
+
+        if (team.signal != null) {
+            signal = am.getSignalsWithId(team.signal)
+
+            document.getElementById("signalP").innerHTML = "Сигнал: " + signal.id;
+            document.getElementById("signalNameP").innerHTML = "Заглавие: " + signal.title;
+            document.getElementById("signalTypeP").innerHTML = "Тип: " + signal.type;
+            document.getElementById("signalDesP").innerHTML = "Описание: " + signal.description;
+            initMap(signal.coordinatesX, signal.coordinatesY, "fireMapSignal");
+
+            if (signal.isClosed) {
+                document.getElementById("startWorkingButton").style.display = "none";
+                document.getElementById("endWorkingButton").style.display = "none";
+            } else {
+                if (signal.start == null) {
+                    document.getElementById("startWorkingButton").style.display = "block";
+                    document.getElementById("endWorkingButton").style.display = "none";
+                } else {
+                    document.getElementById("startWorkingButton").style.display = "none";
+                    document.getElementById("endWorkingButton").style.display = "block";
+                }
+            }
+        } else {
+            document.getElementById("signalP").innerHTML = "Сигнал: няма";
+            document.getElementById("signalWorkButtons").style.display = "none";
+        }
+    }
 }
 
 function forEachCar(selectElement) {
@@ -147,7 +190,7 @@ function forEachCar(selectElement) {
     selectElement.options[0] = new Option("Изберете кола", "");
 
     if (cars != null) {
-        cars.forEach((element, index) => {
+        cars.forEach(element => {
             if (element.inTeam == false) {
                 selectElement.options[selectElement.options.length] = new Option(element.model + " " + element.registrationPlate, element.numberOfSeats + " " + element.id);
             }
@@ -155,43 +198,28 @@ function forEachCar(selectElement) {
     }
 }
 
-function forEachSignal(signalSelect, func) {
-    let signals = func;
-    console.log(signals);
+function forEachOption(optionSelect, func, firstOption) {
+    let options = func;
 
-    for (i = signalSelect.length - 1; i >= 0; i--) {
-        signalSelect.remove(i);
+    for (i = optionSelect.length - 1; i >= 0; i--) {
+        optionSelect.remove(i);
     }
 
-    signalSelect.options[0] = new Option("Изберете сигнал", "");
+    optionSelect.options[0] = new Option(firstOption, "");
 
-    if (signals != null) {
-        signals.forEach((element, index) => {
-            signalSelect.options[signalSelect.options.length] = new Option(element.title, element.id);
+    if (options != null) {
+        options.forEach(element => {
+            optionSelect.options[optionSelect.options.length] = new Option(element.title ?? element.id, element.id);
         });
     }
 }
 
-function forEachTeam(teamsSelect) {
-    let teams = am.getTeamsForSignals();
-
-    for (i = teamsSelect.length - 1; i >= 0; i--) {
-        teamsSelect.remove(i);
-    }
-
-    teamsSelect.options[0] = new Option("Изберете отбор", "");
-
-    if (teams != null) {
-        teams.forEach((element, index) => {
-            teamsSelect.options[teamsSelect.options.length] = new Option(element.id, element.id);
-        });
-    }
-}
-
+/**
+ * Function to get the names
+ * of the user, which is entered
+ */
 function getNames() {
-    if (localStorage.isUserEnter == "true") {
-        document.getElementById("Signalnames").value = JSON.parse(localStorage.getItem("activeUser")).fname + " " + JSON.parse(localStorage.getItem("activeUser")).lname;
-    }
+    document.getElementById("Signalnames").value = activeUser.fname + " " + activeUser.lname;
 }
 
 function initMapForSignal() {
@@ -258,36 +286,6 @@ function initMap(coordinatesX, coordinatesY, id) {
     setTimeout(function () { map.updateSize(); }, 200);
 }
 
-window.onload = () => {
-    forEachCar(carSel);
-    initMapForSignal();
-
-    getNames();
-
-    if (JSON.parse(localStorage.getItem("signals")) != null) {
-        forEachSignal(sigSel, am.getSignalsWithoutTeamSelected());
-        forEachSignal(sigPendingSel, am.getSignalsWithTeamSelected());
-        forEachSignal(sigAccSel, am.getAcceptedSignals());
-        forEachSignal(sigClosedSel, am.getClosedSignals());
-    }
-
-    forEachTeam(teamSel);
-    forEachTeam(teamPenSel);
-    forEachTeam(teamSigSel);
-
-    document.getElementById("displaySignal").style.display = "none";
-    document.getElementById("displayPendingSignal").style.display = "none";
-    document.getElementById("displayAcceptedSignal").style.display = "none";
-    document.getElementById("displayClosedSignal").style.display = "none";
-
-    // Initialize all input of type date
-    var calendars = bulmaCalendar.attach('[type="date"]', {
-        dateFormat: 'DD/MM/YYYY',
-        lang: 'bg',
-        minDate: new Date(),
-        weekStart: 1
-    })
-}
 
 function updateCarSel() {
     let form = document.forms.registerTeam;
@@ -324,6 +322,14 @@ function updateCarSel() {
     }
 }
 
+function chengeParentDivDisplay(parentDiv, id) {
+    if (id == "") {
+        parentDiv.style.display = "none";
+    } else {
+        parentDiv.style.display = "block";
+    }
+}
+
 carSel.onchange = updateCarSel;
 
 sigSel.onchange = () => {
@@ -340,11 +346,7 @@ sigSel.onchange = () => {
         initMap(signal.coordinatesX, signal.coordinatesY, "map");
     }
 
-    if (id == "") {
-        parentDiv.style.display = "none";
-    } else {
-        parentDiv.style.display = "block";
-    }
+    chengeParentDivDisplay(parentDiv, id);
 
     if (signal != undefined) {
         titleP.innerHTML = "Заглавие: " + signal.title;
@@ -369,11 +371,7 @@ sigPendingSel.onchange = () => {
         initMap(signal.coordinatesX, signal.coordinatesY, "mapPendingSignal");
     }
 
-    if (id == "") {
-        parentDiv.style.display = "none";
-    } else {
-        parentDiv.style.display = "block";
-    }
+    chengeParentDivDisplay(parentDiv, id);
 
     if (signal != undefined) {
         titleP.innerHTML = "Заглавие: " + signal.title;
@@ -401,11 +399,7 @@ sigAccSel.onchange = () => {
         initMap(signal.coordinatesX, signal.coordinatesY, "mapAcceptedSignal");
     }
 
-    if (id == "") {
-        parentDiv.style.display = "none";
-    } else {
-        parentDiv.style.display = "block";
-    }
+    chengeParentDivDisplay(parentDiv, id);
 
     let startDate = new Date(signal.start);
 
@@ -437,11 +431,7 @@ sigClosedSel.onchange = () => {
         initMap(signal.coordinatesX, signal.coordinatesY, "mapClosedMap");
     }
 
-    if (id == "") {
-        parentDiv.style.display = "none";
-    } else {
-        parentDiv.style.display = "block";
-    }
+    chengeParentDivDisplay(parentDiv, id);
 
     let startDate = new Date(signal.start);
     let endDate = new Date(signal.end);
@@ -480,7 +470,7 @@ function getInput(input, form = null) {
                 employeeForm.elements.email.value,
                 employeeForm.elements.pass.value,
                 employeeForm.elements.role.value,
-                "Burgas"
+                "Бургас"
             );
 
             switch (employeeOutput) {
@@ -515,7 +505,7 @@ function getInput(input, form = null) {
                 carForm.elements.model.value,
                 carForm.elements.registration.value,
                 carForm.elements.seats.value,
-                "Burgas"
+                "Бургас"
             );
 
             switch (carOutput) {
@@ -620,13 +610,13 @@ function getInput(input, form = null) {
                     document.getElementById("displayPendingSignal").style.display = "none";
 
                     if (JSON.parse(localStorage.getItem("signals")) != null) {
-                        forEachSignal(sigSel, am.getSignalsWithoutTeamSelected());
-                        forEachSignal(sigPendingSel, am.getSignalsWithTeamSelected());
+                        forEachOption(sigSel, am.getSignalsWithoutTeamSelected(), "Изберете сигнал");
+                        forEachOption(sigPendingSel, am.getSignalsWithTeamSelected(), "Изберете сигнал");
                     }
 
-                    forEachTeam(teamSel);
-                    forEachTeam(teamPenSel);
-                    forEachTeam(signalTeam);
+                    forEachOption(teamSel, am.getTeamsForSignals(), "Изберете отбор");
+                    forEachOption(teamPenSel, am.getTeamsForSignals(), "Изберете отбор");
+                    forEachOption(signalTeam, am.getTeamsForSignals(), "Изберете отбор");
                     break;
                 case 1:
                     document.getElementById("signalError").innerHTML = "You don't have signal selected!";
@@ -655,16 +645,16 @@ function getInput(input, form = null) {
             switch (signalOutput2) {
                 case 0:
                     if (JSON.parse(localStorage.getItem("signals")) != null) {
-                        forEachSignal(sigSel, am.getSignalsWithoutTeamSelected());
-                        forEachSignal(sigPendingSel, am.getSignalsWithTeamSelected());
+                        forEachOption(sigSel, am.getSignalsWithoutTeamSelected(), "Изберете сигнал");
+                        forEachOption(sigPendingSel, am.getSignalsWithTeamSelected(), "Изберете сигнал");
                     }
 
                     document.getElementById("displaySignal").style.display = "none";
                     document.getElementById("displayPendingSignal").style.display = "none";
 
-                    forEachTeam(teamSel);
-                    forEachTeam(teamPenSel);
-                    forEachTeam(signalTeam);
+                    forEachOption(teamSel, am.getTeamsForSignals(), "Изберете отбор");
+                    forEachOption(teamPenSel, am.getTeamsForSignals(), "Изберете отбор");
+                    forEachOption(signalTeam, am.getTeamsForSignals(), "Изберете отбор");
                     break;
                 case 1:
                     document.getElementById("signalError").innerHTML = "You don't have signal selected!";
@@ -691,16 +681,16 @@ function getInput(input, form = null) {
             switch (output) {
                 case 0:
                     if (JSON.parse(localStorage.getItem("signals")) != null) {
-                        forEachSignal(sigSel, am.getSignalsWithoutTeamSelected());
-                        forEachSignal(sigPendingSel, am.getSignalsWithTeamSelected());
+                        forEachOption(sigSel, am.getSignalsWithoutTeamSelected(), "Изберете сигнал");
+                        forEachOption(sigPendingSel, am.getSignalsWithTeamSelected(), "Изберете сигнал");
                     }
 
                     document.getElementById("displaySignal").style.display = "none";
                     document.getElementById("displayPendingSignal").style.display = "none";
 
-                    forEachTeam(teamSel);
-                    forEachTeam(teamPenSel);
-                    forEachTeam(signalTeam);
+                    forEachOption(teamSel, am.getTeamsForSignals(), "Изберете отбор");
+                    forEachOption(teamPenSel, am.getTeamsForSignals(), "Изберете отбор");
+                    forEachOption(signalTeam, am.getTeamsForSignals(), "Изберете отбор");
 
                     getNames();
                     document.getElementById("error").innerHTML = "Signal submit!";

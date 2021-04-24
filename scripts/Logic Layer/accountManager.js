@@ -547,7 +547,7 @@ function AccountManager(localStorage) {
     function deleteAccount() {
         load();
 
-        let activeUser = JSON.parse(ls.getItem("activeUser"));
+        let activeUser = getActiveUser();
 
         let index = userArray.findIndex(user => user.id == activeUser.id);
         userArray.splice(index, 1);
@@ -557,6 +557,15 @@ function AccountManager(localStorage) {
         ls.isUserEnter = false;
         ls.numberOfUsers--;
         save();
+    }
+
+    /**
+     * Function that gets the
+     * active user from localeStorage.
+     * @returns {Object} Active User
+     */
+    function getActiveUser() {
+        return JSON.parse(ls.getItem("activeUser"));
     }
 
     /**
@@ -1037,7 +1046,8 @@ function AccountManager(localStorage) {
         getNumberOfTeam,
         getNumberOfCars,
         getNumberOfFreeCars,
-        getNumberOfRescues
+        getNumberOfRescues,
+        getActiveUser
     }
 }
 

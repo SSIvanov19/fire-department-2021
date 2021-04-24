@@ -21,7 +21,7 @@ function getInput() {
 
   let am = new AccountManager(localStorage);
 
-  let output = am.registerUser(fname, lname, email, pass, 0, "Burgas");
+  let output = am.registerUser(fname, lname, email, pass, 0, "Бургас");
 
   switch (output) {
     case 0:

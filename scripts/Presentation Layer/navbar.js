@@ -1,4 +1,6 @@
-if (localStorage.activeUser) {
+let am = new AccountManager(localStorage);
+
+if (am.checkForEnterUser() == "true") {
   document.getElementById("userLogin").style.display = "inline";
   document.getElementById("userNotLogin").style.display = "none";
 } else {

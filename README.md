@@ -1,6 +1,6 @@
 # Team techFlames
 
-![Team Logo](Logo.png)
+![Team Logo](img/Logo.png)
 
 ---
 

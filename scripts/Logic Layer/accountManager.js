@@ -1055,7 +1055,8 @@ function AccountManager(localStorage) {
         getNumberOfCars,
         getNumberOfFreeCars,
         getNumberOfRescues,
-        getActiveUser
+        getActiveUser,
+        isArrayEmpty
     }
 }
 

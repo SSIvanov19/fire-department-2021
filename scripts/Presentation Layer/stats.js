@@ -22,10 +22,13 @@ window.onload = () => {
     updateCounter("numberOfFreeCars", numberOfFreeCars);
     updateCounter("numberOfCars", numberOfCars);
 
-    if (coordinatesX && coordinatesY) {
+
+    if (coordinatesX && coordinatesY && !am.isArrayEmpty(coordinatesX) && !am.isArrayEmpty(coordinatesY)) {
+        console.log("enter")
         initMap(coordinatesX, coordinatesY, "map");
     } else {
         document.getElementById("map").style.display = "none";
+        document.getElementById("popup").style.display = "none";
     }
 };
 
@@ -101,8 +104,6 @@ function initMap(coordinatesXs, coordinatesYs, id) {
     let container = document.getElementById('popup');
     let content = document.getElementById('popup-content');
     let closer = document.getElementById('popup-closer');
-
-    console.log(coordinatesXs);
 
     for (let i = 0; i < coordinatesXs.length; i++) {
         let layer = new ol.layer.Vector({

@@ -4,7 +4,7 @@
   "description": "Repo for project about fire department.",
   "main": "index.js",
   "dependencies": {
-    "bulma-calendar": "^6.0.9",
+    "bulma-calendar": "^6.1.0",
     "node-localstorage": "^2.1.6"
   },
   "devDependencies": {},

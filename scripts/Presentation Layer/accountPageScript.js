@@ -9,8 +9,10 @@ let teamSel = document.getElementById("teams");
 let teamPenSel = document.getElementById("teamsPendingSignal");
 let teamSigSel = document.getElementById("signalTeam");
 
-///Need to be in onload()
-if (localStorage.isUserEnter) {
+//Need to be in onload()
+let isTrue = (am.checkForEnterUser() == 'true');
+
+if (isTrue) {
     document.getElementById("fname").innerHTML = "Име: " + activeUser.fname;
     document.getElementById("lname").innerHTML = "Фамилия: " + activeUser.lname;
     document.getElementById("role").innerHTML = "Роля: " + activeUser.role;

@@ -29,6 +29,10 @@ window.onload = () => {
     }
 };
 
+/**
+ * Function that get stast
+ * for stast page
+ */
 function getNumbers() {
     numberOfSingals = am.getNumberOfSignals() ?? 0;
     numberOfTeams = am.getNumberOfTeam() ?? 0;
@@ -51,6 +55,12 @@ function getNumbers() {
     }
 }
 
+/**
+ * Function that create animation
+ * for countiong word
+ * @param {number} counterId The id of the html p element
+ * @param {number} target The target number
+ */
 function updateCounter(counterId, target) {
     let element = document.getElementById(counterId);
     target = Number(target);
@@ -65,6 +75,13 @@ function updateCounter(counterId, target) {
     }
 }
 
+/**
+ * Function that initialise map
+ * based on openLayer API.
+ * @param {string} coordinatesXs The longitude coordinate
+ * @param {string} coordinatesYs The latitude coordinate
+ * @param {number} id Id of the html div element
+ */
 function initMap(coordinatesXs, coordinatesYs, id) {
     document.getElementById(id).innerHTML = "";
 

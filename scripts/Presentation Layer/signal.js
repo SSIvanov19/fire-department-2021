@@ -1,8 +1,15 @@
 var coordinatesX = null;
 var coordinatesY = null;
 
+/**
+ * Function to get the names
+ * of the user, which is entered
+ */
 function getNames() {
-    if (localStorage.isUserEnter == "true") {
+    let am = new AccountManager(localStorage);
+    let isTrue = (am.checkForEnterUser() == 'true');
+
+    if (isTrue) {
         document.getElementById("names").value = JSON.parse(localStorage.getItem("activeUser")).fname + " " + JSON.parse(localStorage.getItem("activeUser")).lname;
     }
 }
@@ -43,8 +50,13 @@ window.onload = () => {
         coordinatesX = m.coordinate[0];
         coordinatesY = m.coordinate[1];
     });
-}
+};
 
+/**
+ * Function that gets the input 
+ * and send it to the backend.
+ * @function getInputSignal
+ */
 function getInput() {
     let form = document.forms.signalForm;
 
@@ -61,22 +73,22 @@ function getInput() {
 
     switch (output) {
         case 0:
-            document.getElementById("error").innerHTML = "Signal submit!";
+            document.getElementById("error").innerHTML = "Сигналът е изпратен!";
             break;
         case 1:
-            document.getElementById("error").innerHTML = "Title can not be empty!";
+            document.getElementById("error").innerHTML = "Сигналът трябва да има име!";
             break;
         case 2:
-            document.getElementById("error").innerHTML = "Names can not be empty!";
+            document.getElementById("error").innerHTML = "Моля, попълнете вашите имена!";
             break;
         case 3:
-            document.getElementById("error").innerHTML = "There must be type selected!";
+            document.getElementById("error").innerHTML = "Сигналът трябва да има тип!";
             break;
         case 4:
-            document.getElementById("error").innerHTML = "There must be a address selected!";
+            document.getElementById("error").innerHTML = "Моля, изберете адрес от картата!";
             break;
         case 5:
-            document.getElementById("error").innerHTML = "The must be a description!";
+            document.getElementById("error").innerHTML = "Сигналът трябва да има описание!";
             break;
         default:
             console.log("A wild error appeared");

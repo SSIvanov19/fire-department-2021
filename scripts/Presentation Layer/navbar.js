@@ -1,4 +1,4 @@
-let am = new AccountManager(localStorage);
+am = new AccountManager(localStorage);
 
 if (am.checkForEnterUser() == "true") {
   document.getElementById("userLogin").style.display = "inline";

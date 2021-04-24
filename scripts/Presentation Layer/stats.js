@@ -22,7 +22,7 @@ window.onload = () => {
     updateCounter("numberOfFreeCars", numberOfFreeCars);
     updateCounter("numberOfCars", numberOfCars);
 
-    if(coordinatesX && coordinatesY) {
+    if (coordinatesX && coordinatesY) {
         initMap(coordinatesX, coordinatesY, "map");
     } else {
         document.getElementById("map").style.display = "none";
@@ -45,10 +45,10 @@ function getNumbers() {
     if (numberOfSingals != 0) {
         let signals = am.getAcceptedSignals();
 
-        for (const signal of signals) {
-            coordinatesX = [];
-            coordinatesY = [];
+        coordinatesX = [];
+        coordinatesY = [];
 
+        for (const signal of signals) {
             coordinatesX.push(signal.coordinatesX);
             coordinatesY.push(signal.coordinatesY);
         }
@@ -101,25 +101,24 @@ function initMap(coordinatesXs, coordinatesYs, id) {
     let container = document.getElementById('popup');
     let content = document.getElementById('popup-content');
     let closer = document.getElementById('popup-closer');
-   
-   
-    for (const coordinatesX of coordinatesXs) {
-        for (const coordinatesY of coordinatesYs) {
-            let layer = new ol.layer.Vector({
-                source: new ol.source.Vector({
-                    features: [
-                        new ol.Feature({
-                            geometry: new ol.geom.Point([coordinatesX, coordinatesY])
-                        })
-                    ]
-                }),
-                name: 'Marker'
-            });
-            
-            map.addLayer(layer)
-        }
+
+    console.log(coordinatesXs);
+
+    for (let i = 0; i < coordinatesXs.length; i++) {
+        let layer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [
+                    new ol.Feature({
+                        geometry: new ol.geom.Point([coordinatesXs[i], coordinatesYs[i]])
+                    })
+                ]
+            }),
+            name: 'Marker'
+        });
+
+        map.addLayer(layer)
     }
-  
+
     let overlay = new ol.Overlay({
         element: container,
         autoPan: true,
@@ -129,8 +128,8 @@ function initMap(coordinatesXs, coordinatesYs, id) {
     });
 
     map.addOverlay(overlay);
-   
-    closer.onclick = function() {
+
+    closer.onclick = function () {
         overlay.setPosition(undefined);
         closer.blur();
         return false;
@@ -139,7 +138,7 @@ function initMap(coordinatesXs, coordinatesYs, id) {
     map.on('singleclick', function (event) {
         if (map.hasFeatureAtPixel(event.pixel) === true) {
             var coordinate = event.coordinate;
-   
+
             content.innerHTML = '<b>Активен сигнал</b>';
             overlay.setPosition(coordinate);
         } else {

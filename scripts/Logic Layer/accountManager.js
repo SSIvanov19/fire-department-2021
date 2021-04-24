@@ -326,6 +326,14 @@ function AccountManager(localStorage) {
             }
         }
 
+        if (model == "") {
+            return 3;
+        }
+
+        if (registrationPlate == "") {
+            return 4;
+        }
+
         if (ls.numberOfCars == undefined || ls.numberOfCars == 0) {
             ls.numberOfCars = 1;
         } else {

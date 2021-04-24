@@ -498,7 +498,7 @@
   </div>
 </section>
 
-<div class="columns is-centered">
+<div class="columns is-centered" id="sendSignalDiv">
   <div class="column is-7">
     <form class="box" onreset="return getInput(11)" method="POST" name="signalSubmitForm">
       <br>
@@ -539,21 +539,21 @@
       <p id="error" class="has-text-danger"></p>
     </form>
   </div>
+</div>
 
-  <div id="firefighterTeamManagment">
-    <hr>
-    <p id="signalP"></p>
-    <p id="signalNameP"></p>
-    <p id="signalTypeP"></p>
-    <div id="fireMapSignal" class="map"></div>
-    <p id="signalDesP"></p>
+<div id="firefighterTeamManagment">
+  <hr>
+  <p id="signalP"></p>
+  <p id="signalNameP"></p>
+  <p id="signalTypeP"></p>
+  <div id="fireMapSignal" class="map"></div>
+  <p id="signalDesP"></p>
 
-    <div id="signalWorkButtons">
-      <form onreset="return getInput(12)" method="POST" name="signalSubmitForm">
-        <input type="reset" value="Започване на работа" class="button is-success" id="startWorkingButton">
-        <input type="reset" value="Свършване на работа" class="button is-danger" id="endWorkingButton">
-      </form>
-    </div>
+  <div id="signalWorkButtons">
+    <form onreset="return getInput(12)" method="POST" name="signalSubmitForm">
+      <input type="reset" value="Започване на работа" class="button is-success" id="startWorkingButton">
+      <input type="reset" value="Свършване на работа" class="button is-danger" id="endWorkingButton">
+    </form>
   </div>
 </div>
 <br><br>
@@ -645,8 +645,8 @@
 
 <script src="../node_modules/bulma-calendar/dist/js/bulma-calendar.min.js"></script>
 <script src="../scripts/Logic Layer/accountManager.js"></script>
-<script src="../scripts/Presentation Layer/accountPageScript.js"></script>
 <script defer src="../scripts/Presentation Layer/navbar.js"></script>
+<script src="../scripts/Presentation Layer/accountPageScript.js"></script>
 
 </body>
 

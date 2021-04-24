@@ -31,6 +31,7 @@ window.onload = () => {
         //If user is dispatcher
         if (activeUser.role == 2) {
             document.getElementById("signalDiv").style.display = "block";
+            document.getElementById("sendSignalDiv").style.display = "block";
 
             getNames();
             initMapForSignal();
@@ -42,11 +43,7 @@ window.onload = () => {
                 forEachOption(sigClosedSel, am.getClosedSignals(), "Изберете сигнал");
             }
 
-            let sels = [teamSel, teamPenSel, teamSigSel];
-
-            for (const sel of sels) {
-                forEachOption(sel, am.getTeamsForSignals(), "Изберете отбор");
-            }
+            reloadSel();
 
             let ids = ["displaySignal", "displayPendingSignal", "displayAcceptedSignal", "displayClosedSignal"];
 
@@ -55,6 +52,7 @@ window.onload = () => {
             }
         } else {
             document.getElementById("signalDiv").style.display = "none";
+            document.getElementById("sendSignalDiv").style.display = "none";
         }
 
         let ids = ["registerEmployee", "registerCar", "registerTeam"];
@@ -91,6 +89,8 @@ function initFirefighter() {
     if (activeUser.team == undefined || activeUser.team == null) {
         document.getElementById("team").innerHTML = "Отбор: няма";
         document.getElementById("signalP").innerHTML = "Сигнали: няма";
+        document.getElementById("signalWorkButtons").style.display = "none";
+        document.getElementById("fireMapSignal").classList.remove('map');
     } else {
         document.getElementById("team").innerHTML = "Отбор: " + activeUser.team;
 
@@ -152,6 +152,9 @@ function initFirefighter() {
         document.getElementById("sickLeaveP").innerHTML = "Sick Leaves: " + team.sickLeaves;
         document.getElementById("BusinessTripP").innerHTML = "Командировка: " + team.businessTrips;
 
+
+        console.log(team.signal)
+
         if (team.signal != null) {
             signal = am.getSignalsWithId(team.signal)
 
@@ -176,6 +179,7 @@ function initFirefighter() {
         } else {
             document.getElementById("signalP").innerHTML = "Сигнал: няма";
             document.getElementById("signalWorkButtons").style.display = "none";
+            document.getElementById("fireMapSignal").classList.remove('map');
         }
     }
 }
@@ -447,6 +451,21 @@ sigClosedSel.onchange = () => {
     }
 }
 
+function reloadSel() {
+    let sels = [teamSel, teamPenSel, teamSigSel];
+
+    for (const sel of sels) {
+        forEachOption(sel, am.getTeamsForSignals(), "Изберете отбор");
+    }
+}
+
+function reloadSigSel() {
+    if (am.getSignals() != null) {
+        forEachOption(sigSel, am.getSignalsWithoutTeamSelected(), "Изберете сигнал");
+        forEachOption(sigPendingSel, am.getSignalsWithTeamSelected(), "Изберете сигнал");
+    }
+}
+
 function getInput(input, form = null) {
     switch (input) {
         case 1:
@@ -473,25 +492,27 @@ function getInput(input, form = null) {
                 "Бургас"
             );
 
+            let employeeError = document.getElementById("employeeError");
+
             switch (employeeOutput) {
                 case 0:
                     updateCarSel();
-                    document.getElementById("employeeError").innerHTML = "User created successfully!";
+                    employeeError.innerHTML = "Работникът е регестриран успешно!";
                     break;
                 case 1:
-                    document.getElementById("employeeError").innerHTML = "First name should start with capital letter!";
+                    employeeError.innerHTML = "Първото име трябва да започва с главна буква!";
                     break;
                 case 2:
-                    document.getElementById("employeeError").innerHTML = "Last name should start with capital letter!";
+                    employeeError.innerHTML = "Фамилното име трябва да започва с главна буква!";
                     break;
                 case 3:
-                    document.getElementById("employeeError").innerHTML = "Password must be at least 8 characters!";
+                    employeeError.innerHTML = "Паролата трябва да е най-малко 8 символа!";
                     break;
                 case 4:
-                    document.getElementById("employeeError").innerHTML = "There is already a user with this email address!";
+                    employeeError.innerHTML = "Вече има регестриран потребител с такъв e-mail!";
                     break;
                 case 5:
-                    document.getElementById("employeeError").innerHTML = "The email is invalid!";
+                    employeeError.innerHTML = "Въведеният e-mail е невалиден!";
                     break;
                 default:
                     console.log("A wild error appeared");
@@ -508,16 +529,24 @@ function getInput(input, form = null) {
                 "Бургас"
             );
 
+            let carError = document.getElementById("carError");
+
             switch (carOutput) {
                 case 0:
                     forEachCar(carSel);
-                    document.getElementById("carError").innerHTML = "Car registered successfully!";
+                    carError.innerHTML = "Колата е регестрирана успешно!";
                     break;
                 case 1:
-                    document.getElementById("carError").innerHTML = "Number of seat must be positive number!";
+                    carError.innerHTML = "Броят на местата трябва да е по-голям от 0!";
                     break;
                 case 2:
-                    document.getElementById("carError").innerHTML = "There is alredy a car with this registation plate";
+                    carError.innerHTML = "Вече има кола регестрирана с този регистрационен номер!";
+                    break;
+                case 3:
+                    carError.innerHTML = "Моля посочете модел!";
+                    break;
+                case 4:
+                    carError.innerHTML = "Моля посочете регистрационен номер!";
                     break;
                 default:
                     console.log("A wild error appeared");
@@ -551,38 +580,40 @@ function getInput(input, form = null) {
                 teamForm.elements.trip.value
             );
 
+            let teamError = document.getElementById("teamError");
+
             switch (teamOutput) {
                 case 0:
                     forEachCar(carSel);
                     updateCarSel();
-                    document.getElementById("teamError").innerHTML = "Team registered successfully!";
+                    teamError.innerHTML = "Отборът е регестриран успешно!";
                     break;
                 case 1:
-                    document.getElementById("teamError").innerHTML = "There are more than one person in the samo position!";
+                    teamError.innerHTML = "Има работник с повече от една позиция!";
                     break;
                 case 2:
-                    document.getElementById("teamError").innerHTML = "You must select at least one firefighter!";
+                    teamError.innerHTML = "Трябва да изберете поне един пожарникар!";
                     break;
                 case 3:
-                    document.getElementById("teamError").innerHTML = "You must select a car for the team!";
+                    teamError.innerHTML = "Трябва да изберете кола за екипа!";
                     break;
                 case 4:
-                    document.getElementById("teamError").innerHTML = "You must select a start hour of a working day!";
+                    teamError.innerHTML = "Трябва да изберете час за начало на смяната!";
                     break;
                 case 5:
-                    document.getElementById("teamError").innerHTML = "You must select a end hour of a working day!";
+                    teamError.innerHTML = "Трябва да изберете час за край на смяната!!";
                     break;
                 case 6:
-                    document.getElementById("teamError").innerHTML = "You must select working days of the week!";
+                    teamError.innerHTML = "Трябва да изберете дни, през които отбора ще е на работа!";
                     break;
                 case 7:
-                    document.getElementById("teamError").innerHTML = "You must select a holiday!";
+                    teamError.innerHTML = "Трябва да изберете дни за отпуска!";
                     break;
                 case 8:
-                    document.getElementById("teamError").innerHTML = "You must select a sick leave!";
+                    teamError.innerHTML = "Трябва да изберете дни за болнични!";
                     break;
                 case 9:
-                    document.getElementById("teamError").innerHTML = "You must select a business trip!";
+                    teamError.innerHTML = "Трябва да изберете дни за командировка!";
                     break;
                 default:
                     console.log("A wild error appeared");
@@ -609,22 +640,17 @@ function getInput(input, form = null) {
                     document.getElementById("displaySignal").style.display = "none";
                     document.getElementById("displayPendingSignal").style.display = "none";
 
-                    if (JSON.parse(localStorage.getItem("signals")) != null) {
-                        forEachOption(sigSel, am.getSignalsWithoutTeamSelected(), "Изберете сигнал");
-                        forEachOption(sigPendingSel, am.getSignalsWithTeamSelected(), "Изберете сигнал");
-                    }
+                    reloadSigSel()
+                    reloadSel();
 
-                    forEachOption(teamSel, am.getTeamsForSignals(), "Изберете отбор");
-                    forEachOption(teamPenSel, am.getTeamsForSignals(), "Изберете отбор");
-                    forEachOption(signalTeam, am.getTeamsForSignals(), "Изберете отбор");
                     break;
                 case 1:
-                    document.getElementById("signalError").innerHTML = "You don't have signal selected!";
-                    document.getElementById("signalPendingError").innerHTML = "You don't have signal selected!";
+                    document.getElementById("signalError").innerHTML = "Няма избран сигнал!";
+                    document.getElementById("signalPendingError").innerHTML = "Няма избран сигнал!";
                     break;
                 case 2:
-                    document.getElementById("signalError").innerHTML = "You don't have team selected!";
-                    document.getElementById("signalPendingError").innerHTML = "You don't have team selected!";
+                    document.getElementById("signalError").innerHTML = "Няма избран отбор!";
+                    document.getElementById("signalPendingError").innerHTML = "Няма избран отбор!";
                     break;
                 default:
                     console.log("A wild error appeared");
@@ -644,21 +670,17 @@ function getInput(input, form = null) {
 
             switch (signalOutput2) {
                 case 0:
-                    if (JSON.parse(localStorage.getItem("signals")) != null) {
-                        forEachOption(sigSel, am.getSignalsWithoutTeamSelected(), "Изберете сигнал");
-                        forEachOption(sigPendingSel, am.getSignalsWithTeamSelected(), "Изберете сигнал");
-                    }
+                    reloadSigSel();
 
                     document.getElementById("displaySignal").style.display = "none";
                     document.getElementById("displayPendingSignal").style.display = "none";
 
-                    forEachOption(teamSel, am.getTeamsForSignals(), "Изберете отбор");
-                    forEachOption(teamPenSel, am.getTeamsForSignals(), "Изберете отбор");
-                    forEachOption(signalTeam, am.getTeamsForSignals(), "Изберете отбор");
+                    reloadSel();
+
                     break;
                 case 1:
-                    document.getElementById("signalError").innerHTML = "You don't have signal selected!";
-                    document.getElementById("signalPendingError").innerHTML = "Signal deleted successfully!";
+                    document.getElementById("signalError").innerHTML = "Няма избран сигнал!";
+                    document.getElementById("signalPendingError").innerHTML = "Няма избран сигнал!";
                     break;
                 default:
                     console.log("A wild error appeared");
@@ -678,34 +700,34 @@ function getInput(input, form = null) {
                 signalForm5.elements.teams.value
             );
 
+            let error = document.getElementById("error");
+
             switch (output) {
                 case 0:
-                    if (JSON.parse(localStorage.getItem("signals")) != null) {
-                        forEachOption(sigSel, am.getSignalsWithoutTeamSelected(), "Изберете сигнал");
-                        forEachOption(sigPendingSel, am.getSignalsWithTeamSelected(), "Изберете сигнал");
-                    }
+                    reloadSigSel();
 
                     document.getElementById("displaySignal").style.display = "none";
                     document.getElementById("displayPendingSignal").style.display = "none";
 
-                    forEachOption(teamSel, am.getTeamsForSignals(), "Изберете отбор");
-                    forEachOption(teamPenSel, am.getTeamsForSignals(), "Изберете отбор");
-                    forEachOption(signalTeam, am.getTeamsForSignals(), "Изберете отбор");
+                    reloadSel();
 
                     getNames();
-                    document.getElementById("error").innerHTML = "Signal submit!";
+                    error.innerHTML = "Сигналът е изпратен!";
                     break;
                 case 1:
-                    document.getElementById("error").innerHTML = "Title can not be empty!";
+                    error.innerHTML = "Сигналът трябва да има име!";
                     break;
                 case 2:
-                    document.getElementById("error").innerHTML = "Names can not be empty!";
+                    error.innerHTML = "Моля, попълнете вашите имена!";
                     break;
                 case 3:
-                    document.getElementById("error").innerHTML = "There must be type selected!";
+                    error.innerHTML = "Сигналът трябва да има тип!";
                     break;
                 case 4:
-                    document.getElementById("error").innerHTML = "The must be a description!";
+                    error.innerHTML = "Моля, изберете адрес от картата!";
+                    break;
+                case 5:
+                    error.innerHTML = "Сигналът трябва да има описание!";
                     break;
                 default:
                     console.log("A wild error appeared");
@@ -718,11 +740,11 @@ function getInput(input, form = null) {
             let signal = am.getSignalsWithId(team.signal)
 
             if (signal.start == null) {
-                if (confirm("Do you really wand to start working")) {
+                if (confirm("Наистина ли искате да започнете да работите?")) {
                     am.startWorking(signal.id);
                 }
             } else {
-                if (confirm("Do you really wand to end working")) {
+                if (confirm("Наистина ли искат да спрете да работите?")) {
                     am.endWorking(signal.id);
                 }
             }

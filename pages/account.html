@@ -147,7 +147,7 @@
     </ul>
   </div><br>
 
-  <article class="panel is-info" style="width: 50%; margin-left: 25%; margin-right: 25%;">
+  <article class="panel is-info" style="width: 80%; margin-left: 10%; margin-right: 10%;">
     <p class="panel-heading">
       Информация:
     </p>
@@ -384,26 +384,29 @@
 
   <div id="signalDiv" class="box" style="width: 60%; margin-left: 20%; margin-right: 20%;">
     <form method="POST" name="signalForm" id="signalForm">
-      <div class="field">
-        <label class="label" for="signals">Избери незададен сигнал:</label><br>
-        <div class="control">
-          <div class="select">
-            <select name="signals" id="signals">
-              <option value="" selected="selected">Избери сигнал</option>
-            </select>
-          </div>
+      <label class="label" for="signals">Избери незададен сигнал:</label>
+      <div class="control">
+        <div class="select">
+          <select name="signals" id="signals">
+            <option value="" selected="selected">Избери сигнал</option>
+          </select>
         </div>
-      </div><br>
+      </div>
+      <br>
 
       <div id="displaySignal">
         <p id="title"></p>
         <p id="names"></p>
         <p id="type"></p>
-        <div id="map" class="map">
+        <br>
+
+        <div id="map" class="map" style="width: 100%;">
 
         </div>
+        <br>
         <p id="des"></p>
-        <label for="teams">Избери отбор:</label><br>
+        <br>
+        <label class="label" for="teams">Избери отбор:</label>
         <div class="control">
           <div class="select">
             <select name="teams" id="teams">
@@ -416,11 +419,12 @@
         <input type="reset" onclick="getInput(7, 1)" value="Accept" class="button is-success">
         <input type="reset" onclick="getInput(8, 1)" value="Reject" class="button is-danger">
         <p id="signalError"></p>
+        <br>
       </div>
     </form>
 
     <form method="POST" name="signalPendingForm" id="signalPendingForm">
-      <label for="signals">Избери постъпил сигнал:</label><br>
+      <label class="label" for="signals">Избери постъпил сигнал:</label>
       <div class="control">
         <div class="select">
           <select name="signals" id="signalsPending">
@@ -438,7 +442,7 @@
 
           </div>
           <p id="desPendingSignals"></p>
-          <label for="teams">Избери отбор за смяна:</label><br>
+          <label class="label" for="teams">Избери отбор за смяна:</label>
           <div class="control">
             <div class="select">
               <select name="teams" id="teamsPendingSignal">
@@ -453,8 +457,9 @@
           <p id="signalPendingError"></p>
         </div>
     </form>
+    <br>
     <form method="POST" name="signalAcceptedForm" id="signalAcceptedForm">
-      <label for="signals">Избери приет сигнал:</label><br>
+      <label class="label" for="signals">Избери приет сигнал:</label>
       <div class="control">
         <div class="select">
           <select name="signals" id="signalsAccepted">
@@ -473,8 +478,9 @@
           <div id="mapAcceptedSignal" class="map"></div>
         </div>
     </form>
+    <br>
     <form method="POST" name="signalClosedForm" id="signalClosedForm">
-      <label for="signals">Избери завършен сигнал:</label><br>
+      <label class="label" for="signals">Избери завършен сигнал:</label>
       <div class="control">
         <div class="select">
           <select name="signals" id="signalsClosed">
@@ -498,8 +504,8 @@
   </div>
 </section>
 
-<div class="columns is-centered" id="sendSignalDiv">
-  <div class="column is-7">
+<div class="columns" id="sendSignalDiv" style="width: 80%; margin-left: 10%; margin-right: 10%;">
+  <div class="column">
     <form class="box" onreset="return getInput(11)" method="POST" name="signalSubmitForm">
       <br>
       <p class="title is-4 has-text-centered">Изпрати сигнал</p><br>
@@ -541,8 +547,7 @@
   </div>
 </div>
 
-<div id="firefighterTeamManagment">
-  <hr>
+<div id="firefighterTeamManagment" class="box"  style="width: 50%; margin-left: 25%; margin-right: 25%;">
   <p id="signalP"></p>
   <p id="signalNameP"></p>
   <p id="signalTypeP"></p>

@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
-
-*{
+* {
     font-family: 'Comfortaa', cursive;
 }
 
@@ -62,12 +61,13 @@ footer {
 
 .is-paddingless-horizontal {
     display: inline-flex;
-  }
+}
 
-  .card {
+.card {
     margin-left: 30px;
-  }
-  .ol-popup {
+}
+
+.ol-popup {
     font-size: 12px;
     position: absolute;
     background-color: white;
@@ -80,4 +80,44 @@ footer {
     left: -50px;
     min-width: 100px;
     text-align: center;
+}
+
+.about-image iframe {
+    background-color: #fff;
+    width: 100%;
+    padding: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.about-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+    margin: 0 auto;
+    padding: 1em 2em;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.mobile-only {
+    display: none;
+}
+
+@media only screen and (max-width: 769px) {
+    .about-item {
+        width: 100%;
+    }
+    .mobile-only {
+        display: block;
+    }
+    .about-item {
+        padding: 1em;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .mobile-only {
+        display: none;
+    }
 }

@@ -42,7 +42,7 @@ window.onload = () => {
                 forEachOption(sigAccSel, am.getAcceptedSignals(), "Изберете сигнал");
                 forEachOption(sigClosedSel, am.getClosedSignals(), "Изберете сигнал");
             }
-
+            
             reloadSel();
 
             let ids = ["displaySignal", "displayPendingSignal", "displayAcceptedSignal", "displayClosedSignal"];
@@ -120,7 +120,7 @@ function initFirefighter() {
         let workingDaysP = document.getElementById("workingDays");
         workingDaysP.innerHTML = "Работни дни:";
 
-        for (let i = 1; i <= 7; i++) {
+        for (let i = 1; i <= 6; i++) {
             if (team.shifts.includes(i.toString())) {
                 switch (i) {
                     case 1:
@@ -141,11 +141,12 @@ function initFirefighter() {
                     case 6:
                         workingDaysP.innerHTML += " Събота";
                         break;
-                    case 6:
-                        workingDaysP.innerHTML += " Неделя";
-                        break;
                 }
             }
+        }
+
+        if (team.shifts.includes("0")) {
+            workingDaysP.innerHTML += " Неделя";
         }
 
         document.getElementById("holidayP").innerHTML = "Почивни дни: " + team.holidays;
@@ -300,19 +301,26 @@ function updateCarSel() {
     for (let i = 1; i <= form.elements.car.value.split(" ")[0]; i++) {
         let newSelect = document.createElement("Select");
         let newLabel = document.createElement("Label");
+        let controlDiv = document.createElement("div");
+        let selectDiv = document.createElement("div");
 
         newSelect.setAttribute("name", i);
         newSelect.setAttribute("id", i);
         newLabel.setAttribute("for", i);
+        newLabel.classList.add("label");
+        controlDiv.classList.add("control");
+        selectDiv.classList.add("select")
 
         newLabel.innerHTML = "Пожарникар " + i + ":";
 
         parentDiv.appendChild(newLabel);
-        parentDiv.appendChild(document.createElement("br"));
-        parentDiv.appendChild(newSelect);
-        parentDiv.appendChild(document.createElement("br"));
+        parentDiv.appendChild(controlDiv);
+        controlDiv.appendChild(selectDiv);
+        selectDiv.appendChild(newSelect);
 
         newSelect.options[0] = new Option("Изберете пожарникар", "");
+        
+        parentDiv.appendChild(document.createElement("br"));
 
         if (firefightersArray == 0) {
             continue;

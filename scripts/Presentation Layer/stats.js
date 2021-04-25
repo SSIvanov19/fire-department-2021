@@ -24,7 +24,6 @@ window.onload = () => {
 
 
     if (coordinatesX && coordinatesY && !am.isArrayEmpty(coordinatesX) && !am.isArrayEmpty(coordinatesY)) {
-        console.log("enter")
         initMap(coordinatesX, coordinatesY, "map");
     } else {
         document.getElementById("map").style.display = "none";

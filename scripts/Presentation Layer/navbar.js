@@ -21,3 +21,10 @@ document.addEventListener('DOMContentLoaded', function () {
     navbar.classList.toggle('is-active');
   });
 });
+
+let stateCheck = setInterval(() => {
+  if (document.readyState === 'complete') {
+    clearInterval(stateCheck);
+    document.getElementsByClassName("progress")[0].style.display = "none";
+  }
+}, 100);

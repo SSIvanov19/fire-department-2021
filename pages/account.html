@@ -253,7 +253,7 @@
     </div>
   </article><br><br>
 
-  <div id="registerEmployee" class="box" style="width: 60%; margin-left: 20%; margin-right: 20%;">
+  <div id="registerEmployee" class="box" style="width: 80%; margin-left: 10%; margin-right: 10%;">
     <p class="title is-3">Регистриране на работник</p>
     <br>
     <form onreset="return getInput(4)" method="POST" name="registerEmployee">
@@ -304,32 +304,47 @@
       </div>
       <br>
 
-      <button class="button is-success" type="reset">Регистриране</button><br>
+      <button class="button is-success" type="reset">Регистриране</button><br><br>
       <p id="employeeError" class="has-text-danger"></p>
     </form>
   </div><br><br>
 
 
-  <div id="registerCar" class="box" style="width: 60%; margin-left: 20%; margin-right: 20%;">
+  <div id="registerCar" class="box" style="width: 80%; margin-left: 10%; margin-right: 10%;">
     <p class="title is-3">Регистриране на кола</p>
     <br>
     <form onreset="return getInput(5)" method="POST" name="registerCar">
       <label class="label" for="model">Модел:</label>
-      <input class="input" type="text" name="model" id="model" required /><br><br>
+      <p class="control has-icons-left">
+        <input class="input" type="text" name="model" id="model" placeholder="Какъв модел е автомобила?" required>
+        <span class="icon is-small is-left">
+          <i class="fas fa-car"></i>
+        </span>
+      </p><br>
 
       <label class="label" for="registration">Регистрационен номер:</label>
-      <input class="input" type="text" name="registration" id="registration" required /><br><br>
+      <p class="control has-icons-left">
+        <input class="input" type="text" name="registration" id="registration" placeholder="Какъв е Регистрациония номен на автомобила?" required>
+        <span class="icon is-small is-left">
+          <i class="fas fa-car"></i>
+        </span>
+      </p><br>
 
       <label class="label" for="seats">Места:</label>
-      <input class="input" type="number" name="seats" id="seats" required /><br><br><br>
+      <p class="control has-icons-left">
+        <input class="input" type="number" name="seats" id="seats" placeholder="Колко места има в автомобила?" required>
+        <span class="icon is-small is-left">
+          <i class="fas fa-user-friends"></i>
+        </span>
+      </p><br>
 
-      <button class="button is-success" type="reset" value="Регистриране">Регистриране</button><br>
+      <button class="button is-success" type="reset" value="Регистриране">Регистриране</button><br><br>
       <p id="carError" class="has-text-danger"></p>
     </form>
   </div><br><br>
 
 
-  <div id="registerTeam" class="box" style="width: 60%; margin-left: 20%; margin-right: 20%;">
+  <div id="registerTeam" class="box" style="width: 80%; margin-left: 10%; margin-right: 10%;">
     <p class="title is-3">Регистриране на отбор</p>
     <br>
     <form onreset="return getInput(6)" method="POST" name="registerTeam">
@@ -383,12 +398,12 @@
       <label class="label" for="trip">Командировки:</label>
       <input type="date" data-is-range="true" name="trip" id="trip"><br>
 
-      <button class="button is-success" type="reset" value="Register">Регистриране</button>
+      <button class="button is-success" type="reset" value="Register">Регистриране</button><br><br>
       <p id="teamError" class="has-text-danger"></p>
     </form>
   </div>
 
-  <div id="signalDiv" class="box" style="width: 60%; margin-left: 20%; margin-right: 20%;">
+  <div id="signalDiv" class="box" style="width: 80%; margin-left: 10%; margin-right: 10%; margin-top: -5%;">
     <form method="POST" name="signalForm" id="signalForm">
       <label class="label" for="signals">Избери незададен сигнал:</label>
       <div class="control">
@@ -423,8 +438,8 @@
         <br>
 
         <input type="reset" onclick="getInput(7, 1)" value="Accept" class="button is-success">
-        <input type="reset" onclick="getInput(8, 1)" value="Reject" class="button is-danger">
-        <p id="signalError"></p>
+        <input type="reset" onclick="getInput(8, 1)" value="Reject" class="button is-danger"><br><br>
+        <p id="signalError" class="has-text-danger"></p>
         <br>
       </div>
     </form>
@@ -439,15 +454,15 @@
         </div>
         <br>
 
-        <div id="displayPendingSignal">
+        <div id="displayPendingSignal"><br>
           <p id="titlePendingSignal"></p>
           <p id="teamPendingSignal"></p>
           <p id="namesPendingSignal"></p>
-          <p id="typePendingSignal"></p>
+          <p id="typePendingSignal"></p><br>
           <div id="mapPendingSignal" class="map">
 
-          </div>
-          <p id="desPendingSignals"></p>
+          </div><br>
+          <p id="desPendingSignals"></p><br>
           <label class="label" for="teams">Избери отбор за смяна:</label>
           <div class="control">
             <div class="select">
@@ -474,14 +489,14 @@
         </div>
         <br>
 
-        <div id="displayAcceptedSignal">
+        <div id="displayAcceptedSignal"><br>
           <p id="titleAcceptedSignal"></p>
           <p id="teamAcceptedSignal"></p>
           <p id="namesAcceptedSignal"></p>
           <p id="startOfWorkingAccSig"></p>
           <p id="typeAcceptedSignal"></p>
-          <p id="desAcceptedSignals"></p>
-          <div id="mapAcceptedSignal" class="map"></div>
+          <p id="desAcceptedSignals"></p><br>
+          <div id="mapAcceptedSignal" class="map"></div><br>
         </div>
     </form>
     <br>
@@ -503,23 +518,33 @@
         <p id="endOfWorkingClosedP"></p>
         <p id="timeTakenP"></p>
         <p id="typeClosedP"></p>
-        <p id="desClosedP"></p>
-        <div id="mapClosedMap" class="map"></div>
+        <p id="desClosedP"></p><br>
+        <div id="mapClosedMap" class="map"></div><br>
       </div>
     </form>
   </div>
 </section>
 
-<div class="columns" id="sendSignalDiv" style="width: 80%; margin-left: 10%; margin-right: 10%;">
+<div class="columns" id="sendSignalDiv" style="width: 74%; margin-left: 13%; margin-right: 13%;">
   <div class="column">
     <form class="box" onreset="return getInput(11)" method="POST" name="signalSubmitForm">
       <br>
-      <p class="title is-4 has-text-centered">Изпрати сигнал</p><br>
-      <label class="label" for="title">Title:</label>
-      <input class="input" type="text" id="title" name="title" required><br><br>
+      <p class="title is-4">Изпрати сигнал</p><br>
+      <label class="label" for="title">Заглавие:</label>  
+      <p class="control has-icons-left">
+        <input class="input" type="text" id="title" name="title" placeholder="Заглавие" required>
+        <span class="icon is-small is-left">
+          <i class="fas fa-heading"></i>
+        </span>
+      </p><br>
 
       <label class="label" for="names">Име и фамилия:</label>
-      <input class="input" type="text" id="Signalnames" name="names" required><br><br>
+      <p class="control has-icons-left">
+        <input class="input" type="text" id="Signalnames" name="names" placeholder="Име и фамилия" required>
+        <span class="icon is-small is-left">
+          <i class="fas fa-id-badge"></i>
+        </span>
+      </p><br>
 
       <label class="label" for="type">Какъв е проблема:</label>
       <div class="select">
@@ -537,7 +562,9 @@
       <div id="mapSignal" name="mapSignal" class="map" style="width: 100%;"></div><br><br>
 
       <label class="label" for="des">Кратко описание:</label>
-      <textarea class="textarea is-info" name="des" id="des" rows="4" cols="50" required></textarea><br><br>
+      <textarea class="textarea is-info" name="des" id="des" rows="4" cols="50" placeholder="Кратко описание" required></textarea><br>
+
+      
       <label class="label" for="type">Изберете отбор за сиганала:</label>
       <div class="select">
         <select name="teams" id="signalTeam">
@@ -547,19 +574,18 @@
       <br><br>
 
       <br>
-      <input type="reset" value="Подаване" class="button is-success">
+      <input type="reset" value="Подаване" class="button is-success"><br><br>
       <p id="error" class="has-text-danger"></p>
     </form>
   </div>
 </div>
 
-<div id="firefighterTeamManagment" class="box"
-  style="width: 50%; margin-left: 25%; margin-right: 25%; margin-top: -12%;">
+<div id="firefighterTeamManagment" class="box"  style="width: 72%; margin-left: 14%; margin-right: 14%; margin-top: -10%;">
   <p id="signalP"></p>
   <p id="signalNameP"></p>
-  <p id="signalTypeP"></p>
-  <div id="fireMapSignal" class="map"></div>
-  <p id="signalDesP"></p>
+  <p id="signalTypeP"></p><br>
+  <div id="fireMapSignal" class="map"></div><br>
+  <p id="signalDesP"></p><br>
 
   <div id="signalWorkButtons">
     <form onreset="return getInput(12)" method="POST" name="signalSubmitForm">

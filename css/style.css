@@ -3,6 +3,15 @@
     font-family: 'Comfortaa', cursive;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 30px rgb(150, 150, 150); 
+}
+
 .banner {
     position: relative;
     background-image: url(../img/background.png);

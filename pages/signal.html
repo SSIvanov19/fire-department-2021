@@ -31,7 +31,7 @@
       <nav class="navbar">
         <div class="navbar-brand">
           <a class="navbar-item" href="../index.html">
-            <img src="../img/Logo.png" width="90"/>
+            <img src="../img/Logo.png" width="90" />
           </a>
           <a class="navbar-item is-hidden-desktop" href="tel:112">
             <span class="icon" style="color: #333;">
@@ -115,7 +115,7 @@
     </div>
     <progress class="progress is-small is-primary" max="100"></progress>
   </div>
-  
+
   <div class="hero is-info is-fullheight">
     <br>
     <div class="hero-body">
@@ -127,7 +127,7 @@
 
               <div class="field">
                 <label class="label" for="title">Заглавие:</label>
-                <p class="control has-icons-left has-icons-right">
+                <p class="control has-icons-left">
                   <input class="input" type="text" id="title" placeholder="Заглавие" required>
                   <span class="icon is-small is-left">
                     <i class="fas fa-heading"></i>
@@ -145,18 +145,18 @@
                 </p>
                 <br>
                 <label class="label" for="type">Какъв е проблема</label>
-              <div class="select">
-                <select id="type" name="type">
-                  <option value="" selected="selected">Изберете проблем</option>
-                  <option value="Fire">Пожар</option>
-                  <option value="Rescue">Спасяване</option>
-                  <option value="Flood">Наводнение</option>
-                  <option value="Another">Друго</option>
-                </select>
-              </div>
-              <br><br>
-              <label class="label" for="des">Кратко описание:</label>
-              <textarea class="textarea is-info" name="des" id="des" rows="4" cols="50" placeholder="Кратко описание" required></textarea>
+                <div class="select">
+                  <select id="type" name="type">
+                    <option value="" selected="selected">Изберете проблем</option>
+                    <option value="Fire">Пожар</option>
+                    <option value="Rescue">Спасяване</option>
+                    <option value="Flood">Наводнение</option>
+                    <option value="Another">Друго</option>
+                  </select>
+                </div>
+                <br><br>
+                <label class="label" for="des">Кратко описание:</label>
+                <textarea class="textarea is-info" name="des" id="des" rows="4" cols="50" placeholder="Кратко описание" required></textarea>
               </div><br>
 
               <label class="label" for="map">Посочете адрес:</label>
@@ -167,7 +167,7 @@
                 <p class="control">
                   <input type="reset" value="Подай" class="button is-success">
                 </p>
-              </div>
+              </div><br>
               <p id="error" class="has-text-danger"></p>
             </form>
           </div>

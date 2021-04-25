@@ -1,0 +1,13 @@
+{
+    "source": {
+        "includePattern": ".+\\.js(doc|x)?$",   
+        "include": ["."],                      
+        "exclude": ["node_modules"]            
+    },
+    "recurseDepth": 10,                        
+    "opts": {          
+        "recurse": true,
+        "template": "node_modules/braintree-jsdoc-template"
+    }
+                      
+}

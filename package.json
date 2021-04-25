@@ -4,12 +4,13 @@
   "description": "Repo for project about fire department.",
   "main": "index.js",
   "dependencies": {
+    "braintree-jsdoc-template": "^3.3.0",
     "bulma-calendar": "^6.1.0",
     "node-localstorage": "^2.1.6"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "generate-docs": "node_modules/.bin/jsdoc --configure configJSDoc.json --verbose"
   },
   "repository": {
     "type": "git",

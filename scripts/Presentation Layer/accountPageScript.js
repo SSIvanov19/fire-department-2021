@@ -85,6 +85,9 @@ window.onload = () => {
     })
 }
 
+/**
+ * Function that initalise firefighter systems
+ */
 function initFirefighter() {
     if (activeUser.team == undefined || activeUser.team == null) {
         document.getElementById("team").innerHTML = "Отбор: няма";
@@ -185,6 +188,10 @@ function initFirefighter() {
     }
 }
 
+/**
+ * Loads cars in the selected elemend
+ * @param {DOMElement} selectElement
+ */
 function forEachCar(selectElement) {
     let cars = am.getCars();
 
@@ -203,6 +210,13 @@ function forEachCar(selectElement) {
     }
 }
 
+/**
+ * Loads what function gives
+ * in the selected elemend
+ * @param {DOMElement} optionSelect 
+ * @param {func} func 
+ * @param {string} firstOption First option in the select element
+ */
 function forEachOption(optionSelect, func, firstOption) {
     let options = func;
 
@@ -227,6 +241,9 @@ function getNames() {
     document.getElementById("Signalnames").value = activeUser.fname + " " + activeUser.lname;
 }
 
+/**
+ * initalise a map for the signal form
+ */
 function initMapForSignal() {
     let map = new ol.Map({
         target: 'mapSignal',
@@ -263,6 +280,12 @@ function initMapForSignal() {
     });
 }
 
+/**
+ * Intialise a map into div element
+ * @param {string} coordinatesX Longitude
+ * @param {string} coordinatesY Latitude
+ * @param {string} id Id of the element
+ */
 function initMap(coordinatesX, coordinatesY, id) {
     document.getElementById(id).innerHTML = "";
     let map = new ol.Map({
@@ -291,7 +314,9 @@ function initMap(coordinatesX, coordinatesY, id) {
     setTimeout(function () { map.updateSize(); }, 200);
 }
 
-
+/**
+ * Place firefighter to chose from
+ */
 function updateCarSel() {
     let form = document.forms.registerTeam;
     let parentDiv = document.getElementById("teamMembers");
@@ -334,6 +359,11 @@ function updateCarSel() {
     }
 }
 
+/**
+ * Hide/Unhide element
+ * @param {DOM} parentDiv The element
+ * @param {string} id 
+ */
 function chengeParentDivDisplay(parentDiv, id) {
     if (id == "") {
         parentDiv.style.display = "none";
@@ -344,6 +374,9 @@ function chengeParentDivDisplay(parentDiv, id) {
 
 carSel.onchange = updateCarSel;
 
+/**
+ * Arrow function that loads select element
+ */
 sigSel.onchange = () => {
     let id = document.forms.signalForm.elements.signals.value;
     let parentDiv = document.getElementById("displaySignal");
@@ -368,6 +401,9 @@ sigSel.onchange = () => {
     }
 }
 
+/**
+ * Arrow function that loads select element
+ */
 sigPendingSel.onchange = () => {
     let id = document.forms.signalPendingForm.elements.signalsPending.value;
     let parentDiv = document.getElementById("displayPendingSignal");
@@ -394,6 +430,9 @@ sigPendingSel.onchange = () => {
     }
 }
 
+/**
+ * Arrow function that loads select element
+ */
 sigAccSel.onchange = () => {
     let id = document.forms.signalAcceptedForm.elements.signals.value;
 
@@ -425,6 +464,9 @@ sigAccSel.onchange = () => {
     }
 }
 
+/**
+ * Arrow function that loads select element
+ */
 sigClosedSel.onchange = () => {
     let id = document.forms.signalClosedForm.elements.signals.value;
 
@@ -459,6 +501,9 @@ sigClosedSel.onchange = () => {
     }
 }
 
+/**
+ * reload select elements
+ */
 function reloadSel() {
     let sels = [teamSel, teamPenSel, teamSigSel];
 
@@ -467,6 +512,9 @@ function reloadSel() {
     }
 }
 
+/**
+ * reload select elements
+ */
 function reloadSigSel() {
     if (am.getSignals() != null) {
         forEachOption(sigSel, am.getSignalsWithoutTeamSelected(), "Изберете сигнал");
@@ -474,6 +522,11 @@ function reloadSigSel() {
     }
 }
 
+/**
+ * Process the input from forms and send it to the backend
+ * @param {number} input 
+ * @param {number} form 
+ */
 function getInput(input, form = null) {
     switch (input) {
         case 1:

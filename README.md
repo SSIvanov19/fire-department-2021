@@ -18,3 +18,10 @@
    - ***GitHub profile***: [***YHTanev19***](https://github.com/YHTanev19)	
 
 ---
+
+## 👨‍💻About
+
+> Our website systematizes, organizes and facilitates the work of the workers in the Fire Department and gives the citizens access to useful information.
+
+
+

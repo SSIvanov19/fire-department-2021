@@ -30,4 +30,3 @@
 > The technologies we used for our work are: Microsoft Teams for communication, Git and GitHub for code storage and teamwork on the code, Visual Studio Code for creating the code, Microsoft PowerPoint for preparing the presentation and Microsoft Word for preparing the documentation.
 
 ---
-

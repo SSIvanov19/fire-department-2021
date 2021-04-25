@@ -14,7 +14,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css">
-  <!--<link rel="stylesheet" href="css/debug.css">-->
+  <!--<link rel="stylesheet" href="../css/debug.css">-->
 </head>
 
 <body>
@@ -139,17 +139,17 @@
 
     <div class="tile is-ancestor">
       <div class="tile is-12 is-parent">
-        <div class="tile is-child box">
+        <div class="tile is-child box" style="margin-left: 2% !important; margin-top: 2% !important;">
           <p class="title is-4 has-text-centered">Сигнали</p>
           <p class="title is-1 has-text-centered" id="numberOfSignals">0</p>
         </div>
 
-        <div class="tile is-child box" style="margin-left: 2% !important;">
+        <div class="tile is-child box" style="margin-left: 2% !important; margin-top: 2% !important;">
           <p class="title is-4 has-text-centered">Пожари</p>
           <p class="title is-1 has-text-centered" id="numberOfFires">0</p>
         </div>
 
-        <div class="tile is-child box" style="margin-left: 2% !important;">
+        <div class="tile is-child box" style="margin-left: 2% !important; margin-top: 2% !important;">
           <p class="title is-4 has-text-centered">Наводнения</p>
           <p class="title is-1 has-text-centered" id="numberOfFloods">0</p>
         </div>
@@ -159,17 +159,17 @@
 
     <div class="tile is-ancestor">
       <div class="tile is-12 is-parent">
-        <div class="tile is-child box">
+        <div class="tile is-child box" style="margin-left: 2% !important; margin-top: 2% !important;">
           <p class="title is-4 has-text-centered">Отбори</p>
           <p class="title is-1 has-text-centered" id="numberOfTeams">0</p>
         </div>
 
-        <div class="tile is-child box" style="margin-left: 2% !important;">
+        <div class="tile is-child box" style="margin-left: 2% !important; margin-top: 2% !important;">
           <p class="title is-4 has-text-centered">Спасителните операции</p>
           <p class="title is-1 has-text-centered" id="numberOfRescues">0</p>
         </div>
 
-        <div class="tile is-child box" style="margin-left: 2% !important;">
+        <div class="tile is-child box" style="margin-left: 2% !important; margin-top: 2% !important;">
           <p class="title is-4 has-text-centered">Свободни пожарни коли</p>
           <p class="title is-1 has-text-centered" id="numberOfFreeCars">0</p>
           <p class="has-text-centered">от общо</p>
@@ -177,7 +177,8 @@
         </div>
       </div>
     </div>
-    <div id="map" style="width: 600px; height: 400px;"></div>
+    <br><br>
+    <div id="map" style="width: 60%; height: 400px; margin-left: 20%; margin-right: 20%;"></div>
     <div id="popup" class="ol-popup">
       <a href="#" id="popup-closer" class="ol-popup-closer"></a>
       <div id="popup-content"></div>

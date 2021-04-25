@@ -651,13 +651,34 @@ function AccountManager(localStorage) {
                         continue;
                     }
                 }
-            } /* else if (parseInt(team.starOfWorkingDay) > parseInt(team.endOfWorkingDay)) {
-                if (!(parseInt(team.starOfWorkingDay) < today.getHours() && parseInt(team.endOfWorkingDay) < today.getHours())) {
-                    console.log(10)
-                    continue;
+            } else if (parseInt(team.starOfWorkingDay) > parseInt(team.endOfWorkingDay)) {
+                if (!(parseInt(team.starOfWorkingDay) < today.getHours() || today.getHours() < parseInt(team.endOfWorkingDay))) {
+                    if (parseInt(team.starOfWorkingDay) == today.getHours()) {
+                        if (parseInt(team.starOfWorkingDay.split(":")[1]) > today.getMinutes()) {
+                            continue;
+                        }
+                    } else if (parseInt(team.endOfWorkingDay) == today.getHours()) {
+                        if (parseInt(team.endOfWorkingDay.split(":")[1]) < today.getMinutes()) {
+                            continue;
+                        }
+                    } else {
+                        continue;
+                    }
                 }
+            } else if (parseInt(team.starOfWorkingDay) == parseInt(team.endOfWorkingDay)) {
+                if (parseInt(team.starOfWorkingDay.split(":")[1]) < parseInt(team.endOfWorkingDay.split(":")[1])) {
+                    if (!(parseInt(team.starOfWorkingDay.split(":")[1]) < today.getHours() && today.getHours() < parseInt(team.endOfWorkingDay.split(":")[1]))) {
+                        continue;
+                    }
+                } else if (parseInt(team.starOfWorkingDay.split(":")[1]) > parseInt(team.endOfWorkingDay.split(":")[1])) {
+                    if (!(parseInt(team.starOfWorkingDay.split(":")[1]) < today.getHours() || today.getHours() < parseInt(team.endOfWorkingDay.split(":")[1]))) {
+                        continue;
+                    }
+                }
+            } else {
+                console.log("A wild error appeared");
             }
-            */
+            
 
             let startOfHoliday = parseDate(team.holidays.slice(0, 10));
             let endOfHoliday = parseDate(team.holidays.slice(13, 23));
@@ -682,9 +703,7 @@ function AccountManager(localStorage) {
 
             returnArr.push(team);
         }
-
-        //console.log(returnArr)
-
+        
         return returnArr;
     }
 

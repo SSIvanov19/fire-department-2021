@@ -4,17 +4,17 @@
 
 ---
 
-### Table of Contents
+## Team
+> 1. Miroslav Ivanov - **Scrum trainer**	
+   - ***GitHub profile***: [***MTIvanov19***](https://github.com/MTIvanov19)	
 
-- [The team](#the-team)
+> 2. Stoyan Ivanov - **Back-end Developer**	
+   - ***GitHub profile***: [***Stoyan Ivanov***](https://github.com/SSIvanov19)	
 
----
+> 3. Kostadin Taligadzhiev19 - **Front-end Developer**	
+   - ***GitHub profile***: [***KNTaligadzhiev19***](https://github.com/KNTaligadzhiev19)	
 
-## The team
-
-- Miroslav Ivanov - Scrum Trainer
-- Stoyan Ivanov - Back-End Developer
-- Kostadin Taligadzhiev - Front-End Developer
-- Yoan Tanev - Designer
+> 4. Yoan Tanev - **Designer**	
+   - ***GitHub profile***: [***YHTanev19***](https://github.com/YHTanev19)	
 
 ---

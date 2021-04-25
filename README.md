@@ -35,4 +35,6 @@
 
 Paste this in cmd:	
 
-> git clone https://github.com/SSIvanov19/fire-department-2021	
+````	
+git clone https://github.com/SSIvanov19/fire-department-2021		
+````	 

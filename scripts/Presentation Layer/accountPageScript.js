@@ -245,6 +245,7 @@ function getNames() {
  * initalise a map for the signal form
  */
 function initMapForSignal() {
+    console.log("da");  
     let map = new ol.Map({
         target: 'mapSignal',
         layers: [
@@ -257,6 +258,8 @@ function initMapForSignal() {
             zoom: 12
         })
     });
+    
+    setTimeout(function () { map.updateSize(); }, 1000); 
 
     map.on('click', (m) => {
         map.getLayers().getArray()

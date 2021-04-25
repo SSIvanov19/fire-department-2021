@@ -23,7 +23,7 @@
       -moz-border-radius: 15px;
       border-radius: 15px;
       overflow: hidden;
-      position: relative;  
+      position: relative;
     }
   </style>
   <!--<link rel="stylesheet" href="../styles/debug.css">-->
@@ -253,334 +253,392 @@
     </div>
   </article><br><br>
 
-  <div id="registerEmployee" class="box" style="width: 80%; margin-left: 10%; margin-right: 10%;">
-    <p class="title is-3">Регистриране на работник</p>
-    <br>
-    <form onreset="return getInput(4)" method="POST" name="registerEmployee">
-      <label class="label" for="fname">Име:</label>
-      <p class="control has-icons-left">
-        <input class="input" type="text" name="fname" id="fname" placeholder="Име" required /><br>
+  <div class="tabs is-boxed is-centered">
+    <ul>
+      <li class="is-active" data-target="registerEmployee-tab">
+        <a>
+          <span class="icon is-small"><i class="fas fa-user-plus"></i></span>
+          <span>Регистриране на работник</span>
+        </a>
+      </li>
+      <li data-target="registerCar-tab">
+        <a>
+          <span class="icon is-small"><i class="fas fa-car"></i></span>
+          <span>Регистриране на кола</span>
+        </a>
+      </li>
+      <li data-target="registerTeam-tab">
+        <a>
+          <span class="icon is-small"><i class="fas fa-users"></i></span>
+          <span>Регистриране на отбор</span>
+        </a>
+      </li>
+    </ul>
+  </div><br>
 
-        <span class="icon is-small is-left">
-          <i class="fas fa-id-badge"></i>
-        </span>
-      </p><br>
-
-      <label class="label" for="lname">Фамилия:</label>
-      <p class="control has-icons-left">
-        <input class="input" type="text" name="lname" id="lname" placeholder="Фамилия" required /><br>
-
-        <span class="icon is-small is-left">
-          <i class="fas fa-id-badge"></i>
-        </span>
-      </p><br>
-
-      <label class="label" for="email">E-mail:</label>
-      <p class="control has-icons-left">
-        <input class="input" type="email" name="email" id="email" placeholder="E-mail" required /><br>
-
-        <span class="icon is-small is-right">
-          <i class="fas fa-envelope"></i>
-        </span>
-      </p><br>
-
-      <label class="label" for="pass">Парола:</label>
-      <p class="control has-icons-left">
-        <input class="input" type="password" name="pass" id="pass" placeholder="Парола" required /><br><br>
-
-        <span class="icon is-small is-left">
-          <i class="fas fa-lock"></i>
-        </span>
-      </p>
-
-      <label class="label" for="role">Изберете роля:</label>
-      <div class="control">
-        <div class="select">
-          <select id="role" name="role" required>
-            <option value="1">Пожарникар</option>
-            <option value="2">Диспечер</option>
-          </select>
-        </div>
-      </div>
-      <br>
-
-      <button class="button is-success" type="reset">Регистриране</button><br><br>
-      <p id="employeeError" class="has-text-danger"></p>
-    </form>
-  </div><br><br>
-
-
-  <div id="registerCar" class="box" style="width: 80%; margin-left: 10%; margin-right: 10%;">
-    <p class="title is-3">Регистриране на кола</p>
-    <br>
-    <form onreset="return getInput(5)" method="POST" name="registerCar">
-      <label class="label" for="model">Модел:</label>
-      <p class="control has-icons-left">
-        <input class="input" type="text" name="model" id="model" placeholder="Какъв модел е автомобила?" required>
-        <span class="icon is-small is-left">
-          <i class="fas fa-car"></i>
-        </span>
-      </p><br>
-
-      <label class="label" for="registration">Регистрационен номер:</label>
-      <p class="control has-icons-left">
-        <input class="input" type="text" name="registration" id="registration" placeholder="Какъв е Регистрациония номен на автомобила?" required>
-        <span class="icon is-small is-left">
-          <i class="fas fa-car"></i>
-        </span>
-      </p><br>
-
-      <label class="label" for="seats">Места:</label>
-      <p class="control has-icons-left">
-        <input class="input" type="number" name="seats" id="seats" placeholder="Колко места има в автомобила?" required>
-        <span class="icon is-small is-left">
-          <i class="fas fa-user-friends"></i>
-        </span>
-      </p><br>
-
-      <button class="button is-success" type="reset" value="Регистриране">Регистриране</button><br><br>
-      <p id="carError" class="has-text-danger"></p>
-    </form>
-  </div><br><br>
-
-
-  <div id="registerTeam" class="box" style="width: 80%; margin-left: 10%; margin-right: 10%;">
-    <p class="title is-3">Регистриране на отбор</p>
-    <br>
-    <form onreset="return getInput(6)" method="POST" name="registerTeam">
-      <label class="label" for="car">Избери кола:</label>
-      <div class="control">
-        <div class="select">
-          <select name="car" id="car" required>
-            <option value="" selected="selected">Избери кола</option>
-          </select>
-        </div>
-      </div><br>
-
-      <div id="teamMembers">
-
-      </div>
-
-      <label class="label" for="startTime">Час на започване:</label>
-      <input type="time" id="startTime" name="startTime" required><br><br>
-
-      <label class="label" for="endTime">Час на свършване:</label>
-      <input type="time" id="endTime" name="endTime" required><br><br>
-
-      <label class="label">Работни дни:</label>
-      <input type="checkbox" id="mon" name="days" value="1">
-      <label class="checkbox" for="mon">Понеделник</label><br>
-
-      <input type="checkbox" id="tue" name="days" value="2">
-      <label class="checkbox" for="tue">Вторник</label><br>
-
-      <input type="checkbox" id="wed" name="days" value="3">
-      <label class="checkbox" for="wed">Сряда</label><br>
-
-      <input type="checkbox" id="thu" name="days" value="4">
-      <label class="checkbox" for="thu">Четвъртък</label><br>
-
-      <input type="checkbox" id="fri" name="days" value="5">
-      <label class="checkbox" for="fri">Петък</label><br>
-
-      <input type="checkbox" id="sat" name="days" value="6">
-      <label class="checkbox" for="sat">Събота</label><br>
-
-      <input type="checkbox" id="sun" name="days" value="0">
-      <label class="checkbox" for="sun">Неделя</label><br><br>
-
-      <label class="label" for="holiday">Почивни дни:</label>
-      <input type="date" data-is-range="true" name="holiday" id="holiday"><br>
-
-      <label class="label" for="sick">Болнични:</label>
-      <input type="date" data-is-range="true" name="sick" id="sick"><br>
-
-      <label class="label" for="trip">Командировки:</label>
-      <input type="date" data-is-range="true" name="trip" id="trip"><br>
-
-      <button class="button is-success" type="reset" value="Register">Регистриране</button><br><br>
-      <p id="teamError" class="has-text-danger"></p>
-    </form>
-  </div>
-
-  <div id="signalDiv" class="box" style="width: 80%; margin-left: 10%; margin-right: 10%; margin-top: -5%;">
-    <form method="POST" name="signalForm" id="signalForm">
-      <label class="label" for="signals">Избери незададен сигнал:</label>
-      <div class="control">
-        <div class="select">
-          <select name="signals" id="signals">
-            <option value="" selected="selected">Избери сигнал</option>
-          </select>
-        </div>
-      </div>
-      <br>
-
-      <div id="displaySignal">
-        <p id="title"></p>
-        <p id="names"></p>
-        <p id="type"></p>
+  <div class="px-3" id="tab-content">
+    <div id="registerEmployee-tab">
+      <div id="registerEmployee" class="box" style="width: 80%; margin-left: 10%; margin-right: 10%;">
+        <p class="title is-3 has-text-centered">Регистриране на работник</p>
         <br>
+        <form onreset="return getInput(4)" method="POST" name="registerEmployee">
+          <label class="label" for="fname">Име:</label>
+          <p class="control has-icons-left">
+            <input class="input" type="text" name="fname" id="fname" placeholder="Име" required /><br>
 
-        <div id="map" class="map" style="width: 100%;">
+            <span class="icon is-small is-left">
+              <i class="fas fa-id-badge"></i>
+            </span>
+          </p><br>
 
-        </div>
-        <br>
-        <p id="des"></p>
-        <br>
-        <label class="label" for="teams">Избери отбор:</label>
-        <div class="control">
-          <div class="select">
-            <select name="teams" id="teams">
-              <option value="" selected="teams">Отбори</option>
-            </select>
-          </div>
-        </div>
-        <br>
+          <label class="label" for="lname">Фамилия:</label>
+          <p class="control has-icons-left">
+            <input class="input" type="text" name="lname" id="lname" placeholder="Фамилия" required /><br>
 
-        <input type="reset" onclick="getInput(7, 1)" value="Accept" class="button is-success">
-        <input type="reset" onclick="getInput(8, 1)" value="Reject" class="button is-danger"><br><br>
-        <p id="signalError" class="has-text-danger"></p>
-        <br>
-      </div>
-    </form>
+            <span class="icon is-small is-left">
+              <i class="fas fa-id-badge"></i>
+            </span>
+          </p><br>
 
-    <form method="POST" name="signalPendingForm" id="signalPendingForm">
-      <label class="label" for="signals">Избери постъпил сигнал:</label>
-      <div class="control">
-        <div class="select">
-          <select name="signals" id="signalsPending">
-            <option value="" selected="selected">избери сигнал</option>
-          </select>
-        </div>
-        <br>
+          <label class="label" for="email">E-mail:</label>
+          <p class="control has-icons-left">
+            <input class="input" type="email" name="email" id="email" placeholder="E-mail" required /><br>
 
-        <div id="displayPendingSignal"><br>
-          <p id="titlePendingSignal"></p>
-          <p id="teamPendingSignal"></p>
-          <p id="namesPendingSignal"></p>
-          <p id="typePendingSignal"></p><br>
-          <div id="mapPendingSignal" class="map">
+            <span class="icon is-small is-right">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </p><br>
 
-          </div><br>
-          <p id="desPendingSignals"></p><br>
-          <label class="label" for="teams">Избери отбор за смяна:</label>
+          <label class="label" for="pass">Парола:</label>
+          <p class="control has-icons-left">
+            <input class="input" type="password" name="pass" id="pass" placeholder="Парола" required /><br><br>
+
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+
+          <label class="label" for="role">Изберете роля:</label>
           <div class="control">
             <div class="select">
-              <select name="teams" id="teamsPendingSignal">
-                <option value="" selected="selected">Отбор</option>
+              <select id="role" name="role" required>
+                <option value="1">Пожарникар</option>
+                <option value="2">Диспечер</option>
               </select>
             </div>
           </div>
           <br>
 
-          <input type="reset" onclick="getInput(7, 2)" value="Change team" class="button is-success">
-          <input type="reset" onclick="getInput(8, 2)" value="Delete" class="button is-danger">
-          <p id="signalPendingError"></p>
-        </div>
-    </form>
-    <br>
-    <form method="POST" name="signalAcceptedForm" id="signalAcceptedForm">
-      <label class="label" for="signals">Избери приет сигнал:</label>
-      <div class="control">
-        <div class="select">
-          <select name="signals" id="signalsAccepted">
-            <option value="" selected="selected">Избери сигнал</option>
-          </select>
-        </div>
+          <button class="button is-success" type="reset">Регистриране</button><br><br>
+          <p id="employeeError" class="has-text-danger"></p>
+        </form>
+      </div><br><br>
+    </div>
+
+    <div id="registerCar-tab">
+      <div id="registerCar" class="box" style="width: 80%; margin-left: 10%; margin-right: 10%;">
+        <p class="title is-3 has-text-centered">Регистриране на кола</p>
         <br>
+        <form onreset="return getInput(5)" method="POST" name="registerCar">
+          <label class="label" for="model">Модел:</label>
+          <p class="control has-icons-left">
+            <input class="input" type="text" name="model" id="model" placeholder="Какъв модел е автомобила?" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-car"></i>
+            </span>
+          </p><br>
 
-        <div id="displayAcceptedSignal"><br>
-          <p id="titleAcceptedSignal"></p>
-          <p id="teamAcceptedSignal"></p>
-          <p id="namesAcceptedSignal"></p>
-          <p id="startOfWorkingAccSig"></p>
-          <p id="typeAcceptedSignal"></p>
-          <p id="desAcceptedSignals"></p><br>
-          <div id="mapAcceptedSignal" class="map"></div><br>
-        </div>
-    </form>
-    <br>
-    <form method="POST" name="signalClosedForm" id="signalClosedForm">
-      <label class="label" for="signals">Избери завършен сигнал:</label>
-      <div class="control">
-        <div class="select">
-          <select name="signals" id="signalsClosed">
-            <option value="" selected="selected">избери сигнал</option>
-          </select>
-        </div>
-      </div>
-      <br>
+          <label class="label" for="registration">Регистрационен номер:</label>
+          <p class="control has-icons-left">
+            <input class="input" type="text" name="registration" id="registration"
+              placeholder="Какъв е Регистрациония номен на автомобила?" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-car"></i>
+            </span>
+          </p><br>
 
-      <div id="displayClosedSignal">
-        <p id="titleClosedP"></p>
-        <p id="namesClosedP"></p>
-        <p id="startOfWorkingClosedP"></p>
-        <p id="endOfWorkingClosedP"></p>
-        <p id="timeTakenP"></p>
-        <p id="typeClosedP"></p>
-        <p id="desClosedP"></p><br>
-        <div id="mapClosedMap" class="map"></div><br>
+          <label class="label" for="seats">Места:</label>
+          <p class="control has-icons-left">
+            <input class="input" type="number" name="seats" id="seats" placeholder="Колко места има в автомобила?"
+              required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-user-friends"></i>
+            </span>
+          </p><br>
+
+          <button class="button is-success" type="reset" value="Регистриране">Регистриране</button><br><br>
+          <p id="carError" class="has-text-danger"></p>
+        </form>
       </div>
-    </form>
+    </div><br><br>
+
+    <div id="registerTeam-tab">
+      <div id="registerTeam" class="box" style="width: 80%; margin-left: 10%; margin-right: 10%;">
+        <p class="title is-3 has-text-centered">Регистриране на отбор</p>
+        <br>
+        <form onreset="return getInput(6)" method="POST" name="registerTeam">
+          <label class="label" for="car">Избери кола:</label>
+          <div class="control">
+            <div class="select">
+              <select name="car" id="car" required>
+                <option value="" selected="selected">Избери кола</option>
+              </select>
+            </div>
+          </div><br>
+
+          <div id="teamMembers">
+
+          </div>
+
+          <label class="label" for="startTime">Час на започване:</label>
+          <input type="time" id="startTime" name="startTime" required><br><br>
+
+          <label class="label" for="endTime">Час на свършване:</label>
+          <input type="time" id="endTime" name="endTime" required><br><br>
+
+          <label class="label">Работни дни:</label>
+          <input type="checkbox" id="mon" name="days" value="1">
+          <label class="checkbox" for="mon">Понеделник</label><br>
+
+          <input type="checkbox" id="tue" name="days" value="2">
+          <label class="checkbox" for="tue">Вторник</label><br>
+
+          <input type="checkbox" id="wed" name="days" value="3">
+          <label class="checkbox" for="wed">Сряда</label><br>
+
+          <input type="checkbox" id="thu" name="days" value="4">
+          <label class="checkbox" for="thu">Четвъртък</label><br>
+
+          <input type="checkbox" id="fri" name="days" value="5">
+          <label class="checkbox" for="fri">Петък</label><br>
+
+          <input type="checkbox" id="sat" name="days" value="6">
+          <label class="checkbox" for="sat">Събота</label><br>
+
+          <input type="checkbox" id="sun" name="days" value="0">
+          <label class="checkbox" for="sun">Неделя</label><br><br>
+
+          <label class="label" for="holiday">Почивни дни:</label>
+          <input type="date" data-is-range="true" name="holiday" id="holiday"><br>
+
+          <label class="label" for="sick">Болнични:</label>
+          <input type="date" data-is-range="true" name="sick" id="sick"><br>
+
+          <label class="label" for="trip">Командировки:</label>
+          <input type="date" data-is-range="true" name="trip" id="trip"><br>
+
+          <button class="button is-success" type="reset" value="Register">Регистриране</button><br><br>
+          <p id="teamError" class="has-text-danger"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs is-boxed is-centered">
+    <ul>
+      <li class="is-active" data-target="signal-actions">
+        <a>
+          <span class="icon is-small"><i class="fas fa-file-contract"></i></span>
+          <span>Сигнали</span>
+        </a>
+      </li>
+      <li data-target="send-signal" onclick="initMapForSignal()">
+        <a>
+          <span class="icon is-small"><i class="fas fa-file-signature"></i></span>
+          <span>Изпрати сигнал</span>
+        </a>
+      </li>
+    </ul>
+  </div><br><br><br><br><br>
+
+  <div class="px-2" id="tab-content">
+    <div id="signal-actions">
+      <div id="signalDiv" class="box" style="width: 80%; margin-left: 10%; margin-right: 10%; margin-top: -5%;">
+        <form method="POST" name="signalForm" id="signalForm">
+          <label class="label" for="signals">Избери незададен сигнал:</label>
+          <div class="control">
+            <div class="select">
+              <select name="signals" id="signals">
+                <option value="" selected="selected">Избери сигнал</option>
+              </select>
+            </div>
+          </div>
+          <br>
+
+          <div id="displaySignal">
+            <p id="title"></p>
+            <p id="names"></p>
+            <p id="type"></p>
+            <br>
+
+            <div id="map" class="map" style="width: 100%;">
+
+            </div>
+            <br>
+            <p id="des"></p>
+            <br>
+            <label class="label" for="teams">Избери отбор:</label>
+            <div class="control">
+              <div class="select">
+                <select name="teams" id="teams">
+                  <option value="" selected="teams">Отбори</option>
+                </select>
+              </div>
+            </div>
+            <br>
+
+            <input type="reset" onclick="getInput(7, 1)" value="Accept" class="button is-success">
+            <input type="reset" onclick="getInput(8, 1)" value="Reject" class="button is-danger"><br><br>
+            <p id="signalError" class="has-text-danger"></p>
+            <br>
+          </div>
+        </form>
+
+        <form method="POST" name="signalPendingForm" id="signalPendingForm">
+          <label class="label" for="signals">Избери постъпил сигнал:</label>
+          <div class="control">
+            <div class="select">
+              <select name="signals" id="signalsPending">
+                <option value="" selected="selected">избери сигнал</option>
+              </select>
+            </div>
+            <br>
+
+            <div id="displayPendingSignal"><br>
+              <p id="titlePendingSignal"></p>
+              <p id="teamPendingSignal"></p>
+              <p id="namesPendingSignal"></p>
+              <p id="typePendingSignal"></p><br>
+              <div id="mapPendingSignal" class="map">
+
+              </div><br>
+              <p id="desPendingSignals"></p><br>
+              <label class="label" for="teams">Избери отбор за смяна:</label>
+              <div class="control">
+                <div class="select">
+                  <select name="teams" id="teamsPendingSignal">
+                    <option value="" selected="selected">Отбор</option>
+                  </select>
+                </div>
+              </div>
+              <br>
+
+              <input type="reset" onclick="getInput(7, 2)" value="Change team" class="button is-success">
+              <input type="reset" onclick="getInput(8, 2)" value="Delete" class="button is-danger">
+              <p id="signalPendingError"></p>
+            </div>
+        </form>
+        <br>
+        <form method="POST" name="signalAcceptedForm" id="signalAcceptedForm">
+          <label class="label" for="signals">Избери приет сигнал:</label>
+          <div class="control">
+            <div class="select">
+              <select name="signals" id="signalsAccepted">
+                <option value="" selected="selected">Избери сигнал</option>
+              </select>
+            </div>
+            <br>
+
+            <div id="displayAcceptedSignal"><br>
+              <p id="titleAcceptedSignal"></p>
+              <p id="teamAcceptedSignal"></p>
+              <p id="namesAcceptedSignal"></p>
+              <p id="startOfWorkingAccSig"></p>
+              <p id="typeAcceptedSignal"></p>
+              <p id="desAcceptedSignals"></p><br>
+              <div id="mapAcceptedSignal" class="map"></div><br>
+            </div>
+        </form>
+        <br>
+        <form method="POST" name="signalClosedForm" id="signalClosedForm">
+          <label class="label" for="signals">Избери завършен сигнал:</label>
+          <div class="control">
+            <div class="select">
+              <select name="signals" id="signalsClosed">
+                <option value="" selected="selected">избери сигнал</option>
+              </select>
+            </div>
+          </div>
+          <br>
+
+          <div id="displayClosedSignal">
+            <p id="titleClosedP"></p>
+            <p id="namesClosedP"></p>
+            <p id="startOfWorkingClosedP"></p>
+            <p id="endOfWorkingClosedP"></p>
+            <p id="timeTakenP"></p>
+            <p id="typeClosedP"></p>
+            <p id="desClosedP"></p><br>
+            <div id="mapClosedMap" class="map"></div><br>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </section>
 
-<div class="columns" id="sendSignalDiv" style="width: 74%; margin-left: 13%; margin-right: 13%;">
-  <div class="column">
-    <form class="box" onreset="return getInput(11)" method="POST" name="signalSubmitForm">
-      <br>
-      <p class="title is-4">Изпрати сигнал</p><br>
-      <label class="label" for="title">Заглавие:</label>  
-      <p class="control has-icons-left">
-        <input class="input" type="text" id="title" name="title" placeholder="Заглавие" required>
-        <span class="icon is-small is-left">
-          <i class="fas fa-heading"></i>
-        </span>
-      </p><br>
+<div id="tab-content">
+  <div id="send-signal" class="is-hidden">
+    <div class="columns" id="sendSignalDiv" style="width: 74%; margin-left: 13%; margin-right: 13%;">
+      <div class="column">
+        <form class="box" onreset="return getInput(11)" method="POST" name="signalSubmitForm">
+          <br>
+          <p class="title is-4">Изпрати сигнал</p><br>
+          <label class="label" for="title">Заглавие:</label>
+          <p class="control has-icons-left">
+            <input class="input" type="text" id="title" name="title" placeholder="Заглавие" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-heading"></i>
+            </span>
+          </p><br>
 
-      <label class="label" for="names">Име и фамилия:</label>
-      <p class="control has-icons-left">
-        <input class="input" type="text" id="Signalnames" name="names" placeholder="Име и фамилия" required>
-        <span class="icon is-small is-left">
-          <i class="fas fa-id-badge"></i>
-        </span>
-      </p><br>
+          <label class="label" for="names">Име и фамилия:</label>
+          <p class="control has-icons-left">
+            <input class="input" type="text" id="Signalnames" name="names" placeholder="Име и фамилия" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-id-badge"></i>
+            </span>
+          </p><br>
 
-      <label class="label" for="type">Какъв е проблема:</label>
-      <div class="select">
-        <select id="type" name="type">
-          <option value="" selected="selected">Изберете проблем</option>
-          <option value="Fire">Пожар</option>
-          <option value="Rescue">Спасяване</option>
-          <option value="Flood">Наводнение</option>
-          <option value="Another">Друго</option>
-        </select>
+          <label class="label" for="type">Какъв е проблема:</label>
+          <div class="select">
+            <select id="type" name="type">
+              <option value="" selected="selected">Изберете проблем</option>
+              <option value="Fire">Пожар</option>
+              <option value="Rescue">Спасяване</option>
+              <option value="Flood">Наводнение</option>
+              <option value="Another">Друго</option>
+            </select>
+          </div>
+          <br><br>
+
+          <label class="label" for="mapSignal">Изберете адрес</label>
+          <div id="mapSignal" name="mapSignal" class="map" style="width: 100%;"></div><br><br>
+
+          <label class="label" for="des">Кратко описание:</label>
+          <textarea class="textarea is-info" name="des" id="des" rows="4" cols="50" placeholder="Кратко описание"
+            required></textarea><br>
+
+
+          <label class="label" for="type">Изберете отбор за сиганала:</label>
+          <div class="select">
+            <select name="teams" id="signalTeam">
+              <option value="" selected="teams">Изберете отбор</option>
+            </select>
+          </div>
+          <br><br>
+
+          <br>
+          <input type="reset" value="Подаване" class="button is-success"><br><br>
+          <p id="error" class="has-text-danger"></p>
+        </form>
       </div>
-      <br><br>
-
-      <label class="label" for="mapSignal">Изберете адрес</label>
-      <div id="mapSignal" name="mapSignal" class="map" style="width: 100%;"></div><br><br>
-
-      <label class="label" for="des">Кратко описание:</label>
-      <textarea class="textarea is-info" name="des" id="des" rows="4" cols="50" placeholder="Кратко описание" required></textarea><br>
-
-      
-      <label class="label" for="type">Изберете отбор за сиганала:</label>
-      <div class="select">
-        <select name="teams" id="signalTeam">
-          <option value="" selected="teams">Изберете отбор</option>
-        </select>
-      </div>
-      <br><br>
-
-      <br>
-      <input type="reset" value="Подаване" class="button is-success"><br><br>
-      <p id="error" class="has-text-danger"></p>
-    </form>
+    </div>
   </div>
 </div>
 
-<div id="firefighterTeamManagment" class="box"  style="width: 72%; margin-left: 14%; margin-right: 14%; margin-top: -10%;">
+<div id="firefighterTeamManagment" class="box"
+  style="width: 72%; margin-left: 14%; margin-right: 14%; margin-top: -10%;">
   <p id="signalP"></p>
   <p id="signalNameP"></p>
   <p id="signalTypeP"></p><br>
@@ -685,6 +743,7 @@
 <script src="../scripts/Logic Layer/accountManager.js"></script>
 <script defer src="../scripts/Presentation Layer/navbar.js"></script>
 <script src="../scripts/Presentation Layer/accountPageScript.js"></script>
+<script src="../scripts/Presentation Layer/tabs-script.js"></script>
 
 </body>
 

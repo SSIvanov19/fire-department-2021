@@ -43,10 +43,12 @@
     <li>To store the date we stringify it and then store it in localStorage. When we need it, we just parse it with JSON.</li>
     <li>This method in not the most secure one, but it is good enought, as our main task is to present dynamic date and statistics.</li>
     </ul>
+    <br>
     <li>
     <img src="https://bulma.io/images/bulma-logo.png" width="72px" height="18px" alt="bulmaLogo" > Fron end - Bulma :  </li>
     <ul><li>Bulma is CSS framework that is build on flexbox and grid system and create fully responsive webpage.</li>
    </ul>
+   <br>
    <p>Here you can see how these two part combines and create our website:</p>
    <ul>
    <li> <p>Image</p> </li>

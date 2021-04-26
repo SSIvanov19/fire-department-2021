@@ -66,6 +66,8 @@ window.onload = () => {
             for (const id of ids) {
                 document.getElementById(id).style.display = "block";
             }
+            document.getElementById("registerCar").parentElement.classList.add("is-hidden");
+            document.getElementById("registerTeam").parentElement.classList.add("is-hidden");
             forEachCar(carSel);
         } else {
             document.getElementById("deleteAll").style.display = "none";

@@ -45,9 +45,9 @@
     </ul>
     <li>
     <img src="https://bulma.io/images/bulma-logo.png" width="72px" height="18px" alt="bulmaLogo" > Fron end - Bulma :  </li>
-    <ul><li>Обясни Булма.</li>
+    <ul><li>Bulma is CSS framework that is build on flexbox and grid system and create fully responsive webpage.</li>
    </ul>
-   <p>Here you can how these two part combines and create our website:</p>
+   <p>Here you can see how these two part combines and create our website:</p>
    <ul>
    <li> <p>Image</p> </li>
    </ul>
@@ -68,7 +68,7 @@
    npm install node-localstorage
    </pre>
    <p> After that, just start the website by click on index.html in File Explorer. </p>
-   <h1> Installing </h1>
+   <h1> 📥 Installing </h1>
    <p> To install our project on your machine you just need to clone it. This can be done by : </p>
    <pre>
     git clone https://github.com/SSIvanov19/fire-department-2021.git

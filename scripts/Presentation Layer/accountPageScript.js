@@ -32,6 +32,7 @@ window.onload = () => {
         if (activeUser.role == 2) {
             document.getElementById("signalDiv").style.display = "block";
             document.getElementById("sendSignalDiv").style.display = "block";
+            document.getElementById("dispatcherTabs").style.display = "block";
 
             getNames();
             initMapForSignal();
@@ -53,9 +54,10 @@ window.onload = () => {
         } else {
             document.getElementById("signalDiv").style.display = "none";
             document.getElementById("sendSignalDiv").style.display = "none";
+            document.getElementById("dispatcherTabs").style.display = "none";
         }
 
-        let ids = ["registerEmployee", "registerCar", "registerTeam"];
+        let ids = ["registerEmployee", "registerCar", "registerTeam", "adminTabs"];
 
         //If user is admin
         if (activeUser.role == 3) {
@@ -155,9 +157,6 @@ function initFirefighter() {
         document.getElementById("holidayP").innerHTML = "Почивни дни: " + team.holidays;
         document.getElementById("sickLeaveP").innerHTML = "Sick Leaves: " + team.sickLeaves;
         document.getElementById("BusinessTripP").innerHTML = "Командировка: " + team.businessTrips;
-
-
-        console.log(team.signal)
 
         if (team.signal != null) {
             signal = am.getSignalsWithId(team.signal)

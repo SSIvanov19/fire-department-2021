@@ -73,24 +73,38 @@ function getInput() {
 
     switch (output) {
         case 0:
+            form.reset();
+            getNames();
             document.getElementById("error").innerHTML = "Сигналът е изпратен!";
             break;
         case 1:
+            form.reset();
+            getNames();
             document.getElementById("error").innerHTML = "Сигналът трябва да има име!";
             break;
         case 2:
+            form.reset();
+            getNames();
             document.getElementById("error").innerHTML = "Моля, попълнете вашите имена!";
             break;
         case 3:
+            form.reset();
+            getNames();
             document.getElementById("error").innerHTML = "Сигналът трябва да има тип!";
             break;
         case 4:
+            form.reset();
+            getNames();
             document.getElementById("error").innerHTML = "Моля, изберете адрес от картата!";
             break;
         case 5:
+            form.reset();
+            getNames();
             document.getElementById("error").innerHTML = "Сигналът трябва да има описание!";
             break;
         default:
+            form.reset();
+            getNames();
             console.log("A wild error appeared");
             break;
     }

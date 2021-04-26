@@ -7,7 +7,12 @@
     "recurseDepth": 10,                        
     "opts": {          
         "recurse": true,
+        "encoding": "utf8",
         "template": "node_modules/braintree-jsdoc-template"
-    }
-                      
+    },
+    "templates": {
+        "referenceTitle": "Fire-department-2021",
+        "disableSort": false,
+        "collapse": true
+    }                 
 }

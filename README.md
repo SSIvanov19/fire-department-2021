@@ -30,7 +30,8 @@
   <img src  = "gifts/index.gif">
   <h1><a href = "https://codingburgas-my.sharepoint.com/:w:/g/personal/ssivanov19_codingburgas_bg/EUGuPsevQ9NMuSeoroLK6jMBN-b7UeZFsMO_KY_B9xg1EQ?e=xEuDhm">📄 Our Documentation</h1>
   <h1><a href = "https://ssivanov19.github.io/fire-department-2021-documnetation/" target="_blank">📄 Our JS Documentation</h1>
-  <h1><a href = "https://codingburgas-my.sharepoint.com/:x:/g/personal/kntaligadzhiev19_codingburgas_bg/EcpkbBmua9tEsJy9ixz0cv0BWO0J2fpWUKoQTFw8bb6_Fg?e=pvuGSE" target="_blank">📄 Our QA Documentation</h1>
+  <h1><a href = "https://codingburgas-my.sharepoint.com/:x:/g/personal/kntaligadzhiev19_codingburgas_bg/EcpkbBmua9tEsJy9ixz0cv0BSa70jbMQqZ9aEXBKQBdPHg?e=uGMarC" target="_blank">📄 Our QA Documentation</h1>
+  <h1><a href = "https://codingburgas-my.sharepoint.com/:p:/g/personal/ssivanov19_codingburgas_bg/EcnS26cesNRApLYNauglkcEByoWYs6RJbLT88mUMOeL4Cg?e=eyw9c5" target="_blank">📄 Our Presentation</h1>
   </a>
   <h1>⌨️ How it works</h1>
   <p><big>Our work can be split on 2 main things :</p></big>

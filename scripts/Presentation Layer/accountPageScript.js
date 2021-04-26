@@ -13,9 +13,27 @@ window.onload = () => {
     let isEnter = (am.checkForEnterUser() == 'true');
 
     if (isEnter) {
+        let role = activeUser.role;
         document.getElementById("fname").innerHTML = "Име: " + activeUser.fname;
         document.getElementById("lname").innerHTML = "Фамилия: " + activeUser.lname;
-        document.getElementById("role").innerHTML = "Роля: " + activeUser.role;
+
+        switch (Number(role)) {
+            case 0:
+                role = "Потребител";
+                break;
+            case 1:
+                role = "Пожарникар";
+                break;
+            case 2:
+
+                role = "Диспечер";
+                break;
+            case 3:
+                role = "Админ";
+                break;
+        }
+
+        document.getElementById("role").innerHTML = "Роля: " + role;
         document.getElementById("region").innerHTML = "Регион: " + activeUser.region;
 
         //If user is firefighter
@@ -43,7 +61,7 @@ window.onload = () => {
                 forEachOption(sigAccSel, am.getAcceptedSignals(), "Изберете сигнал");
                 forEachOption(sigClosedSel, am.getClosedSignals(), "Изберете сигнал");
             }
-            
+
             reloadSel();
 
             let ids = ["displaySignal", "displayPendingSignal", "displayAcceptedSignal", "displayClosedSignal"];
@@ -157,7 +175,7 @@ function initFirefighter() {
         }
 
         document.getElementById("holidayP").innerHTML = "Почивни дни: " + team.holidays;
-        document.getElementById("sickLeaveP").innerHTML = "Sick Leaves: " + team.sickLeaves;
+        document.getElementById("sickLeaveP").innerHTML = "Болнични: " + team.sickLeaves;
         document.getElementById("BusinessTripP").innerHTML = "Командировка: " + team.businessTrips;
 
         if (team.signal != null) {
@@ -247,7 +265,7 @@ function getNames() {
  */
 function initMapForSignal() {
     document.getElementById("mapSignal").innerHTML = "";
-    
+
     let map = new ol.Map({
         target: 'mapSignal',
         layers: [
@@ -260,8 +278,8 @@ function initMapForSignal() {
             zoom: 12
         })
     });
-    
-    setTimeout(function () { map.updateSize(); }, 200); 
+
+    setTimeout(function () { map.updateSize(); }, 200);
 
     map.on('click', (m) => {
         map.getLayers().getArray()
@@ -349,7 +367,7 @@ function updateCarSel() {
         selectDiv.appendChild(newSelect);
 
         newSelect.options[0] = new Option("Изберете пожарникар", "");
-        
+
         parentDiv.appendChild(document.createElement("br"));
 
         if (firefightersArray == 0) {
@@ -400,7 +418,7 @@ sigSel.onchange = () => {
 
     if (signal != undefined) {
         titleP.innerHTML = "Заглавие: " + signal.title;
-        namesP.innerHTML = "Име: " + signal.names;
+        namesP.innerHTML = "Име на изпратилия сигнала: " + signal.names;
         typeP.innerHTML = "Тип: " + signal.type;
         desP.innerHTML = "Описание: " + signal.description;
     }
@@ -429,7 +447,7 @@ sigPendingSel.onchange = () => {
     if (signal != undefined) {
         titleP.innerHTML = "Заглавие: " + signal.title;
         teamP.innerHTML = "Отбор: " + signal.team;
-        namesP.innerHTML = "Име: " + signal.names;
+        namesP.innerHTML = "Име на изпратилия сигнала: " + signal.names;
         typeP.innerHTML = "Тип: " + signal.type;
         desP.innerHTML = "Описание: " + signal.description;
     }
@@ -462,10 +480,10 @@ sigAccSel.onchange = () => {
     if (signal != undefined) {
         titleP.innerHTML = "Заглавие: " + signal.title;
         teamP.innerHTML = "Отбор: " + signal.team;
-        namesP.innerHTML = "Име: " + signal.names;
+        namesP.innerHTML = "Име на изпратилия сигнала: " + signal.names;
         typeP.innerHTML = "Тип: " + signal.type;
         desP.innerHTML = "Описание: " + signal.description;
-        startP.innerHTML = "Начало на смяната: " + startDate.getHours() + ":" + startDate.getMinutes();
+        startP.innerHTML = "Начало на работа по сигнала: " + startDate.getHours() + ":" + startDate.getMinutes();
     }
 }
 
@@ -497,11 +515,11 @@ sigClosedSel.onchange = () => {
 
     if (signal != undefined) {
         titleP.innerHTML = "Заглавие: " + signal.title;
-        namesP.innerHTML = "Име: " + signal.names;
+        namesP.innerHTML = "Име на изпратилия сигнала: " + signal.names;
         typeP.innerHTML = "Тип: " + signal.type;
         desP.innerHTML = "Описание: " + signal.description;
-        startP.innerHTML = "Начало на смяната: " + startDate.getHours() + ":" + startDate.getMinutes();
-        endP.innerHTML = "Край на смяната: " + endDate.getHours() + ":" + endDate.getMinutes();
+        startP.innerHTML = "Начало на работа по сигнала: " + startDate.getHours() + ":" + startDate.getMinutes();
+        endP.innerHTML = "Край на работа по сигнала: " + endDate.getHours() + ":" + endDate.getMinutes();
         timeP.innerHTML = "Времетраене: " + signal.timeToComplete;
     }
 }

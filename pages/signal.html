@@ -122,7 +122,7 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-7">
-            <form class="box" onreset="return getInput()" method="POST" name="signalForm">
+            <form class="box" method="POST" name="signalForm">
               <p class="title is-2 has-text-centered has-text-black">Подай сигнал</p>
 
               <div class="field">
@@ -165,7 +165,7 @@
 
               <div class="field">
                 <p class="control">
-                  <input type="reset" value="Подай" class="button is-success">
+                  <input type="button" value="Подай" class="button is-success" onclick="getInput()">
                 </p>
               </div><br>
               <p id="error" class="has-text-danger"></p>

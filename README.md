@@ -27,12 +27,10 @@
     Our website systematizes, organizes and facilitates the work of the workers in the Fire Department and gives the citizens access to useful information. 
   </p>
   <h1>🎥 Demo of our project </h1>
-  <p>TBD</p>
-  <!--
-  <img src  = "gifs/Dam.gif">
-  -->
-  <h1><a href = "#">Our Documentation</h1>
-  <h1><a href = "https://ssivanov19.github.io/fire-department-2021-documnetation/" target="_blank">Our JS Documentation</h1>
+  <img src  = "gifts/index.gif">
+  <h1><a href = "https://codingburgas-my.sharepoint.com/:w:/g/personal/ssivanov19_codingburgas_bg/EUGuPsevQ9NMuSeoroLK6jMBN-b7UeZFsMO_KY_B9xg1EQ?e=xEuDhm">📄 Our Documentation</h1>
+  <h1><a href = "https://ssivanov19.github.io/fire-department-2021-documnetation/" target="_blank">📄 Our JS Documentation</h1>
+  <h1><a href = "https://codingburgas-my.sharepoint.com/:x:/g/personal/kntaligadzhiev19_codingburgas_bg/EcpkbBmua9tEsJy9ixz0cv0BWO0J2fpWUKoQTFw8bb6_Fg?e=pvuGSE" target="_blank">📄 Our QA Documentation</h1>
   </a>
   <h1>⌨️ How it works</h1>
   <p><big>Our work can be split on 2 main things :</p></big>
@@ -51,7 +49,7 @@
    <br>
    <p>Here you can see how these two part combines and create our website:</p>
    <ul>
-   <li> <p>Image</p> </li>
+   <li> <img src  = "gifts/account.gif"> </li>
    </ul>
   </ol>
   <h1>🖱️ Usage </h1>
@@ -84,5 +82,5 @@
     <h1>🧒 Our Team</h1>
     <p>Miroslav Ivanov - <a href = "https://github.com/MTIvanov19"> MTIvanov19</a> - Scrum trainer </p>
     <p>Stoyan Ivanov - <a href = "https://github.com/SSIvanov19"> SSIvanov19</a> - Back-end Developer </p>
-    <p>Kostadin Taligadzhiev - <a href = "https://github.com/KNTaligadzhiev19"> KNTaligadzhiev19 </a> - Data Analyzer </p>
+    <p>Kostadin Taligadzhiev - <a href = "https://github.com/KNTaligadzhiev19"> KNTaligadzhiev19 </a> - Front-end Developer </p>
     <p>Yoan Tanev - <a href = "https://github.com/YHTanev19"> YHTanev19</a> - Designer </p>

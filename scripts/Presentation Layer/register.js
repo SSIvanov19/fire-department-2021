@@ -13,13 +13,13 @@ window.onload = () => {
  * @function getInputRegister
  */
 function getInput() {
-  //Get input from user
-  let fname = document.getElementById("fname").value;
-  let lname = document.getElementById("lname").value;
-  let email = document.getElementById("email").value;
-  let pass = document.getElementById("pass").value;
-
   let am = new AccountManager(localStorage);
+
+  //Get input from user
+  let fname = am.escapeHtml(document.getElementById("fname").value);
+  let lname = am.escapeHtml(document.getElementById("lname").value);
+  let email = am.escapeHtml(document.getElementById("email").value);
+  let pass = am.escapeHtml(document.getElementById("pass").value);
 
   let output = am.registerUser(fname, lname, email, pass, 0, "Бургас");
 

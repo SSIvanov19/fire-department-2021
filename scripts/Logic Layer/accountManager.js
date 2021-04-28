@@ -678,7 +678,7 @@ function AccountManager(localStorage) {
             } else {
                 console.log("A wild error appeared");
             }
-            
+
 
             let startOfHoliday = parseDate(team.holidays.slice(0, 10));
             let endOfHoliday = parseDate(team.holidays.slice(13, 23));
@@ -703,7 +703,7 @@ function AccountManager(localStorage) {
 
             returnArr.push(team);
         }
-        
+
         return returnArr;
     }
 
@@ -1054,6 +1054,21 @@ function AccountManager(localStorage) {
         }
     }
 
+    /**
+     * Function that prevent Cross Site Scripting
+     * by replacing (escaping) special HTML characters.
+     * @param {string} unsafe The unsafe string
+     * @returns The modified safe string
+     */
+    function escapeHtml(unsafe) {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
     return {
         getAll,
         registerUser,
@@ -1091,7 +1106,8 @@ function AccountManager(localStorage) {
         getNumberOfFreeCars,
         getNumberOfRescues,
         getActiveUser,
-        isArrayEmpty
+        isArrayEmpty,
+        escapeHtml
     }
 }
 

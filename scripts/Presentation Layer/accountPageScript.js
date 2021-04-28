@@ -568,11 +568,11 @@ function getInput(input, form = null) {
             let employeeForm = document.forms.registerEmployee;
 
             let employeeOutput = am.registerUser(
-                employeeForm.elements.fname.value,
-                employeeForm.elements.lname.value,
-                employeeForm.elements.email.value,
-                employeeForm.elements.pass.value,
-                employeeForm.elements.role.value,
+                am.escapeHtml(employeeForm.elements.fname.value),
+                am.escapeHtml(employeeForm.elements.lname.value),
+                am.escapeHtml(employeeForm.elements.email.value),
+                am.escapeHtml(employeeForm.elements.pass.value),
+                am.escapeHtml(employeeForm.elements.role.value),
                 "Бургас"
             );
 
@@ -607,9 +607,9 @@ function getInput(input, form = null) {
             let carForm = document.forms.registerCar;
 
             let carOutput = am.registerCar(
-                carForm.elements.model.value,
-                carForm.elements.registration.value,
-                carForm.elements.seats.value,
+                am.escapeHtml(carForm.elements.model.value),
+                am.escapeHtml(carForm.elements.registration.value),
+                am.escapeHtml(carForm.elements.seats.value),
                 "Бургас"
             );
 
@@ -655,13 +655,13 @@ function getInput(input, form = null) {
 
             let teamOutput = am.registerTeam(
                 firefightersArray,
-                teamForm.elements.car.value.split(" ")[1],
-                teamForm.elements.startTime.value,
-                teamForm.elements.endTime.value,
+                am.escapeHtml(teamForm.elements.car.value.split(" ")[1]),
+                am.escapeHtml(teamForm.elements.startTime.value),
+                am.escapeHtml(teamForm.elements.endTime.value),
                 shifts,
-                teamForm.elements.holiday.value,
-                teamForm.elements.sick.value,
-                teamForm.elements.trip.value
+                am.escapeHtml(teamForm.elements.holiday.value),
+                am.escapeHtml(teamForm.elements.sick.value),
+                am.escapeHtml(teamForm.elements.trip.value)
             );
 
             let teamError = document.getElementById("teamError");
@@ -715,8 +715,8 @@ function getInput(input, form = null) {
             }
 
             let signalOutput1 = am.assignTeamForSignal(
-                signalForm.elements.signals.value,
-                signalForm.elements.teams.value
+                am.escapeHtml(signalForm.elements.signals.value),
+                am.escapeHtml(signalForm.elements.teams.value)
             )
 
             switch (signalOutput1) {
@@ -775,13 +775,13 @@ function getInput(input, form = null) {
             let signalForm5 = document.forms.signalSubmitForm;
 
             let output = am.submitSignalForm(
-                signalForm5.elements.title.value,
-                signalForm5.elements.names.value,
-                signalForm5.elements.type.value,
+                am.escapeHtml(signalForm5.elements.title.value),
+                am.escapeHtml(signalForm5.elements.names.value),
+                am.escapeHtml(signalForm5.elements.type.value),
                 coordinatesX,
                 coordinatesY,
-                signalForm5.elements.des.value,
-                signalForm5.elements.teams.value
+                am.escapeHtml(signalForm5.elements.des.value),
+                am.escapeHtml(signalForm5.elements.teams.value)
             );
 
             let error = document.getElementById("error");

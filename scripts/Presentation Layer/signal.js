@@ -63,12 +63,12 @@ function getInput() {
     let am = new AccountManager(localStorage)
 
     let output = am.submitSignalForm(
-        form.elements.title.value,
-        form.elements.names.value,
-        form.elements.type.value,
+        am.escapeHtml(form.elements.title.value),
+        am.escapeHtml(form.elements.names.value),
+        am.escapeHtml(form.elements.type.value),
         coordinatesX,
         coordinatesY,
-        form.elements.des.value
+        am.escapeHtml(form.elements.des.value)
     );
 
     switch (output) {

@@ -13,10 +13,10 @@ window.onload = () => {
  * @function getInputLogin
  */
 function getInput() {
-    let email = document.getElementById("email").value;
-    let pass = document.getElementById("pass").value;
-
     let am = new AccountManager(localStorage);
+    
+    let email = am.escapeHtml(document.getElementById("email").value);
+    let pass = am.escapeHtml(document.getElementById("pass").value);
 
     if (am.login(email, pass)) {
         window.location.href = "../pages/account.html";

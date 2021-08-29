@@ -26,6 +26,7 @@
       position: relative;
     }
   </style>
+  <link rel="manifest" href="../manifest.json">
   <!--<link rel="stylesheet" href="../styles/debug.css">-->
 </head>
 
@@ -743,7 +744,11 @@
 <script defer src="../scripts/Presentation Layer/navbar.js"></script>
 <script src="../scripts/Presentation Layer/accountPageScript.js"></script>
 <script src="../scripts/Presentation Layer/tabs-script.js"></script>
-
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('../service-worker.js')
+  }
+</script>
 </body>
 
 </html>

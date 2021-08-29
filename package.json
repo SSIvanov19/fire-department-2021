@@ -6,7 +6,8 @@
   "dependencies": {
     "braintree-jsdoc-template": "^3.3.0",
     "bulma-calendar": "^6.1.0",
-    "node-localstorage": "^2.1.6"
+    "node-localstorage": "^2.1.6",
+    "pwa-asset-generator": "^4.3.6"
   },
   "devDependencies": {},
   "scripts": {

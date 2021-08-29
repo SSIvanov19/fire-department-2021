@@ -14,9 +14,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
   <!--<link rel="stylesheet" href="css/debug.css">-->
+  <link rel="manifest" href="../manifest.json">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
     </style>
+    
 </head>
 
 <body>
@@ -300,4 +302,10 @@
   <script src="../scripts/Logic Layer/accountManager.js"></script>
   <script defer src="../scripts/Presentation Layer/navbar.js"></script>
 
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('../service-worker.js')
+    }
+  </script>
+</body>
 </html>

@@ -21,6 +21,7 @@
       height: 350px;
     }
   </style>
+  <link rel="manifest" href="../manifest.json">
   <!--<link rel="stylesheet" href="../styles/debug.css">-->
 </head>
 
@@ -244,6 +245,11 @@
   <script src="../scripts/Logic Layer/accountManager.js"></script>
   <script src="../scripts/Presentation Layer/signal.js"></script>
   <script defer src="../scripts/Presentation Layer/navbar.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('../service-worker.js')
+    }
+  </script>
 </body>
 
 </html>
